@@ -1,0 +1,47 @@
+## .gitignore Selection
+
+**Choose: `Python`** from GitHub's template options.
+
+Here's what you should add to the standard Python .gitignore:
+```gitignore
+# Additional for Parichay Project
+
+# AWS credentials and config
+.aws/
+aws-exports.js
+
+# API Keys and sensitive data
+.env
+.env.local
+.env.production
+*.key
+config/secrets.yml
+
+# Large datasets
+*.csv
+*.xlsx
+!example_data.csv
+
+# AWS CloudFormation outputs
+outputs.json
+deployment-outputs.json
+
+# Lambda deployment packages
+*.zip
+deployment-package/
+
+# Local development
+local_test_data/
+temp_processing/
+
+# IDE specific
+.vscode/settings.json
+.idea/workspace.xml
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Documentation builds
+docs/_build/
+docs/site/
