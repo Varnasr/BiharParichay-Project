@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this project in your research, please cite it as below."
+type: software
+title: "BiharParichay: Demographic Classification System for Bihar"
+authors:
+  - family-names: Raman
+    given-names: Varna Sri
+url: "https://github.com/Varnasr/BiharParichay-Project"
+repository-code: "https://github.com/Varnasr/BiharParichay-Project"
+license: MIT
+keywords:
+  - bihar
+  - india
+  - demographics
+  - classification
+  - development-economics
+
+date-released: "2025-01-01"
