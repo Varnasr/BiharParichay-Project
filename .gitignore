@@ -45,3 +45,10 @@ Thumbs.db
 # Documentation builds
 docs/_build/
 docs/site/
+
+# Added by git standards propagation
+node_modules/
+*.log
+dist/
+coverage/
+*.swp
