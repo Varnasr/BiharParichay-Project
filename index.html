@@ -1680,6 +1680,30 @@ graph LR
                         </div>
                     </div>
 
+                    <!-- Tool 15: Facilitator Guide -->
+                    <div class="tool-card" style="grid-column: 1 / -1;">
+                        <div class="tool-card-header" onclick="toggleTool('guide-tool')">
+                            <h4>Listening Circle Facilitator Guide</h4>
+                            <span class="tool-toggle" id="guide-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="guide-tool">
+                            <p class="tool-desc">Ready-made session plans for different audience groups. Each suggests which stories, data, and tools to use.</p>
+                            <div id="guide-content" style="font-size:0.84rem;line-height:1.7;color:var(--text-secondary);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 16: SMS Fact Cards -->
+                    <div class="tool-card" style="grid-column: 1 / -1;">
+                        <div class="tool-card-header" onclick="toggleTool('sms-tool')">
+                            <h4>WhatsApp-Ready Fact Cards</h4>
+                            <span class="tool-toggle" id="sms-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="sms-tool">
+                            <p class="tool-desc">Pre-formatted messages under 160 characters. One-tap copy or share on WhatsApp.</p>
+                            <div id="sms-cards"></div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -2975,6 +2999,59 @@ graph LR
             ).join('') || '<p style="color:var(--text-tertiary)">No quotes for this topic.</p>';
         }
 
+        // Tool 15: Facilitator Guide
+        function initFacilitatorGuide() {
+            const container = document.getElementById('guide-content');
+            if (!container || container.innerHTML) return;
+            const guides = [
+                { audience: "Women's Group (Mahila Mandal)", icon: "&#9792;", stories: ['The Girl on the Bicycle','The Rs 50,000 That Changes Everything','The ASHA Worker\'s Invisible Labour','The Anaemic Mother and the Stunted Child'], tools: ['Issue Priority Ranker (select their district)','Scheme Gap Finder (show PMMVY/Ujjwala gaps)','Impact Calculator (child marriage, stunting)'], opener: 'Start by asking: "Aapke gaon mein ladkiyon ki padhai kab tak hoti hai?" (How long do girls study in your village?) Then share the bicycle story. Ask what changed and what didn\'t.', duration: '60-90 minutes' },
+                { audience: 'Youth / Students Group', icon: '&#9998;', stories: ['Agnipath: The Burning Trains','Paper Leak Raj','The Coaching Capital and Its Broken Promise','3 Million Walked Home'], tools: ['Constituency Lookup (show their seat\'s margin)','Bihar Timeline (show what changed after movements)','Impact Calculator (migration numbers)'], opener: 'Start by asking: "Aap 5 saal baad kahan rehna chahte ho -- Bihar mein ya bahar?" (Where do you want to be in 5 years?) Let them talk. Then share the Agnipath numbers.', duration: '45-60 minutes' },
+                { audience: 'Farmers / Agricultural Workers', icon: '&#127806;', stories: ['The Makhana Diver','The Diara Farmer With No Land Title','Magahi Paan and the Vanishing Farmers','The Rs 900 Cylinder'], tools: ['Scheme Gap Finder (MGNREGA days, PM-Kisan coverage)','Flood Risk Checker','District Data Explorer (their district)'], opener: 'Start by asking: "Is saal fasal kaisi rahi?" (How was the crop this year?) Then ask about PM-Kisan -- did they receive it? How many days of MGNREGA? Share the scheme gap data.', duration: '60 minutes' },
+                { audience: 'Muslim Community (Seemanchal focus)', icon: '&#9774;', stories: ['Seemanchal: India\'s Forgotten Quadrant','Seemanchal and the CAA Shadow','The Hooch Deaths Nobody Counts'], tools: ['District Data Explorer (Kishanganj, Purnia, Katihar, Araria)','Scheme Gap Finder (show Kishanganj\'s 41% PM-Kisan)','Constituency Lookup (Kishanganj, Katihar seats)'], opener: 'Start with the data: Kishanganj has 57% literacy and 41% PM-Kisan coverage. Ask: "Aapko lagta hai yeh neglect hai ya coincidence?" Then listen.', duration: '60-90 minutes' },
+                { audience: 'Dalit / Mahadalit Community', icon: '&#9733;', stories: ['The Musahar Tola','Laxmanpur Bathe','The Makhana Diver','Bidesia: The Art Form Born from Absence'], tools: ['Surname Lookup (show their community\'s category)','Issue Priority Ranker','Impact Calculator (poverty = 66.4M people)'], opener: 'Start by asking about Mahadalit scheme benefits -- did they receive housing? Did the Vikas Mission reach them? Then share the Musahar literacy data (<10%). Ask what they think would actually change things.', duration: '60-90 minutes' },
+                { audience: 'General / Mixed Audience', icon: '&#9673;', stories: ['The Core Question (Overview panel)','3 Million Walked Home','The Girl on the Bicycle','Bihar\'s Fiscal Injustice'], tools: ['District Indicator Map (show their district)','Impact Calculator (pick 2-3 indicators)','Bihar Timeline'], opener: 'Start with the hero stat: 128 million people, highest poverty rate, lowest per capita income. Then ask: "Bihar ne India ko kya diya, aur India ne Bihar ko kya diya?" Show the fiscal injustice data.', duration: '60-90 minutes' }
+            ];
+
+            container.innerHTML = guides.map(g =>
+                '<div style="margin-bottom:24px;padding:20px;background:var(--surface-alt);border-radius:var(--radius-lg);border:1px solid var(--border);">' +
+                '<h4 style="font-family:var(--font-serif);font-size:0.95rem;margin-bottom:10px;">' + g.icon + ' ' + g.audience + ' <span style="font-size:0.72rem;color:var(--text-tertiary);font-weight:400;">(' + g.duration + ')</span></h4>' +
+                '<div style="margin-bottom:10px;"><strong style="font-size:0.78rem;color:var(--accent);">OPENER:</strong><br><span style="font-size:0.84rem;font-style:italic;">' + g.opener + '</span></div>' +
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+                '<div><strong style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;">Stories to use:</strong><ul style="margin:4px 0 0 14px;font-size:0.82rem;">' + g.stories.map(s => '<li>' + s + '</li>').join('') + '</ul></div>' +
+                '<div><strong style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;">Tools to show:</strong><ul style="margin:4px 0 0 14px;font-size:0.82rem;">' + g.tools.map(t => '<li>' + t + '</li>').join('') + '</ul></div>' +
+                '</div></div>'
+            ).join('');
+        }
+
+        // Tool 16: SMS Fact Cards
+        function initSMSCards() {
+            const container = document.getElementById('sms-cards');
+            if (!container || container.innerHTML) return;
+            const facts = [
+                { text: 'Bihar: 51.9% gareebi. 66.4 lakh log -- France se zyada. Kab badlega?', en: '51.9% poverty. 66.4M people -- more than France.' },
+                { text: 'Bihar mein 40.8% ladkiyon ki shaadi 18 se pehle. Har din 3,300 bal vivah.', en: 'Child marriage: 40.8%. That\'s 3,300 girls per day.' },
+                { text: '8-10 lakh Bihari bahar kaam karte hain. Gaon mein kaam nahi, shahar mein izzat nahi.', en: '8-10M Bihari workers outside the state. No jobs at home.' },
+                { text: 'PM-Kisan Kishanganj mein sirf 41% tak pahunchta hai. National average 85%.', en: 'PM-Kisan reaches only 41% in Kishanganj (national: 85%).' },
+                { text: 'Bihar ka per capita income Rs 54,383. India average Rs 1,50,726. Ek-tihaayi.', en: 'Bihar per capita: Rs 54K. India avg: Rs 1.5L. One-third.' },
+                { text: 'ASHA worker: 90,000 mahilayen, koi salary nahi. Rs 4,000 mahine. Desh ki sehat inke haath.', en: '90K ASHA workers. No salary. Rs 4K/month. They deliver India\'s health.' },
+                { text: 'Makhana: diver ko Rs 150/kg. Delhi mein Rs 1,200/kg. GI tag se kya badla?', en: 'Makhana diver: Rs 150/kg. Delhi retail: Rs 1,200/kg. GI tag changed nothing.' },
+                { text: 'Ujjwala: connection mila, par cylinder Rs 900. 30-40% garib wapas chulhe par.', en: 'Ujjwala gave connections but cylinders cost Rs 900. 30-40% back on chulha.' },
+                { text: 'Agnipath: 5-6 lakh Bihar ke naujawan tayyari kar rahe the. 4 saal ki naukri, phir kuch nahi.', en: 'Agnipath: 5-6L Bihar youth were preparing. 4 years, then nothing.' },
+                { text: 'BPSC paper leak. NEET paper leak. Naukri ki tayyari salon ki, dhokha ek din mein.', en: 'BPSC leak. NEET leak. Years of prep, betrayed in a day.' },
+                { text: 'Bihar mein 42.9% bacche stunted. 77 lakh bacchon ka dimaag aur sharir poora nahi bana.', en: '42.9% children stunted. 7.7M children permanently underdeveloped.' },
+                { text: 'Kanya Utthan: Rs 50,000 ka vaada. 2 saal se payment nahi. Vaada kya kaam ka?', en: 'Kanya Utthan: Rs 50K promised. 2 years no payment. What use is a promise?' }
+            ];
+
+            container.innerHTML = '<div class="fact-cards-grid">' + facts.map(f =>
+                '<div class="share-fact-card">' +
+                '<div class="share-fact-text">' + f.text + '<br><span style="font-size:0.68rem;color:var(--text-tertiary);">' + f.en + '</span></div>' +
+                '<div class="share-fact-btns">' +
+                '<button class="share-fact-btn" onclick="navigator.clipboard.writeText(\'' + f.text.replace(/'/g,"\\'") + ' -- Bihar Parichay\');this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy\',1500)">Copy</button>' +
+                '<button class="share-fact-btn wa" onclick="shareOnWhatsApp(\'' + f.text.replace(/'/g,"\\'") + ' -- Bihar Parichay biharparichay.netlify.app\')">WA</button>' +
+                '</div></div>'
+            ).join('') + '</div>';
+        }
+
         // Tool 14: Printable District One-Pager
         function generateOnePager() {
             const name = document.getElementById('print-district').value;
@@ -3090,6 +3167,9 @@ graph LR
             renderQuotes();
             initTimeline();
             // Auto-open first two tools
+            // Init facilitator guide and SMS cards
+            initFacilitatorGuide();
+            initSMSCards();
             toggleTool('surname-tool');
             toggleTool('lexicon-tool');
         }
