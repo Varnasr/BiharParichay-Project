@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bihar-parichay-v2';
+const CACHE_NAME = 'bihar-parichay-v3';
 const ASSETS = [
   '/',
   '/index.html',

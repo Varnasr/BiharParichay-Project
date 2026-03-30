@@ -228,8 +228,12 @@
         .lang-toggle { display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-left: 8px; }
         .lang-opt { padding: 4px 10px; font-size: 0.68rem; font-family: var(--font-sans); border: none; background: var(--surface); color: var(--text-tertiary); cursor: pointer; transition: all 0.15s; font-weight: 600; }
         .lang-opt.active { background: var(--accent); color: #fff; }
-        [data-lang="hi"] .lang-en { display: none !important; }
-        [data-lang="en"] .lang-hi { display: none !important; }
+        /* Language toggle: Hindi hidden by default, shown when data-lang=hi */
+        .lang-hi { display: none !important; }
+        html[data-lang="hi"] .lang-hi { display: block !important; }
+        html[data-lang="hi"] p.lang-hi { display: block !important; }
+        html[data-lang="hi"] div.lang-hi { display: block !important; }
+        html[data-lang="hi"] .lang-en { display: none !important; }
         .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
         .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
 
@@ -260,6 +264,14 @@
         .tool-category:first-child { margin-top: 0; }
         .tool-category h3 { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
         .tool-category p { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 2px; }
+
+        /* === ARTWORK === */
+        .artwork-banner { display: flex; gap: 12px; overflow-x: auto; padding: 16px 0; scrollbar-width: none; margin: 20px 0; }
+        .artwork-banner::-webkit-scrollbar { display: none; }
+        .artwork-item { flex: 0 0 auto; width: 200px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .artwork-item img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .artwork-item .artwork-caption { padding: 6px 10px; font-size: 0.68rem; color: var(--text-tertiary); background: var(--surface); }
+        @media (max-width: 600px) { .artwork-item { width: 160px; } .artwork-item img { height: 120px; } }
 
         /* === CRAFTS === */
         .craft-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: box-shadow 0.15s, transform 0.15s; }
@@ -1160,6 +1172,29 @@ graph LR
                 <p class="section-subtitle lang-en">Six living craft traditions -- who makes them, who profits, and what's being lost</p>
                 <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">छह जीवित हस्तकला परंपराएँ -- कौन बनाता है, मुनाफ़ा किसे मिलता है, और क्या खो रहा है</p>
 
+                <div class="artwork-banner">
+                    <div class="artwork-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Madhubani_art.jpg/320px-Madhubani_art.jpg" alt="Madhubani painting - fish motif" loading="lazy">
+                        <div class="artwork-caption">Madhubani painting, fish motif. CC BY-SA, Wikimedia</div>
+                    </div>
+                    <div class="artwork-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Madhubani_painting_-_Radha_Krishna.jpg/320px-Madhubani_painting_-_Radha_Krishna.jpg" alt="Madhubani - Radha Krishna" loading="lazy">
+                        <div class="artwork-caption">Madhubani, Radha-Krishna. CC BY-SA, Wikimedia</div>
+                    </div>
+                    <div class="artwork-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Manjusha_Art_Bhagalpur_Bihar.jpg/320px-Manjusha_Art_Bhagalpur_Bihar.jpg" alt="Manjusha Art Bhagalpur" loading="lazy">
+                        <div class="artwork-caption">Manjusha art, Bhagalpur. CC BY-SA, Wikimedia</div>
+                    </div>
+                    <div class="artwork-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Sikki_Art_%28Bihar%29.jpg/320px-Sikki_Art_%28Bihar%29.jpg" alt="Sikki grass craft" loading="lazy">
+                        <div class="artwork-caption">Sikki grass craft, Mithila. CC BY-SA, Wikimedia</div>
+                    </div>
+                    <div class="artwork-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sujani_embroidery.jpg/320px-Sujani_embroidery.jpg" alt="Sujini embroidery" loading="lazy">
+                        <div class="artwork-caption">Sujini embroidery, Muzaffarpur. CC BY-SA, Wikimedia</div>
+                    </div>
+                </div>
+
                 <div class="crafts-grid">
                     <div class="craft-card">
                         <div class="craft-card-accent"></div>
@@ -1483,6 +1518,62 @@ graph LR
                     <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">स्वच्छ भारत का शौचालय जिसमें पानी नहीं</div>
                     <div class="mp-text lang-en">Bihar was declared "Open Defecation Free" in 2019 under Swachh Bharat Mission. The declaration was based on <strong>toilet construction numbers</strong>, not usage verification. NFHS-5 tells the real story: only <strong>48.6% of Bihar households use an improved sanitation facility</strong> (national: 70.2%). Millions of toilets were built but many lack water connections, have no sewage disposal system, or were so poorly constructed that they became unusable within months. In Musahar tolas and EBC settlements, toilet access remains negligible. The political optics of "ODF declared" satisfied Delhi. The reality on the ground -- children defecating in the open, women walking to fields before dawn for privacy, faecal contamination of the water table contributing to diarrhoea that kills thousands of children annually -- has not changed in many areas. <strong>A toilet without water is not a toilet. It is a room.</strong><br><br><em>Data: NFHS-5 sanitation indicators; Swachh Bharat MIS (construction vs usage); UNICEF WASH studies Bihar.</em></div>
                     <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार को 2019 में स्वच्छ भारत मिशन के तहत "खुले में शौच मुक्त" घोषित किया गया। घोषणा <strong>शौचालय निर्माण संख्याओं</strong> पर आधारित थी, उपयोग सत्यापन पर नहीं। NFHS-5 असली कहानी बताता है: बिहार के केवल <strong>48.6% परिवार बेहतर शौचालय सुविधा का उपयोग करते हैं</strong> (राष्ट्रीय: 70.2%)। लाखों शौचालय बनाए गए लेकिन कई में पानी का कनेक्शन नहीं, सीवेज व्यवस्था नहीं, या इतने ख़राब बने कि महीनों में अनुपयोगी हो गए। <strong>पानी के बिना शौचालय शौचालय नहीं है। वह एक कमरा है।</strong><br><br><em>स्रोत: NFHS-5 स्वच्छता संकेतक; स्वच्छ भारत MIS; UNICEF WASH अध्ययन बिहार।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">The Child Bride Next Door</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">पड़ोस की बाल वधू</div>
+                    <div class="mp-text lang-en"><strong>40.8% of Bihar's girls are married before they turn 18</strong> (NFHS-5). That is not a statistic buried in a report -- it is the girl in the next house, the classmate who stopped coming to school, the daughter whose parents decided that feeding her until graduation was more expensive than marrying her off. Bihar has India's highest child marriage rate. The drivers are specific: <strong>poverty</strong> (a daughter married is a mouth less to feed), <strong>safety anxiety</strong> (parents fear sexual violence and see marriage as "protection"), <strong>dowry economics</strong> (younger brides command lower dowry), and <strong>social pressure</strong> (if every other family marries daughters at 15, holding out until 18 invites gossip). The Cycle Yojana and Kanya Utthan have delayed marriages for many girls. But after Class 12, without a college nearby and with no jobs, the marriage pressure returns with full force. The legal age is 18. The social age remains 15-16 in much of rural Bihar. <strong>Every year, approximately 12 lakh girls in Bihar become child brides</strong> -- 3,300 per day, 137 per hour.<br><br><em>Data: NFHS-5 Bihar; UNICEF child marriage data; District-level household survey.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार की <strong>40.8% लड़कियों की शादी 18 साल से पहले</strong> हो जाती है (NFHS-5)। यह किसी रिपोर्ट में दबा हुआ आँकड़ा नहीं -- यह बगल के घर की लड़की है, वह सहपाठी जो स्कूल आना बंद कर दी, वह बेटी जिसके माता-पिता ने तय किया कि graduation तक खिलाना शादी करवाने से महँगा है। हर साल, बिहार में लगभग <strong>12 लाख लड़कियाँ बाल वधू बनती हैं</strong> -- प्रतिदिन 3,300, प्रति घंटा 137।<br><br><em>स्रोत: NFHS-5 बिहार; UNICEF बाल विवाह आँकड़े।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">Dowry Deaths: The Price Tag on a Daughter</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">दहेज हत्या: बेटी पर लगी क़ीमत</div>
+                    <div class="mp-text lang-en">Bihar consistently records one of the <strong>highest rates of dowry deaths</strong> in India. NCRB data shows Bihar reported <strong>1,207 dowry deaths in 2022</strong> -- roughly 3 women killed every day over dowry. These are only the registered cases; actual numbers are believed to be significantly higher. Dowry demands in Bihar have escalated, not decreased, with economic aspiration: a government job commands Rs 15-25 lakh in dowry, a doctor Rs 30-50 lakh, an engineer Rs 10-20 lakh. Families borrow, sell land, or go into generational debt to marry daughters. Those who cannot pay face harassment, violence, and sometimes murder disguised as kitchen accidents or suicide. The Dowry Prohibition Act (1961) exists. Convictions are rare. For many Bihar families, a daughter's birth is the beginning of a financial crisis that only ends with her marriage -- or her death.<br><br><em>Data: NCRB Crime in India 2022; Bihar Police dowry case data; field documentation.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार में लगातार भारत में <strong>सबसे ऊँची दहेज हत्या दरों</strong> में है। NCRB आँकड़ों के अनुसार बिहार ने 2022 में <strong>1,207 दहेज हत्याएँ</strong> दर्ज कीं -- दहेज पर हर दिन लगभग 3 महिलाओं की हत्या। सरकारी नौकरी वाले दूल्हे के लिए 15-25 लाख, डॉक्टर के लिए 30-50 लाख। जो भुगतान नहीं कर सकते उन्हें उत्पीड़न, हिंसा और कभी-कभी रसोई दुर्घटना या आत्महत्या के रूप में छुपाई गई हत्या का सामना करना पड़ता है।<br><br><em>स्रोत: NCRB Crime in India 2022; बिहार पुलिस दहेज मामले।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">Bihar Runs India, But Not Bihar</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार भारत चलाता है, लेकिन बिहार नहीं</div>
+                    <div class="mp-text lang-en">Bihar produces an extraordinary number of <strong>IAS, IPS, and IFS officers</strong> -- disproportionate to its population. Bihari officers administer districts in Tamil Nadu, command police in Maharashtra, and manage embassies across the world. The UPSC coaching culture in Patna, Kota, and Delhi feeds on Bihar's hunger for sarkari naukri. Yet the state itself faces a <strong>chronic shortage of competent administrators</strong> -- not because they don't exist, but because they are posted elsewhere. The irony is structural: Bihar's most talented products leave, either as migrants earning wages or as officers earning prestige, while the state that produced them remains underadministered. The <strong>brain drain</strong> is not just of labourers to Surat and Delhi. It is of the administrative class itself -- trained in Bihar, serving everywhere but Bihar.<br><br><em>Data: UPSC annual reports; Bihar cadre allocation; Lal Bahadur Shastri National Academy of Administration data.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार असाधारण संख्या में <strong>IAS, IPS और IFS अधिकारी</strong> पैदा करता है। बिहारी अधिकारी Tamil Nadu में ज़िले चलाते हैं, Maharashtra में पुलिस की कमान सँभालते हैं। फिर भी राज्य में <strong>योग्य प्रशासकों की दीर्घकालिक कमी</strong> है -- इसलिए नहीं कि वे मौजूद नहीं, बल्कि इसलिए कि वे कहीं और तैनात हैं। <strong>प्रतिभा पलायन</strong> केवल मज़दूरों का नहीं है -- यह प्रशासनिक वर्ग का भी है।<br><br><em>स्रोत: UPSC वार्षिक रिपोर्ट; बिहार कैडर आवंटन।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">The Dom at the Ghat: Caste Locked in Labour</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">घाट पर डोम: श्रम में बंद जाति</div>
+                    <div class="mp-text lang-en">In Bihar, certain castes remain locked into hereditary occupations. The <strong>Dom community</strong> controls cremation at ghats -- a monopoly granted by custom, sustained by untouchability. The <strong>Musahar</strong> ("rat eaters") remain associated with the most degraded manual labour. The <strong>Mehtar/Balmiki</strong> community continues to be pressed into manual scavenging in some areas despite it being illegal since 1993. The <strong>Dhobi</strong> (washerman), <strong>Nai</strong> (barber), <strong>Chamar</strong> (leatherwork) -- each caste name carries an occupational history that still determines social standing and economic opportunity. These are not merely cultural identities. They are <strong>labour traps</strong>: a Dom's son is expected to burn bodies, a Musahar's daughter is expected to clean. Breaking out requires education, migration, or extraordinary individual will -- structural support from the state is minimal. The "Mahadalit" category was supposed to target these communities. The targeting is imprecise, the schemes inadequate.<br><br><em>Data: Bihar Mahadalit Vikas Mission; ethnographic studies; IIDS caste discrimination documentation.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार में कुछ जातियाँ वंशानुगत व्यवसायों में बंद हैं। <strong>Dom समुदाय</strong> घाटों पर दाह-संस्कार पर नियंत्रण रखता है। <strong>Musahar</strong> ("चूहा पकड़ने वाले") सबसे अपमानजनक शारीरिक श्रम से जुड़े रहते हैं। <strong>Mehtar/Balmiki</strong> समुदाय पर 1993 से अवैध होने के बावजूद कुछ क्षेत्रों में मैला ढोने का दबाव जारी है। ये केवल सांस्कृतिक पहचान नहीं -- ये <strong>श्रम जाल</strong> हैं।<br><br><em>स्रोत: बिहार महादलित विकास मिशन; नृवंशविज्ञान अध्ययन।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">Patna Junction at 3 AM</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">Patna Junction रात 3 बजे</div>
+                    <div class="mp-text lang-en">Patna Junction is one of the <strong>busiest and most chaotic railway stations in India</strong>. Bihar has among the <strong>lowest railway line density per capita</strong> despite having the highest demand. Trains from Bihar to Delhi, Mumbai, and Kolkata are <strong>permanently overbooked</strong> -- RAC and waitlisted tickets stretching into hundreds. The Rajdhani Express has a waitlist that starts filling months in advance. During Chhath Puja and Diwali, the station becomes a humanitarian crisis: families sleeping on platforms, children lost in crowds, unreserved coaches packed to 300% capacity. Bihar contributes approximately <strong>8-10% of Indian Railways' passenger revenue</strong> but receives a disproportionately small share of railway investment -- fewer new lines, fewer electrified routes, fewer modern stations. The Patna Metro, announced years ago, remains largely on paper. For Bihar's migrant workers, the railway platform is the liminal space between home and survival -- and the state of that platform tells you everything about how India values Bihar's people.<br><br><em>Data: Railway Board annual statistics; Passenger reservation data; Bihar railway development reports.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">Patna Junction भारत के <strong>सबसे व्यस्त और अराजक रेलवे स्टेशनों</strong> में है। बिहार में <strong>सबसे कम रेल लाइन घनत्व</strong> है जबकि माँग सबसे अधिक है। छठ और दिवाली पर स्टेशन मानवीय संकट बन जाता है। बिहार भारतीय रेलवे के यात्री राजस्व का <strong>8-10%</strong> योगदान देता है लेकिन रेलवे निवेश का असमान रूप से कम हिस्सा पाता है।<br><br><em>स्रोत: Railway Board वार्षिक सांख्यिकी; यात्री आरक्षण आँकड़े।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">The Jharkhand Border: Prohibition's Smuggling Economy</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">झारखंड सीमा: शराबबंदी की तस्करी अर्थव्यवस्था</div>
+                    <div class="mp-text lang-en">Bihar's complete alcohol prohibition (2016) created an instant smuggling economy along its borders with <strong>Jharkhand, UP, and West Bengal</strong> -- states where liquor is legal and cheap. The Jharkhand border is the most active corridor. Bottles are carried across in rickshaws, hidden in vegetable trucks, smuggled by boat across the Ganga, and concealed in ambulances. A bottle of whisky that costs Rs 400 in Jharkhand sells for Rs 1,500-2,500 in dry Bihar. The profit margins attract organised networks with political protection. Bihar Police seize crores worth of liquor annually, but seizures represent a fraction of the flow. The <strong>social costs are borne by the poorest</strong>: when branded liquor is unaffordable and illegal, people drink <em>desi</em> -- country liquor of unknown composition, sometimes laced with methanol. The hooch deaths (Chhapra 2022: 72+) are a direct consequence of prohibition forcing drinking underground where quality control does not exist.<br><br><em>Data: Bihar Excise Dept seizure data; Bihar-Jharkhand border police reports; media documentation.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार की शराबबंदी (2016) ने <strong>झारखंड, UP और पश्चिम बंगाल</strong> सीमाओं पर तुरंत तस्करी अर्थव्यवस्था बनाई। झारखंड में Rs 400 की बोतल सूखे बिहार में Rs 1,500-2,500 में बिकती है। जब ब्रांडेड शराब सस्ती और अवैध हो, लोग देसी पीते हैं -- अज्ञात संरचना की, कभी-कभी methanol मिली। ज़हरीली शराब से मौतें (छपरा 2022: 72+) शराबबंदी का सीधा परिणाम हैं।<br><br><em>स्रोत: बिहार आबकारी विभाग ज़ब्ती आँकड़े; सीमा पुलिस रिपोर्ट।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">Brick Kiln Children</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">ईंट भट्ठे के बच्चे</div>
+                    <div class="mp-text lang-en">Bihar's <strong>brick kilns</strong> employ an estimated <strong>5-8 lakh workers</strong>, many of them entire families including children. Workers are recruited from Musahar, Chamar, and other Dalit/EBC communities through labour contractors who advance Rs 5,000-10,000 against a season's work. This advance creates a <strong>debt bondage</strong> cycle: the family works 14-16 hour days for 6 months, children carry bricks on their heads from age 8-10, and at season's end the debt is rarely fully cleared -- ensuring return next year. The Bonded Labour System (Abolition) Act 1976 prohibits this. Enforcement is negligible. <strong>Child labour in brick kilns</strong> is technically illegal under the Child Labour Act. But when an entire family's survival depends on every pair of hands, and the local administration does not inspect, the law means nothing. Bihar also has child labour in <strong>mica collection</strong> (though primarily in Jharkhand's border areas), domestic servitude (girls sent to urban households), and small-scale manufacturing.<br><br><em>Data: ILO brick kiln studies India; Anti-Slavery International; Bihar Labour Dept inspection data.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार के <strong>ईंट भट्ठों</strong> में अनुमानित <strong>5-8 लाख श्रमिक</strong> काम करते हैं, कई परिवार बच्चों सहित। मज़दूरों की भर्ती Musahar, Chamar और अन्य दलित/EBC समुदायों से ठेकेदारों द्वारा होती है जो Rs 5,000-10,000 अग्रिम देते हैं। यह <strong>ऋण बंधन</strong> चक्र बनाता है: बच्चे 8-10 साल की उम्र से सिर पर ईंटें ढोते हैं। बंधुआ मज़दूरी प्रणाली (उन्मूलन) अधिनियम 1976 इसे प्रतिबंधित करता है। प्रवर्तन नगण्य है।<br><br><em>स्रोत: ILO ईंट भट्ठा अध्ययन; Anti-Slavery International; बिहार श्रम विभाग।</em></div>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title lang-en">Whose Language? Bihar's Unresolved Linguistic Politics</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">किसकी भाषा? बिहार की अनसुलझी भाषाई राजनीति</div>
+                    <div class="mp-text lang-en">Bihar is home to four major languages: <strong>Hindi</strong> (official), <strong>Maithili</strong> (8th Schedule recognition, 2003), <strong>Bhojpuri</strong> (seeking recognition -- among the most widely spoken languages in India with 50M+ speakers), and <strong>Magahi</strong>. The linguistic map is also a political map. Maithili speakers in Mithilanchal resisted being classified as "Hindi speakers" for decades, and its 8th Schedule recognition was a political movement. Bhojpuri's exclusion from the 8th Schedule remains a grievance -- particularly as Bhojpuri cinema and music have achieved massive commercial success while the language itself lacks constitutional recognition, state support for education, or use in government administration. Magahi, spoken in Magadh (Patna, Gaya, Nawada), is almost invisible institutionally. Bihar's education system operates in Hindi, which is nobody's mother tongue in the state. Children learn in a language that is not their home language, contributing to the <strong>learning crisis</strong> documented by ASER. Language is not a side issue in Bihar -- it is tied to identity, caste (Maithili is associated with Brahmin/Kayastha culture), regional pride, and access to power.<br><br><em>Data: Census 2011 language tables; 8th Schedule history; Bihar State Education Policy documents.</em></div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार चार प्रमुख भाषाओं का घर है: <strong>हिंदी</strong> (आधिकारिक), <strong>मैथिली</strong> (8वीं अनुसूची, 2003), <strong>भोजपुरी</strong> (मान्यता की माँग -- 5 करोड़+ बोलने वालों के साथ), और <strong>मगही</strong>। भोजपुरी का 8वीं अनुसूची से बहिष्कार एक शिकायत बना हुआ है। बिहार की शिक्षा प्रणाली हिंदी में चलती है, जो राज्य में किसी की मातृभाषा नहीं है। बच्चे ऐसी भाषा में पढ़ते हैं जो उनकी घर की भाषा नहीं है, जो ASER द्वारा प्रलेखित <strong>शिक्षण संकट</strong> में योगदान करती है।<br><br><em>स्रोत: Census 2011 भाषा तालिकाएँ; 8वीं अनुसूची इतिहास।</em></div>
                 </div>
 
             </section>
