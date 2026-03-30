@@ -358,6 +358,71 @@
             margin-bottom: 16px;
         }
 
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 40px 24px 32px;
+            margin-top: 0;
+        }
+
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .footer-inner { grid-template-columns: 1fr; }
+        }
+
+        .footer-disclaimer {
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            line-height: 1.7;
+        }
+
+        .footer-disclaimer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-cite {
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            line-height: 1.7;
+        }
+
+        .footer-cite strong {
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        .footer-cite code {
+            display: block;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            margin-top: 8px;
+            word-break: break-word;
+        }
+
+        .footer-bottom {
+            max-width: 960px;
+            margin: 24px auto 0;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
         /* ===== CONTAINER ===== */
         .container {
             max-width: 960px;
@@ -449,6 +514,23 @@
                 <h2 class="section-title">References &amp; Sources</h2>
             </section>
         </div>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-disclaimer">
+                    <p><strong>Academic Disclaimer.</strong> This resource is intended for educational and research purposes only. All data is sourced from publicly available government reports, peer-reviewed publications, and open-access repositories. The authors make no warranties regarding completeness or accuracy.</p>
+                    <p>Content is provided under a Creative Commons Attribution 4.0 International (CC BY 4.0) license unless otherwise noted. Data sourced from Government of India publications retains its original licensing terms.</p>
+                </div>
+                <div class="footer-cite">
+                    <strong>How to Cite</strong>
+                    <code>Bihar Parichay Project. (2025). Bihar Parichay: An Academic Deep Dive. Retrieved from https://biharparichay.netlify.app</code>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                Bihar Parichay Project &middot; Last updated March 2025 &middot; MIT License
+            </div>
+        </footer>
     </div>
 
     <script>
