@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
+    <script>
+        // Set language immediately to prevent flash of dual content
+        (function() {
+            var lang = localStorage.getItem('bp-lang') || 'en';
+            document.documentElement.setAttribute('data-lang', lang);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bihar Parichay - An Academic Deep Dive</title>
