@@ -2,10 +2,10 @@
 <html lang="en" data-lang="en">
 <head>
     <script>
-        // Set language immediately to prevent flash of dual content
+        // Set language immediately
         (function() {
             var lang = localStorage.getItem('bp-lang') || 'en';
-            document.documentElement.setAttribute('data-lang', lang);
+            if (lang === 'hi') document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('hindi'); });
         })();
     </script>
     <meta charset="UTF-8">
@@ -228,12 +228,12 @@
         .lang-toggle { display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-left: 8px; }
         .lang-opt { padding: 4px 10px; font-size: 0.68rem; font-family: var(--font-sans); border: none; background: var(--surface); color: var(--text-tertiary); cursor: pointer; transition: all 0.15s; font-weight: 600; }
         .lang-opt.active { background: var(--accent); color: #fff; }
-        /* Language toggle: Hindi hidden by default, shown when data-lang=hi */
-        .lang-hi { display: none !important; }
-        html[data-lang="hi"] .lang-hi { display: block !important; }
-        html[data-lang="hi"] p.lang-hi { display: block !important; }
-        html[data-lang="hi"] div.lang-hi { display: block !important; }
-        html[data-lang="hi"] .lang-en { display: none !important; }
+        /* Language toggle */
+        .lang-hi { display: none; }
+        body.hindi .lang-hi { display: block; }
+        body.hindi p.lang-hi { display: block; }
+        body.hindi div.lang-hi { display: block; }
+        body.hindi .lang-en { display: none; }
         .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
         .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
 
@@ -2528,8 +2528,12 @@ style GULF fill:#e67e22,color:#fff
 
         // Language switching
         function setLang(lang) {
-            document.documentElement.setAttribute('data-lang', lang);
             localStorage.setItem('bp-lang', lang);
+            if (lang === 'hi') {
+                document.body.classList.add('hindi');
+            } else {
+                document.body.classList.remove('hindi');
+            }
             document.querySelectorAll('.lang-opt').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.langMode === lang);
             });
