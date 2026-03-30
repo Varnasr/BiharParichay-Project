@@ -134,7 +134,7 @@
         .nav-dropdown { position: relative; }
         .nav-dropdown > a::after { content: " ▾"; font-size: 0.6em; }
         .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 var(--radius) var(--radius); box-shadow: var(--shadow-lg); min-width: 140px; z-index: 60; }
-        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        /* hover removed, using click toggle only */ .nav-dropdown.open .nav-dropdown-menu { display: block; }
         .nav-dropdown-menu a { display: block; padding: 8px 14px; font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border-light); white-space: nowrap; }
         .nav-dropdown-menu a:last-child { border-bottom: none; }
         .nav-dropdown-menu a:hover { background: var(--surface-alt); color: var(--accent); }
@@ -3300,6 +3300,13 @@
             switchTab(sectionId);
         }
 
+        // Close dropdowns on click outside
+        document.addEventListener("click", function(e) {
+            if (!e.target.closest(".nav-dropdown")) {
+                document.querySelectorAll(".nav-dropdown.open").forEach(d => d.classList.remove("open"));
+            }
+        });
+
         // Close search on click outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-input-wrap')) {
@@ -3705,6 +3712,7 @@
 
         // Bind nav links (including dropdown items)
         document.querySelectorAll(".nav-dropdown-menu a").forEach(link => {
+            link.addEventListener("click", function() { document.querySelectorAll(".nav-dropdown.open").forEach(d => d.classList.remove("open")); });
             link.addEventListener("click", function(e) {
                 e.preventDefault();
                 const id = this.getAttribute("href").replace("#", "");
@@ -3715,8 +3723,10 @@
         // Mobile dropdown toggle
         document.querySelectorAll(".nav-dropdown > a").forEach(link => {
             link.addEventListener("click", function(e) {
-                if (window.innerWidth <= 900) {
+                {
                     e.preventDefault();
+                    // Close other dropdowns first
+                    document.querySelectorAll(".nav-dropdown.open").forEach(d => { if(d !== this.parentElement) d.classList.remove("open"); });
                     this.parentElement.classList.toggle("open");
                 }
             });
