@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Newsreader:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sargam-icons@1.0.0/css/sargam.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <!-- mermaid removed, using CSS diagrams instead -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <meta property="og:title" content="Bihar Parichay - An Academic Deep Dive">
@@ -272,6 +272,21 @@
         .artwork-item img { width: 100%; height: 150px; object-fit: cover; display: block; }
         .artwork-item .artwork-caption { padding: 6px 10px; font-size: 0.68rem; color: var(--text-tertiary); background: var(--surface); }
         @media (max-width: 600px) { .artwork-item { width: 160px; } .artwork-item img { height: 120px; } }
+
+        /* === CSS FLOWCHARTS === */
+        .css-flow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; padding: 16px 0; }
+        .css-flow-vertical { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px 0; }
+        .flow-node { padding: 10px 16px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; color: #fff; text-align: center; min-width: 120px; line-height: 1.4; }
+        .flow-node small { display: block; font-weight: 400; font-size: 0.68rem; opacity: 0.85; margin-top: 2px; }
+        .flow-arrow { color: var(--text-tertiary); font-size: 1.2rem; line-height: 1; }
+        .flow-arrow-down { color: var(--text-tertiary); font-size: 1rem; }
+        .flow-group { border: 2px solid; border-radius: 8px; padding: 12px; text-align: center; }
+        .flow-group-label { font-size: 0.72rem; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+        .flow-group-items { display: flex; flex-direction: column; gap: 4px; }
+        .flow-group-item { font-size: 0.78rem; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.15); }
+        .flow-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 8px 0; }
+        .flow-leak { padding: 8px 12px; border-radius: 6px; font-size: 0.72rem; color: #fff; background: #e67e22; text-align: center; }
+        @media (max-width: 600px) { .flow-node { min-width: 90px; font-size: 0.7rem; padding: 8px 10px; } .flow-group { padding: 8px; } }
 
         /* === CRAFTS === */
         .craft-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: box-shadow 0.15s, transform 0.15s; }
@@ -719,34 +734,23 @@
                 <!-- Electoral Coalition Diagram -->
                 <div class="diagram-container">
                     <h4>Electoral Coalition Map: Who Votes With Whom</h4>
-                    <div class="mermaid">
-graph LR
-subgraph RJD["RJD Coalition"]
-Y["Yadav ~14%"]
-M["Muslim ~17%"]
-end
-subgraph JDU["JDU Coalition"]
-E["EBC ~36%"]
-MD["Mahadalit ~8%"]
-W["Women voters"]
-end
-subgraph BJP["BJP Coalition"]
-UC["Upper Caste ~15%"]
-NOY["Non-Yadav OBC"]
-end
-subgraph LEFT["Left CPI-ML"]
-LL["Landless labourers"]
-DL2["Dalit activists"]
-end
-Y --- M
-E --- MD
-E --- W
-UC --- NOY
-LL --- DL2
-style RJD fill:#27ae60,color:#fff
-style JDU fill:#4A90E2,color:#fff
-style BJP fill:#e67e22,color:#fff
-style LEFT fill:#c0392b,color:#fff
+                    <div class="flow-row">
+                        <div class="flow-group" style="border-color:#27ae60;">
+                            <div class="flow-group-label" style="color:#27ae60;">RJD Coalition</div>
+                            <div class="flow-group-items"><span class="flow-group-item">Yadav ~14%</span><span class="flow-group-item">Muslim ~17%</span></div>
+                        </div>
+                        <div class="flow-group" style="border-color:#4A90E2;">
+                            <div class="flow-group-label" style="color:#4A90E2;">JD(U) Coalition</div>
+                            <div class="flow-group-items"><span class="flow-group-item">EBC ~36%</span><span class="flow-group-item">Mahadalit ~8%</span><span class="flow-group-item">Women voters</span></div>
+                        </div>
+                        <div class="flow-group" style="border-color:#e67e22;">
+                            <div class="flow-group-label" style="color:#e67e22;">BJP Coalition</div>
+                            <div class="flow-group-items"><span class="flow-group-item">Upper Caste ~15%</span><span class="flow-group-item">Non-Yadav OBC</span></div>
+                        </div>
+                        <div class="flow-group" style="border-color:#c0392b;">
+                            <div class="flow-group-label" style="color:#c0392b;">Left / CPI-ML</div>
+                            <div class="flow-group-items"><span class="flow-group-item">Landless labourers</span><span class="flow-group-item">Dalit activists</span></div>
+                        </div>
                     </div>
                     <p class="diagram-caption">Simplified coalition map. Actual alliances shift between elections. Percentages are approximate population shares. The "swing" segments (non-Yadav OBC, women, EBC sub-groups) determine electoral outcomes.</p>
                 </div>
@@ -802,25 +806,19 @@ style LEFT fill:#c0392b,color:#fff
 
                 <div class="diagram-container">
                     <h4>Where Bihar's Money Comes From -- and Where It Goes</h4>
-                    <div class="mermaid">
-graph TD
-CENTRE["Central Govt Transfers 70%+"]
-STATE["Bihar State Budget"]
-REMIT["Migrant Remittances Rs 50-80K Cr"]
-AGRI["Agriculture 76% workforce"]
-FAMILIES["Bihar Families"]
-CENTRE --> STATE
-STATE --> SCHEMES["Schemes: MGNREGA MDM JSY"]
-STATE --> INFRA["Roads Buildings Salaries"]
-SCHEMES -->|"40-70% reach"| FAMILIES
-REMIT --> FAMILIES
-AGRI -->|"Low returns"| FAMILIES
-FAMILIES -->|"Sons migrate"| REMIT
-style CENTRE fill:#2a6496,color:#fff
-style REMIT fill:#c0392b,color:#fff
-style AGRI fill:#27ae60,color:#fff
-style FAMILIES fill:#e67e22,color:#fff
-style SCHEMES fill:#8e6f4e,color:#fff
+                    <div class="css-flow-vertical">
+                        <div class="flow-row">
+                            <div class="flow-node" style="background:#2a6496;">Central Govt Transfers<small>70%+ of Bihar revenue</small></div>
+                            <div class="flow-node" style="background:#c0392b;">Migrant Remittances<small>Rs 50-80K Crore/year</small></div>
+                            <div class="flow-node" style="background:#27ae60;">Agriculture<small>76% workforce, 19% GSDP</small></div>
+                        </div>
+                        <div class="flow-arrow-down">&#8595; &#8595; &#8595;</div>
+                        <div class="flow-node" style="background:#e67e22;">Bihar Families</div>
+                        <div class="flow-arrow-down">&#8593; sons migrate &#8593;</div>
+                        <div class="flow-row" style="margin-top:8px;">
+                            <div class="flow-node" style="background:#8e6f4e;">Schemes: MGNREGA, MDM, JSY<small>Reaches only 40-70%</small></div>
+                            <div class="flow-node" style="background:#7b341e;">Roads, Buildings, Salaries</div>
+                        </div>
                     </div>
                     <p class="diagram-caption">Bihar depends on central transfers for 70%+ of revenue and migrant remittances for household income. The state's own tax base is thin. Scheme delivery reaches 40-70% of intended beneficiaries. Source: RBI State Finances; Bihar Economic Survey.</p>
                 </div>
@@ -889,22 +887,25 @@ style SCHEMES fill:#8e6f4e,color:#fff
                 <div class="madhubani-panel" style="border-color:var(--accent-warm);background:linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);">
                 <div class="diagram-container">
                     <h4>Why Schemes Don't Reach People: The Delivery Chain</h4>
-                    <div class="mermaid">
-graph LR
-POLICY["Delhi: Scheme Announced"] --> BUDGET["Budget Allocated"]
-BUDGET --> STATE["State Govt"]
-STATE --> DISTRICT["District Admin"]
-DISTRICT --> BLOCK["Block Office"]
-BLOCK --> PANCHAYAT["Panchayat"]
-PANCHAYAT --> FAMILY["Family"]
-BUDGET -->|"30% delays"| LEAK1["Bureaucratic Bottleneck"]
-DISTRICT -->|"Doc barriers"| LEAK2["Aadhaar/Patta Needed"]
-PANCHAYAT -->|"Local capture"| LEAK3["Elite Capture"]
-style POLICY fill:#2a6496,color:#fff
-style FAMILY fill:#c0392b,color:#fff
-style LEAK1 fill:#e67e22,color:#fff
-style LEAK2 fill:#e67e22,color:#fff
-style LEAK3 fill:#e67e22,color:#fff
+                    <div class="css-flow">
+                        <div class="flow-node" style="background:#2a6496;">Delhi: Scheme</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">Budget</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">State Govt</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">District</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">Block</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">Panchayat</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#c0392b;">Family</div>
+                    </div>
+                    <div class="flow-row" style="margin-top:8px;">
+                        <div class="flow-leak">&#9888; 30% lost to delays</div>
+                        <div class="flow-leak">&#9888; Aadhaar/Patta barriers</div>
+                        <div class="flow-leak">&#9888; Elite capture at panchayat</div>
                     </div>
                     <p class="diagram-caption">Every link in the chain loses beneficiaries. Budget delays, documentation requirements (Aadhaar, land titles), and local elite capture mean that only 40-70% of eligible families actually receive scheme benefits. The poorest -- who lack documents and connections -- are systematically excluded.</p>
                 </div>
@@ -945,62 +946,43 @@ style LEAK3 fill:#e67e22,color:#fff
                 <!-- Cycle of Deprivation Diagram -->
                 <div class="diagram-container">
                     <h4>Bihar's Cycle of Deprivation</h4>
-                    <div class="mermaid">
-graph TD
-LAND["Landlessness No Patta"]
-CREDIT["No formal credit"]
-DEBT["Informal debt 3-10% monthly"]
-MIGRATION["Male out-migration"]
-WOMEN["Women-headed households"]
-CHILD["Early marriage of daughters"]
-EDU["Low education investment"]
-HEALTH["Malnutrition poor health"]
-LABOR["Low-skill low-wage work"]
-LAND --> CREDIT
-CREDIT --> DEBT
-DEBT --> MIGRATION
-MIGRATION --> WOMEN
-WOMEN --> CHILD
-CHILD --> EDU
-EDU --> LABOR
-LABOR --> LAND
-DEBT --> HEALTH
-HEALTH --> EDU
-style LAND fill:#c0392b,color:#fff
-style MIGRATION fill:#2a6496,color:#fff
-style CHILD fill:#d35400,color:#fff
-style HEALTH fill:#8e44ad,color:#fff
-style EDU fill:#e67e22,color:#fff
-style LABOR fill:#7f8c8d,color:#fff
-    style CREDIT fill:#2c3e50,color:#fff,stroke:#1a252f
-    style DEBT fill:#c0392b,color:#fff,stroke:#922b21
-    style WOMEN fill:#2a6496,color:#fff,stroke:#1a3a5c
+                    <div class="css-flow" style="flex-wrap:wrap;max-width:700px;margin:0 auto;">
+                        <div class="flow-node" style="background:#c0392b;">Landlessness<small>No patta, no collateral</small></div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2c3e50;">No formal credit</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#c0392b;">Debt at 3-10%/month</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">Male migration</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#2a6496;">Women alone at home</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#d35400;">Early marriage</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#e67e22;">Low education</div>
+                        <div class="flow-arrow">&#8594;</div>
+                        <div class="flow-node" style="background:#7f8c8d;">Low-skill work</div>
+                        <div class="flow-arrow">&#8594; back to &#8594;</div>
+                        <div class="flow-node" style="background:#c0392b;">Landlessness</div>
                     </div>
+                    <div style="text-align:center;margin-top:8px;font-size:0.78rem;color:var(--text-tertiary);">&#8593; Also: Debt &#8594; <span style="background:#8e44ad;color:#fff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Malnutrition</span> &#8594; Low education &#8593;</div>
                     <p class="diagram-caption">This cycle operates at household and community level. Landlessness locks families out of credit, pushing men to migrate. Women left behind face pressure to marry daughters early. Low education perpetuates low-skill labour. Health shocks (malnutrition, anaemia) compound every link in the chain. Breaking the cycle requires intervention at multiple points simultaneously.</p>
                 </div>
 
                 <!-- Migration Flow Diagram -->
                 <div class="diagram-container">
                     <h4>Migration Flows: Where Bihar's Workers Go</h4>
-                    <div class="mermaid">
-graph LR
-BH["BIHAR 8-10M migrants"]
-BH -->|"Construction"| DL["Delhi-NCR"]
-BH -->|"Factories"| MH["Maharashtra"]
-BH -->|"Textiles"| GJ["Gujarat"]
-BH -->|"Agriculture"| PB["Punjab Haryana"]
-BH -->|"Services"| KL["Kerala"]
-BH -->|"Gulf labour"| GULF["UAE Saudi Qatar"]
-DL -->|"Remittances"| BH
-MH -->|"Remittances"| BH
-GJ -->|"Remittances"| BH
-style BH fill:#c0392b,color:#fff
-style DL fill:#2a6496,color:#fff
-style MH fill:#2a6496,color:#fff
-style GJ fill:#2a6496,color:#fff
-style PB fill:#27ae60,color:#fff
-style KL fill:#27ae60,color:#fff
-style GULF fill:#e67e22,color:#fff
+                    <div style="text-align:center;padding:16px 0;">
+                        <div class="flow-node" style="background:#c0392b;display:inline-block;font-size:0.95rem;padding:14px 24px;margin-bottom:12px;">BIHAR<small>8-10 million migrant workers</small></div>
+                        <div class="flow-row">
+                            <div class="flow-node" style="background:#2a6496;">Delhi-NCR<small>Construction</small></div>
+                            <div class="flow-node" style="background:#2a6496;">Maharashtra<small>Factories</small></div>
+                            <div class="flow-node" style="background:#2a6496;">Gujarat<small>Textiles, Surat</small></div>
+                            <div class="flow-node" style="background:#27ae60;">Punjab/Haryana<small>Agriculture</small></div>
+                            <div class="flow-node" style="background:#27ae60;">Kerala<small>Services</small></div>
+                            <div class="flow-node" style="background:#e67e22;">UAE/Saudi/Qatar<small>Gulf labour</small></div>
+                        </div>
+                        <div style="margin-top:10px;font-size:0.82rem;color:var(--accent);">&#8593; &#8593; &#8593; Remittances flow back: Rs 50,000-80,000 Crore/year &#8593; &#8593; &#8593;</div>
                     </div>
                     <p class="diagram-caption">Estimated Rs 50,000-80,000 crore in annual remittances. Key source districts: Darbhanga, Madhubani, Siwan, Gopalganj, Supaul. COVID-19 reverse migration (2020) returned ~3 million workers within weeks, exposing the absence of local livelihood alternatives.</p>
                 </div>
@@ -1168,24 +1150,16 @@ style GULF fill:#e67e22,color:#fff
 
                 <div class="artwork-banner">
                     <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Madhubani_art.jpg/320px-Madhubani_art.jpg" alt="Madhubani painting - fish motif" loading="lazy">
-                        <div class="artwork-caption">Madhubani painting, fish motif. CC BY-SA, Wikimedia</div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Jadupatua_paintings_and_Madhubani_paintings.JPG/320px-Jadupatua_paintings_and_Madhubani_paintings.JPG" alt="Madhubani painting" loading="lazy">
+                        <div class="artwork-caption">Madhubani painting. CC BY-SA 3.0, Wikimedia</div>
                     </div>
                     <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Madhubani_painting_-_Radha_Krishna.jpg/320px-Madhubani_painting_-_Radha_Krishna.jpg" alt="Madhubani - Radha Krishna" loading="lazy">
-                        <div class="artwork-caption">Madhubani, Radha-Krishna. CC BY-SA, Wikimedia</div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Colorful_Madhubani_painting.jpg/320px-Colorful_Madhubani_painting.jpg" alt="Colorful Madhubani painting" loading="lazy">
+                        <div class="artwork-caption">Colourful Madhubani art. CC BY-SA, Wikimedia</div>
                     </div>
                     <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Manjusha_Art_Bhagalpur_Bihar.jpg/320px-Manjusha_Art_Bhagalpur_Bihar.jpg" alt="Manjusha Art Bhagalpur" loading="lazy">
-                        <div class="artwork-caption">Manjusha art, Bhagalpur. CC BY-SA, Wikimedia</div>
-                    </div>
-                    <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Sikki_Art_%28Bihar%29.jpg/320px-Sikki_Art_%28Bihar%29.jpg" alt="Sikki grass craft" loading="lazy">
-                        <div class="artwork-caption">Sikki grass craft, Mithila. CC BY-SA, Wikimedia</div>
-                    </div>
-                    <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sujani_embroidery.jpg/320px-Sujani_embroidery.jpg" alt="Sujini embroidery" loading="lazy">
-                        <div class="artwork-caption">Sujini embroidery, Muzaffarpur. CC BY-SA, Wikimedia</div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Madhubani_art.jpg/320px-Madhubani_art.jpg" alt="Madhubani art fish motif" loading="lazy">
+                        <div class="artwork-caption">Madhubani fish motif. CC BY-SA, Wikimedia</div>
                     </div>
                 </div>
 
@@ -3594,8 +3568,7 @@ style GULF fill:#e67e22,color:#fff
             if (sectionInits[id] && !initialized[id]) {
                 setTimeout(() => { sectionInits[id](); initialized[id] = true; }, 100);
             }
-            // Render mermaid diagrams in the active section
-            setTimeout(() => renderMermaidInSection(id), 300);
+            // (mermaid removed -- CSS diagrams render instantly)
         };
 
         const origShowApp = showApp;
@@ -3610,40 +3583,7 @@ style GULF fill:#e67e22,color:#fff
             }
         };
 
-        // Initialize
-        // Mermaid init
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default',
-            flowchart: { curve: 'basis', padding: 12 },
-            fontSize: 13
-        });
-
-        let mermaidRendered = {};
-        async function renderMermaidInSection(sectionId) {
-            if (mermaidRendered[sectionId]) return;
-            const section = document.getElementById(sectionId);
-            if (!section) return;
-            const els = section.querySelectorAll('.mermaid:not([data-processed])');
-            if (els.length === 0) return;
-            // Clean whitespace from mermaid code before rendering
-            els.forEach(el => {
-                const lines = el.textContent.split('\n').map(l => l.trim()).filter(l => l);
-                el.textContent = lines.join('\n');
-            });
-            try {
-                await mermaid.run({ nodes: Array.from(els) });
-            } catch (e) {
-                console.warn('Mermaid run failed for', sectionId, e);
-                // Fallback: show as pre-formatted code
-                els.forEach(el => {
-                    if (!el.querySelector('svg')) {
-                        el.innerHTML = '<pre style="font-size:0.72rem;color:var(--text-tertiary);overflow-x:auto;">' + el.textContent + '</pre>';
-                    }
-                });
-            }
-            mermaidRendered[sectionId] = true;
-        }
+        // Initialize (Mermaid removed -- all diagrams are now CSS)
 
         initTheme();
         initLang();
