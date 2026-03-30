@@ -222,6 +222,12 @@
         .back-to-top.visible { display: flex; }
         .back-to-top:hover { transform: translateY(-2px); }
 
+        /* === WHATSAPP SHARE === */
+        .wa-share-float { position: fixed; bottom: 20px; left: 20px; width: 44px; height: 44px; background: #25D366; color: #fff; border: none; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 99; transition: transform 0.15s; text-decoration: none; }
+        .wa-share-float:hover { transform: scale(1.1); }
+        .wa-share-story { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; padding: 4px 10px; background: #25D366; color: #fff; border: none; border-radius: 14px; font-size: 0.68rem; font-family: var(--font-sans); font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.15s; }
+        .wa-share-story:hover { background: #1da851; }
+
         /* === CTRL+K OVERLAY === */
         .overlay-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: flex-start; justify-content: center; padding-top: 12vh; }
         .overlay-backdrop.visible { display: flex; }
@@ -1308,6 +1314,9 @@ graph LR
         </div>
     </div>
 
+    <!-- WhatsApp floating share -->
+    <a class="wa-share-float" id="waShareFloat" href="#" onclick="shareOnWhatsApp()" title="Share on WhatsApp" style="display:none;">&#9993;</a>
+
     <!-- Back to top button -->
     <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
 
@@ -1363,6 +1372,42 @@ graph LR
             if (sessionStorage.getItem('bp-auth') === 'true') {
                 showApp();
             }
+        }
+
+        // WhatsApp sharing
+        function shareOnWhatsApp(text) {
+            const msg = text || 'Bihar Parichay -- An Academic Deep Dive into Bihar. Explore data, stories, and research tools: ' + window.location.href;
+            window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        function shareStory(title, excerpt) {
+            const msg = '*' + title + '*\n\n' + excerpt.substring(0, 300) + '...\n\nRead more: ' + window.location.href + '#perspectives';
+            window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        // Show WA float after auth
+        function showWaButton() {
+            const btn = document.getElementById('waShareFloat');
+            if (btn) btn.style.display = 'flex';
+        }
+
+        // Add share buttons to story panels
+        function addStoryShareButtons() {
+            const section = document.getElementById('perspectives');
+            if (!section) return;
+            section.querySelectorAll('.madhubani-panel').forEach(panel => {
+                if (panel.querySelector('.wa-share-story')) return;
+                const titleEl = panel.querySelector('.mp-title');
+                const textEl = panel.querySelector('.mp-text');
+                if (!titleEl || !textEl) return;
+                const title = titleEl.textContent.trim();
+                const text = textEl.textContent.trim();
+                const btn = document.createElement('button');
+                btn.className = 'wa-share-story';
+                btn.innerHTML = '&#9993; Share';
+                btn.onclick = () => shareStory(title, text);
+                panel.appendChild(btn);
+            });
         }
 
         // 3-mode theme (light / dark / system)
@@ -2128,7 +2173,8 @@ graph LR
         const origShowApp = showApp;
         showApp = function() {
             origShowApp();
-            // Init the default active tab (overview has no charts)
+            showWaButton();
+            addStoryShareButtons();
             const hash = location.hash.replace('#', '');
             if (hash && document.getElementById(hash)) {
                 switchTab(hash);
