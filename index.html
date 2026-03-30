@@ -68,10 +68,8 @@
             font-family: var(--font-sans);
             background: var(--background);
             background-image:
-                radial-gradient(circle at 20px 20px, rgba(192,57,43,0.02) 1px, transparent 1px),
-                radial-gradient(circle at 60px 60px, rgba(211,84,0,0.02) 1px, transparent 1px),
-                radial-gradient(circle at 40px 80px, rgba(230,126,34,0.015) 1px, transparent 1px);
-            background-size: 80px 80px;
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(192,57,43,0.03) 39px, rgba(192,57,43,0.03) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(211,84,0,0.03) 39px, rgba(211,84,0,0.03) 40px);
             color: var(--text-primary);
             line-height: 1.7;
             font-size: 15px;
@@ -80,9 +78,8 @@
         }
         [data-theme="dark"] body {
             background-image:
-                radial-gradient(circle at 20px 20px, rgba(192,57,43,0.03) 1px, transparent 1px),
-                radial-gradient(circle at 60px 60px, rgba(211,84,0,0.03) 1px, transparent 1px);
-            background-size: 80px 80px;
+                repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(192,57,43,0.05) 39px, rgba(192,57,43,0.05) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(211,84,0,0.05) 39px, rgba(211,84,0,0.05) 40px);
         }
 
         /* === PASSWORD GATE === */
