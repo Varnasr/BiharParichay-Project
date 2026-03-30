@@ -180,41 +180,41 @@
 
         /* ===== SITE HEADER ===== */
         .site-header {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, #0f2844 0%, #1a3a5c 50%, #2a5078 100%);
             color: #fff;
-            padding: 56px 40px 48px;
+            padding: 52px 40px 44px;
             text-align: center;
             position: relative;
         }
 
         [data-theme="dark"] .site-header {
-            background: #1a2332;
+            background: linear-gradient(135deg, #0a1520 0%, #1a2332 50%, #1e2d40 100%);
         }
 
         .site-header-inner {
-            max-width: 860px;
+            max-width: 720px;
             margin: 0 auto;
         }
 
         .site-header h1 {
             font-family: var(--font-serif);
-            font-size: 2.4rem;
+            font-size: 2.2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .site-header .tagline {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 300;
-            opacity: 0.9;
+            opacity: 0.85;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
         .site-header .meta-line {
-            font-size: 0.82rem;
-            opacity: 0.65;
+            font-size: 0.78rem;
+            opacity: 0.55;
             font-style: italic;
         }
 
@@ -252,18 +252,30 @@
         }
 
         .nav-inner {
-            max-width: 960px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 16px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .nav-brand {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--primary-color);
+            white-space: nowrap;
+            padding: 12px 8px 12px 0;
+            border-right: 1px solid var(--border);
+            margin-right: 4px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 0;
+            flex: 1;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
@@ -273,14 +285,15 @@
 
         .nav-links a {
             display: block;
-            padding: 14px 14px;
-            font-size: 0.82rem;
+            padding: 12px 10px;
+            font-size: 0.76rem;
             font-weight: 500;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
             text-decoration: none;
             white-space: nowrap;
             border-bottom: 2px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
+            transition: color 0.15s, border-color 0.15s;
+            letter-spacing: 0.01em;
         }
 
         .nav-links a:hover {
@@ -290,6 +303,25 @@
         .nav-links a.active {
             color: var(--primary-color);
             border-bottom-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-cmd-btn {
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            color: var(--text-tertiary);
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+
+        .nav-cmd-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
         }
 
         .hamburger {
@@ -302,8 +334,10 @@
             font-size: 22px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .hamburger { display: block; }
+            .nav-brand { display: none; }
+            .nav-cmd-btn { display: none; }
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -318,6 +352,7 @@
             .nav-links.open { display: flex; }
             .nav-links a {
                 padding: 14px 24px;
+                font-size: 0.85rem;
                 border-bottom: none;
                 border-left: 3px solid transparent;
             }
@@ -325,8 +360,6 @@
                 border-left-color: var(--primary-color);
                 border-bottom: none;
             }
-        }
-
         /* ===== SECTIONS (TAB-BASED) ===== */
         .content-section {
             display: none;
@@ -630,8 +663,8 @@
         /* ===== TOOLS SECTION ===== */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+            gap: 16px;
             margin-top: 20px;
         }
 
@@ -853,9 +886,13 @@
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 1040px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 40px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 16px; }
         }
 
         /* ===== MADHUBANI DECORATIVE ELEMENTS ===== */
@@ -1158,19 +1195,21 @@
         <nav class="site-nav">
             <div class="nav-inner">
                 <button class="hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+                <span class="nav-brand">BP</span>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="#overview" class="active">Overview</a></li>
                     <li><a href="#geography">Geography</a></li>
-                    <li><a href="#demographics">Demographics</a></li>
+                    <li><a href="#demographics">Society</a></li>
                     <li><a href="#economy">Economy</a></li>
-                    <li><a href="#social-issues">Social Issues</a></li>
+                    <li><a href="#social-issues">Issues</a></li>
                     <li><a href="#people">People</a></li>
                     <li><a href="#food">Food</a></li>
-                    <li><a href="#culture">Art &amp; Culture</a></li>
+                    <li><a href="#culture">Culture</a></li>
                     <li><a href="#data">Data</a></li>
                     <li><a href="#tools">Tools</a></li>
-                    <li><a href="#references">References</a></li>
+                    <li><a href="#references">Sources</a></li>
                 </ul>
+                <button class="nav-cmd-btn" onclick="openCmdOverlay()" title="Quick navigation (Ctrl+K)">&#8984;K</button>
             </div>
         </nav>
 
@@ -2414,6 +2453,9 @@
             searchLexicon();
             // Initial reading list render
             renderReadingList();
+            // Auto-open first two tools
+            toggleTool('surname-tool');
+            toggleTool('lexicon-tool');
         }
 
         // Lazy initialization: init charts/maps when their tab is first shown
