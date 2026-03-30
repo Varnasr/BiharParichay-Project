@@ -16,41 +16,41 @@
     <meta property="og:type" content="website">
     <style>
         :root {
-            --primary-color: #1a3a5c;
-            --primary-hover: #0f2844;
-            --secondary-color: #c17f24;
-            --secondary-hover: #a86a15;
-            --accent: #c17f24;
-            --background: #faf9f6;
+            --primary-color: #1e4976;
+            --primary-hover: #153660;
+            --secondary-color: #b87333;
+            --secondary-hover: #9a5f28;
+            --accent: #b87333;
+            --background: #f7f5f0;
             --surface: #ffffff;
-            --surface-elevated: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --text-tertiary: #7a7a7a;
-            --border: #e0ddd5;
-            --border-hover: #c0bdb5;
-            --shadow: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-lg: 0 4px 16px rgba(0,0,0,0.1);
+            --surface-elevated: #fdfcfa;
+            --text-primary: #1c1c1c;
+            --text-secondary: #444;
+            --text-tertiary: #888;
+            --border: #ddd8cd;
+            --border-hover: #c5bfb3;
+            --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
             --font-serif: 'Merriweather', Georgia, serif;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         [data-theme="dark"] {
-            --primary-color: #8ab4e8;
-            --primary-hover: #a8c8f0;
-            --secondary-color: #e0a84c;
-            --secondary-hover: #eabb6e;
-            --accent: #e0a84c;
-            --background: #0f1116;
-            --surface: #1a1d24;
-            --surface-elevated: #22262e;
-            --text-primary: #e8e6e1;
-            --text-secondary: #b0aea8;
-            --text-tertiary: #808080;
-            --border: #2e3138;
-            --border-hover: #3e4148;
-            --shadow: 0 1px 3px rgba(0,0,0,0.24);
-            --shadow-lg: 0 4px 16px rgba(0,0,0,0.32);
+            --primary-color: #7babd4;
+            --primary-hover: #9bc2e4;
+            --secondary-color: #d4a054;
+            --secondary-hover: #e0b874;
+            --accent: #d4a054;
+            --background: #0e1117;
+            --surface: #181c24;
+            --surface-elevated: #1f242e;
+            --text-primary: #e4e2dc;
+            --text-secondary: #a8a6a0;
+            --text-tertiary: #6e6e6e;
+            --border: #282c34;
+            --border-hover: #383c44;
+            --shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -79,8 +79,8 @@
         .gate-container {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 48px 40px;
+            border-radius: 16px;
+            padding: 52px 44px;
             max-width: 440px;
             width: 100%;
             text-align: center;
@@ -506,9 +506,10 @@
         .fact-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px 14px;
+            border-radius: 10px;
+            padding: 18px 14px;
             text-align: center;
+            box-shadow: var(--shadow);
         }
 
         .fact-value {
@@ -581,8 +582,15 @@
         .person-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .person-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-1px);
         }
 
         .person-card h4 {
@@ -648,8 +656,9 @@
         .chart-box {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: var(--shadow);
         }
 
         .chart-box h4 {
@@ -746,9 +755,14 @@
         .tool-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            transition: box-shadow 0.2s;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-1px);
         }
 
         .tool-card:hover {
