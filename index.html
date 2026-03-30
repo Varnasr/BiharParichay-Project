@@ -1397,6 +1397,19 @@ graph LR
                 <div class="section-prose lang-hi" style="font-family:'Noto Serif Devanagari',serif;">
                     <p>यह खंड प्रमुख आँकड़ों को तुलनात्मक दृश्यांकनों में समेकित करता है। सभी आँकड़े सरकारी प्रकाशनों और समकक्ष-समीक्षित शोध से हैं। लगभग हर संकेतक पर बिहार और राष्ट्रीय औसत के बीच का अंतर आकस्मिक नहीं -- यह औपनिवेशिक शोषण, ज़मींदारी भू-व्यवस्था, स्वतंत्रता के बाद की नीतिगत उपेक्षा (बिहार को दशकों तक अधिकांश राज्यों से कम प्रति व्यक्ति केंद्रीय निवेश मिला), और आंतरिक संरचनात्मक असमानता का संचयी परिणाम है। आँकड़ों को इसी संदर्भ में पढ़ना चाहिए।</p>
                 </div>
+                <!-- District Indicator Map (prominent) -->
+                <div style="margin-bottom:28px;">
+                    <h3 style="font-family:var(--font-serif);font-size:1.05rem;margin-bottom:8px;">District Indicator Map</h3>
+                    <p style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:10px;">Select an indicator to color-code Bihar's districts. Green = better performing, Red = needs attention. Click a circle for details.</p>
+                    <select class="tool-select" id="map-indicator" onchange="updateDistrictMap()" style="max-width:280px;">
+                        <option value="literacy">Literacy Rate (%)</option>
+                        <option value="sexRatio">Sex Ratio (per 1000)</option>
+                        <option value="urban">Urbanisation (%)</option>
+                        <option value="density">Pop. Density (/sq km)</option>
+                    </select>
+                    <div id="district-indicator-map" class="map-container" style="height:460px;margin-top:10px;"></div>
+                </div>
+
                 <div class="charts-row">
                     <div class="chart-box">
                         <h4>Bihar vs India: Key Indicators (grouped comparison)</h4>
@@ -1592,24 +1605,6 @@ graph LR
                 </div>
                 <div class="tool-category"><h3>Maps, Data &amp; History</h3><p>Visual exploration of Bihar's districts and timeline</p></div>
                 <div class="tools-grid">
-
-                    <!-- Tool 10: District Map -->
-                    <div class="tool-card" style="grid-column: 1 / -1;">
-                        <div class="tool-card-header" onclick="toggleTool('map-tool')">
-                            <h4>District Indicator Map</h4>
-                            <span class="tool-toggle" id="map-tool-toggle">&#9660;</span>
-                        </div>
-                        <div class="tool-card-body" id="map-tool">
-                            <p class="tool-desc">Color-coded Bihar district map by indicator. Green = better, Red = needs attention.</p>
-                            <select class="tool-select" id="map-indicator" onchange="updateDistrictMap()">
-                                <option value="literacy">Literacy Rate (%)</option>
-                                <option value="sexRatio">Sex Ratio (per 1000)</option>
-                                <option value="urban">Urbanisation (%)</option>
-                                <option value="density">Pop. Density (/sq km)</option>
-                            </select>
-                            <div id="district-indicator-map" style="height:420px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);margin-top:10px;"></div>
-                        </div>
-                    </div>
 
                     <!-- Tool 11: Impact Calculator -->
                     <div class="tool-card">
@@ -3097,14 +3092,6 @@ graph LR
             // Auto-open first two tools
             toggleTool('surname-tool');
             toggleTool('lexicon-tool');
-            // Init district map (after short delay for DOM)
-            setTimeout(() => {
-                const mapTool = document.getElementById('map-tool');
-                if (mapTool) {
-                    toggleTool('map-tool');
-                    setTimeout(updateDistrictMap, 200);
-                }
-            }, 100);
         }
 
         // Lazy initialization: init charts/maps when their tab is first shown
@@ -3114,7 +3101,7 @@ graph LR
             'demographics': () => initDemographicsCharts(),
             'economy': () => initEconomyCharts(),
             'social-issues': () => initSocialCharts(),
-            'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); },
+            'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); setTimeout(updateDistrictMap, 200); },
             'tools': () => { initTools(); }
         };
 
