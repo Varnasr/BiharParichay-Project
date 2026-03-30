@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bihar Parichay - An Academic Deep Dive</title>
     <meta name="description" content="Bihar Parichay: A comprehensive academic resource on Bihar's geography, society, economy, culture, and development challenges. Data-driven analysis with authenticated sources.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Newsreader:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sargam-icons@1.0.0/css/sargam.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -16,41 +16,51 @@
     <meta property="og:type" content="website">
     <style>
         :root {
-            --primary-color: #1e4976;
-            --primary-hover: #153660;
+            --primary-color: #15803D;
+            --primary-hover: #16A34A;
             --secondary-color: #b87333;
-            --secondary-hover: #9a5f28;
-            --accent: #b87333;
-            --background: #f7f5f0;
+            --accent: #15803D;
+            --accent-light: #dcfce7;
+            --background: #FAFAF5;
             --surface: #ffffff;
-            --surface-elevated: #fdfcfa;
-            --text-primary: #1c1c1c;
-            --text-secondary: #444;
-            --text-tertiary: #888;
-            --border: #ddd8cd;
-            --border-hover: #c5bfb3;
-            --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
-            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03);
-            --font-serif: 'Merriweather', Georgia, serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --surface-alt: #F7F6F3;
+            --surface-elevated: #ffffff;
+            --text-primary: #1a1a18;
+            --text-secondary: #4a4a46;
+            --text-tertiary: #7a7a74;
+            --border: #e5e5dc;
+            --border-light: #eeeeea;
+            --border-hover: #d0d0c6;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 1px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-xl: 0 12px 40px rgba(0,0,0,0.08);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --font-serif: 'Newsreader', Georgia, serif;
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         [data-theme="dark"] {
-            --primary-color: #7babd4;
-            --primary-hover: #9bc2e4;
-            --secondary-color: #d4a054;
-            --secondary-hover: #e0b874;
-            --accent: #d4a054;
-            --background: #0e1117;
-            --surface: #181c24;
-            --surface-elevated: #1f242e;
-            --text-primary: #e4e2dc;
-            --text-secondary: #a8a6a0;
-            --text-tertiary: #6e6e6e;
-            --border: #282c34;
-            --border-hover: #383c44;
-            --shadow: 0 1px 4px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04);
-            --shadow-lg: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+            --primary-color: #4ADE80;
+            --primary-hover: #86EFAC;
+            --accent: #4ADE80;
+            --accent-light: #14532d;
+            --background: #0e0e0c;
+            --surface: #171714;
+            --surface-alt: #1c1c18;
+            --surface-elevated: #212120;
+            --text-primary: #eaeae4;
+            --text-secondary: #a0a09a;
+            --text-tertiary: #6a6a64;
+            --border: #2a2a26;
+            --border-light: #222220;
+            --border-hover: #3a3a34;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+            --shadow: 0 1px 4px rgba(0,0,0,0.2);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.3);
+            --shadow-xl: 0 12px 40px rgba(0,0,0,0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,8 +72,10 @@
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.15s ease, color 0.15s ease;
             -webkit-text-size-adjust: 100%;
+            font-size: 15px;
+            letter-spacing: -0.01em;
         }
 
         /* ===== PASSWORD GATE ===== */
@@ -79,8 +91,8 @@
         .gate-container {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 52px 44px;
+            border-radius: var(--radius-lg);
+            padding: 56px 48px;
             max-width: 440px;
             width: 100%;
             text-align: center;
@@ -122,29 +134,21 @@
 
         .gate-btn {
             width: 100%;
-            padding: 14px;
-            background: var(--primary-color);
+            padding: 13px;
+            background: var(--accent);
             color: #fff;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: var(--radius);
+            font-size: 0.92rem;
             font-weight: 600;
             font-family: var(--font-sans);
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        [data-theme="dark"] .gate-btn {
-            background: #3a6a9e;
-            color: #fff;
+            transition: background 0.15s, transform 0.15s;
         }
 
         .gate-btn:hover {
             background: var(--primary-hover);
-        }
-
-        [data-theme="dark"] .gate-btn:hover {
-            background: #4a7ab0;
+            transform: translateY(-1px);
         }
 
         .gate-error {
@@ -183,47 +187,45 @@
 
         /* ===== SITE HEADER ===== */
         .site-header {
-            background: linear-gradient(135deg, #0f2844 0%, #1a3a5c 50%, #2a5078 100%);
-            color: #fff;
-            padding: 52px 40px 44px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 48px 40px 40px;
             text-align: center;
             position: relative;
         }
 
-        [data-theme="dark"] .site-header {
-            background: linear-gradient(135deg, #0a1520 0%, #1a2332 50%, #1e2d40 100%);
-        }
-
         .site-header-inner {
-            max-width: 720px;
+            max-width: 640px;
             margin: 0 auto;
         }
 
         .site-header h1 {
             font-family: var(--font-serif);
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+            color: var(--text-primary);
         }
 
         .site-header .tagline {
-            font-size: 0.95rem;
-            font-weight: 300;
-            opacity: 0.85;
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--text-secondary);
             line-height: 1.6;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .site-header .meta-line {
-            font-size: 0.78rem;
-            opacity: 0.55;
+            font-size: 0.76rem;
+            color: var(--text-tertiary);
             font-style: italic;
         }
 
         .header-controls {
             position: absolute;
-            top: 16px;
+            top: 14px;
             right: 20px;
         }
 
@@ -281,15 +283,14 @@
 
         .nav-links a {
             display: block;
-            padding: 12px 10px;
-            font-size: 0.76rem;
+            padding: 14px 11px;
+            font-size: 0.78rem;
             font-weight: 500;
             color: var(--text-tertiary);
             text-decoration: none;
             white-space: nowrap;
             border-bottom: 2px solid transparent;
             transition: color 0.15s, border-color 0.15s;
-            letter-spacing: 0.01em;
         }
 
         .nav-links a:hover {
@@ -297,8 +298,8 @@
         }
 
         .nav-links a.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+            color: var(--accent);
+            border-bottom-color: var(--accent);
             font-weight: 600;
         }
 
@@ -359,9 +360,9 @@
         /* ===== SECTIONS (TAB-BASED) ===== */
         .content-section {
             display: none;
-            padding: 40px 0 56px;
+            padding: 56px 0 64px;
             min-height: calc(100vh - 200px);
-            animation: fadeIn 0.25s ease;
+            animation: fadeIn 0.2s ease;
         }
 
         .content-section.active {
@@ -369,48 +370,48 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
             font-family: var(--font-serif);
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 600;
             margin-bottom: 6px;
             color: var(--text-primary);
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
             font-size: 0.88rem;
             color: var(--text-tertiary);
-            margin-bottom: 32px;
-            line-height: 1.5;
+            margin-bottom: 36px;
+            line-height: 1.6;
         }
 
         .section-prose {
-            font-size: 0.95rem;
-            line-height: 1.9;
+            font-size: 0.94rem;
+            line-height: 1.85;
             color: var(--text-secondary);
-            max-width: 720px;
+            max-width: 680px;
         }
 
         .section-prose p {
-            margin-bottom: 18px;
-            text-align: justify;
-            hyphens: auto;
+            margin-bottom: 20px;
         }
 
         .section-prose strong {
             color: var(--text-primary);
+            font-weight: 600;
         }
 
         .section-prose blockquote {
-            margin: 20px 0;
-            padding: 16px 20px;
+            margin: 24px 0;
+            padding: 16px 24px;
             border-left: 3px solid var(--accent);
-            background: var(--surface);
+            background: var(--surface-alt);
+            border-radius: 0 var(--radius) var(--radius) 0;
             font-style: italic;
             color: var(--text-secondary);
             font-size: 0.92rem;
@@ -506,26 +507,26 @@
         .fact-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: var(--radius);
             padding: 18px 14px;
             text-align: center;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-sm);
         }
 
         .fact-value {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--accent);
             margin-bottom: 4px;
         }
 
         .fact-label {
-            font-size: 0.75rem;
+            font-size: 0.68rem;
             color: var(--text-tertiary);
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
         }
 
         /* ===== MAP ===== */
@@ -582,22 +583,23 @@
         .person-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            transition: box-shadow 0.2s, transform 0.2s;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.15s, transform 0.15s;
         }
 
         .person-card:hover {
             box-shadow: var(--shadow-lg);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .person-card h4 {
             font-family: var(--font-serif);
             font-size: 0.95rem;
-            color: var(--primary-color);
+            color: var(--accent);
             margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .person-card p {
@@ -656,9 +658,9 @@
         .chart-box {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 22px;
-            box-shadow: var(--shadow);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
         }
 
         .chart-box h4 {
@@ -837,20 +839,21 @@
 
         .tool-btn {
             padding: 10px 20px;
-            background: var(--primary-color);
+            background: var(--accent);
             color: #fff;
             border: none;
-            border-radius: 6px;
-            font-size: 0.88rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
             font-weight: 600;
             font-family: var(--font-sans);
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.15s, transform 0.15s;
         }
 
-        [data-theme="dark"] .tool-btn { background: #3a6a9e; }
-        .tool-btn:hover { background: var(--primary-hover); }
-        [data-theme="dark"] .tool-btn:hover { background: #4a7ab0; }
+        .tool-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
 
         .tool-result {
             margin-top: 14px;
@@ -988,16 +991,8 @@
 
         /* ===== MADHUBANI DECORATIVE ELEMENTS ===== */
         .madhubani-border {
-            height: 6px;
-            background: repeating-linear-gradient(
-                90deg,
-                #c0392b 0px, #c0392b 8px,
-                #e67e22 8px, #e67e22 16px,
-                #f1c40f 16px, #f1c40f 24px,
-                #27ae60 24px, #27ae60 32px,
-                #4A90E2 32px, #4A90E2 40px,
-                #9b59b6 40px, #9b59b6 48px
-            );
+            height: 4px;
+            background: linear-gradient(90deg, #c0392b, #d35400, #f39c12, #27ae60, #2980b9, #8e44ad);
         }
 
         .site-header::before {
@@ -1005,49 +1000,30 @@
             display: block;
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 5px;
-            background: repeating-linear-gradient(
-                90deg,
-                #c0392b 0px, #c0392b 10px,
-                #e67e22 10px, #e67e22 20px,
-                #f1c40f 20px, #f1c40f 30px,
-                #27ae60 30px, #27ae60 40px,
-                #9b59b6 40px, #9b59b6 50px
-            );
-        }
-
-        /* Madhubani-inspired corner decoration on section titles */
-        .section-title::before {
-            content: '\25C6';
-            color: var(--accent);
-            margin-right: 10px;
-            font-size: 0.8em;
+            height: 4px;
+            background: linear-gradient(90deg, #c0392b, #d35400, #f39c12, #27ae60, #2980b9, #8e44ad);
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 48px;
             height: 3px;
-            margin-top: 8px;
-            background: linear-gradient(90deg, #c0392b, #e67e22, #f1c40f, #27ae60);
+            margin-top: 10px;
+            background: linear-gradient(90deg, #c0392b, #d35400, #f39c12, #27ae60);
             border-radius: 2px;
         }
 
         /* (removed inter-section divider -- not needed with tab layout) */
 
-        /* Card header accent */
+        /* Card Madhubani accent */
         .person-card::before {
             content: '';
             display: block;
             height: 3px;
-            margin: -20px -20px 16px;
-            background: linear-gradient(90deg,
-                var(--accent) 0%, var(--accent) 33%,
-                #c0392b 33%, #c0392b 66%,
-                #27ae60 66%, #27ae60 100%
-            );
-            border-radius: 8px 8px 0 0;
+            margin: -24px -24px 18px;
+            background: linear-gradient(90deg, #c0392b, #d35400, #27ae60);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
         }
 
         /* Devanagari quote decoration for header */
