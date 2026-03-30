@@ -1335,14 +1335,14 @@
             </section>
             <section id="data" class="content-section">
                 <h2 class="section-title">Data &amp; Analysis</h2>
-                <p class="section-subtitle">Consolidated data dashboard -- development indicators, district-level comparisons, and heritage mapping</p>
+                <p class="section-subtitle">Numbers that tell the story -- where Bihar stands, and how it got here</p>
                 <div class="section-prose">
-                    <p>This section consolidates key data from across the site into comparative visualisations. All data is sourced from government publications and peer-reviewed research. Figures should be interpreted with awareness of methodological differences across surveys and time periods.</p>
+                    <p>This section consolidates key data into comparative visualisations. All figures are sourced from government publications and peer-reviewed research. The gap between Bihar and national averages on nearly every indicator is not accidental -- it is the cumulative result of colonial extraction, zamindari landholding, post-independence policy neglect (Bihar received less per-capita central investment than most states for decades), and internal structural inequality. The data should be read with that context.</p>
                 </div>
                 <div class="charts-row">
                     <div class="chart-box">
-                        <h4>Development Radar: Bihar vs India Average</h4>
-                        <canvas id="radarChart"></canvas>
+                        <h4>Bihar vs India: Key Indicators (grouped comparison)</h4>
+                        <canvas id="biharVsIndiaChart"></canvas>
                         <p class="chart-source">Source: NFHS-5, Census 2011, RBI, NITI Aayog</p>
                     </div>
                     <div class="chart-box">
@@ -1759,17 +1759,17 @@
 
         // Data dashboard charts
         function initDataCharts() {
-            // Radar: Bihar vs India
-            new Chart(document.getElementById('radarChart'), {
-                type: 'radar',
+            // Grouped bar: Bihar vs India key indicators
+            new Chart(document.getElementById('biharVsIndiaChart'), {
+                type: 'bar',
                 data: {
-                    labels: ['Literacy Rate','Urbanisation','Per Capita Income\n(normalised)','Life Expectancy\n(est.)','IMR\n(inverse, higher=better)','Women in\nWorkforce'],
+                    labels: ['Literacy\n(%)','Urban\nPop (%)','Women in\nWorkforce (%)','Institutional\nDelivery (%)','Full\nImmunisation (%)','Stunting\n(under 5, %)'],
                     datasets: [
-                        { label: 'Bihar', data: [63.8,11.3,36,68.7,53.2,9.8], borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,0.15)', pointBackgroundColor: '#c0392b' },
-                        { label: 'India', data: [74.0,31.2,100,70.4,64.8,32.8], borderColor: '#4A90E2', backgroundColor: 'rgba(74,144,226,0.15)', pointBackgroundColor: '#4A90E2' }
+                        { label: 'Bihar', data: [63.8, 11.3, 9.8, 74.4, 75.9, 42.9], backgroundColor: 'rgba(192,57,43,0.75)' },
+                        { label: 'India', data: [74.0, 31.2, 32.8, 88.6, 76.4, 35.5], backgroundColor: 'rgba(74,144,226,0.75)' }
                     ]
                 },
-                options: { responsive: true, maintainAspectRatio: true, scales: { r: { beginAtZero: true, max: 100, ticks: { font: { size: 9 } }, pointLabels: { font: { size: 10 } } } }, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } } }
             });
 
             // Population growth
