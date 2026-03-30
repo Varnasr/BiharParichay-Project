@@ -178,7 +178,7 @@
         .ref-list a:hover { border-bottom-style: solid; }
 
         /* === TOOLS === */
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-top: 14px; }
+        .tools-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
         .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
         .tool-card-header { padding: 14px 20px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; }
         .tool-card-header h4 { font-family: var(--font-serif); font-size: 0.9rem; }
@@ -721,33 +721,32 @@
                     <h4>Electoral Coalition Map: Who Votes With Whom</h4>
                     <div class="mermaid">
 graph LR
-    subgraph RJD["RJD Coalition"]
-        Y[Yadav ~14%]
-        M[Muslim ~17%]
-    end
-    subgraph JDU["JD(U) Coalition"]
-        E[EBC ~36%]
-        MD[Mahadalit ~8%]
-        W[Women voters]
-    end
-    subgraph BJP["BJP Coalition"]
-        UC[Upper Caste ~15%]
-        NOY[Non-Yadav OBC segments]
-    end
-    subgraph LEFT["Left/CPI-ML"]
-        LL[Landless labourers]
-        DL[Dalit activists]
-    end
-    Y --- M
-    E --- MD
-    E --- W
-    UC --- NOY
-    LL --- DL
-
-    style RJD fill:#27ae60,color:#fff,stroke:#1e8449
-    style JDU fill:#4A90E2,color:#fff,stroke:#2a6496
-    style BJP fill:#e67e22,color:#fff,stroke:#d35400
-    style LEFT fill:#c0392b,color:#fff,stroke:#922b21
+subgraph RJD["RJD Coalition"]
+Y["Yadav ~14%"]
+M["Muslim ~17%"]
+end
+subgraph JDU["JDU Coalition"]
+E["EBC ~36%"]
+MD["Mahadalit ~8%"]
+W["Women voters"]
+end
+subgraph BJP["BJP Coalition"]
+UC["Upper Caste ~15%"]
+NOY["Non-Yadav OBC"]
+end
+subgraph LEFT["Left CPI-ML"]
+LL["Landless labourers"]
+DL2["Dalit activists"]
+end
+Y --- M
+E --- MD
+E --- W
+UC --- NOY
+LL --- DL2
+style RJD fill:#27ae60,color:#fff
+style JDU fill:#4A90E2,color:#fff
+style BJP fill:#e67e22,color:#fff
+style LEFT fill:#c0392b,color:#fff
                     </div>
                     <p class="diagram-caption">Simplified coalition map. Actual alliances shift between elections. Percentages are approximate population shares. The "swing" segments (non-Yadav OBC, women, EBC sub-groups) determine electoral outcomes.</p>
                 </div>
@@ -805,15 +804,15 @@ graph LR
                     <h4>Where Bihar's Money Comes From -- and Where It Goes</h4>
                     <div class="mermaid">
 graph TD
-CENTRE["Central Govt Transfers<br/>70%+ of Bihar revenue"]
+CENTRE["Central Govt Transfers 70%+"]
 STATE["Bihar State Budget"]
-REMIT["Migrant Remittances<br/>Rs 50-80K Crore/year"]
-AGRI["Agriculture<br/>76% workforce, 19% GSDP"]
+REMIT["Migrant Remittances Rs 50-80K Cr"]
+AGRI["Agriculture 76% workforce"]
 FAMILIES["Bihar Families"]
 CENTRE --> STATE
-STATE --> SCHEMES["Schemes:<br/>MGNREGA, MDM, JSY,<br/>Cycle Yojana, Kanya Utthan"]
-STATE --> INFRA["Roads, Buildings,<br/>Salaries"]
-SCHEMES -->|"Reaches 40-70%"| FAMILIES
+STATE --> SCHEMES["Schemes: MGNREGA MDM JSY"]
+STATE --> INFRA["Roads Buildings Salaries"]
+SCHEMES -->|"40-70% reach"| FAMILIES
 REMIT --> FAMILIES
 AGRI -->|"Low returns"| FAMILIES
 FAMILIES -->|"Sons migrate"| REMIT
@@ -892,15 +891,15 @@ style SCHEMES fill:#8e6f4e,color:#fff
                     <h4>Why Schemes Don't Reach People: The Delivery Chain</h4>
                     <div class="mermaid">
 graph LR
-POLICY["Delhi:<br/>Scheme Announced"] --> BUDGET["Budget<br/>Allocated"]
-BUDGET --> STATE["State Govt<br/>Implements"]
-STATE --> DISTRICT["District<br/>Administration"]
+POLICY["Delhi: Scheme Announced"] --> BUDGET["Budget Allocated"]
+BUDGET --> STATE["State Govt"]
+STATE --> DISTRICT["District Admin"]
 DISTRICT --> BLOCK["Block Office"]
 BLOCK --> PANCHAYAT["Panchayat"]
 PANCHAYAT --> FAMILY["Family"]
-BUDGET -->|"30% lost to<br/>delays"| LEAK1["Bureaucratic<br/>Bottleneck"]
-DISTRICT -->|"Documentation<br/>barriers"| LEAK2["Aadhaar/Patta<br/>Requirements"]
-PANCHAYAT -->|"Local capture"| LEAK3["Elite<br/>Capture"]
+BUDGET -->|"30% delays"| LEAK1["Bureaucratic Bottleneck"]
+DISTRICT -->|"Doc barriers"| LEAK2["Aadhaar/Patta Needed"]
+PANCHAYAT -->|"Local capture"| LEAK3["Elite Capture"]
 style POLICY fill:#2a6496,color:#fff
 style FAMILY fill:#c0392b,color:#fff
 style LEAK1 fill:#e67e22,color:#fff
@@ -948,33 +947,31 @@ style LEAK3 fill:#e67e22,color:#fff
                     <h4>Bihar's Cycle of Deprivation</h4>
                     <div class="mermaid">
 graph TD
-    LAND["Landlessness / No Patta"]
-    CREDIT["No access to formal credit"]
-    DEBT["Informal debt at 3-10%/month"]
-    MIGRATION["Male out-migration"]
-    WOMEN["Women-headed households"]
-    CHILD["Early marriage of daughters"]
-    EDU["Low education investment"]
-    HEALTH["Malnutrition & poor health"]
-    LABOR["Low-skill, low-wage work"]
-
-    LAND --> CREDIT
-    CREDIT --> DEBT
-    DEBT --> MIGRATION
-    MIGRATION --> WOMEN
-    WOMEN --> CHILD
-    CHILD --> EDU
-    EDU --> LABOR
-    LABOR --> LAND
-    DEBT --> HEALTH
-    HEALTH --> EDU
-
-    style LAND fill:#c0392b,color:#fff,stroke:#922b21
-    style MIGRATION fill:#2a6496,color:#fff,stroke:#1a3a5c
-    style CHILD fill:#d35400,color:#fff,stroke:#a84300
-    style HEALTH fill:#8e44ad,color:#fff,stroke:#6c3483
-    style EDU fill:#e67e22,color:#fff,stroke:#d35400
-    style LABOR fill:#7f8c8d,color:#fff,stroke:#5d6d7e
+LAND["Landlessness No Patta"]
+CREDIT["No formal credit"]
+DEBT["Informal debt 3-10% monthly"]
+MIGRATION["Male out-migration"]
+WOMEN["Women-headed households"]
+CHILD["Early marriage of daughters"]
+EDU["Low education investment"]
+HEALTH["Malnutrition poor health"]
+LABOR["Low-skill low-wage work"]
+LAND --> CREDIT
+CREDIT --> DEBT
+DEBT --> MIGRATION
+MIGRATION --> WOMEN
+WOMEN --> CHILD
+CHILD --> EDU
+EDU --> LABOR
+LABOR --> LAND
+DEBT --> HEALTH
+HEALTH --> EDU
+style LAND fill:#c0392b,color:#fff
+style MIGRATION fill:#2a6496,color:#fff
+style CHILD fill:#d35400,color:#fff
+style HEALTH fill:#8e44ad,color:#fff
+style EDU fill:#e67e22,color:#fff
+style LABOR fill:#7f8c8d,color:#fff
     style CREDIT fill:#2c3e50,color:#fff,stroke:#1a252f
     style DEBT fill:#c0392b,color:#fff,stroke:#922b21
     style WOMEN fill:#2a6496,color:#fff,stroke:#1a3a5c
@@ -987,26 +984,23 @@ graph TD
                     <h4>Migration Flows: Where Bihar's Workers Go</h4>
                     <div class="mermaid">
 graph LR
-    BH["BIHAR<br/>8-10M migrants"]
-
-    BH -->|Construction| DL["Delhi-NCR"]
-    BH -->|Factories| MH["Maharashtra<br/>Mumbai, Pune"]
-    BH -->|Textiles| GJ["Gujarat<br/>Surat, Ahmedabad"]
-    BH -->|Agriculture| PB["Punjab<br/>Haryana"]
-    BH -->|Services| KL["Kerala"]
-    BH -->|Gulf labour| GULF["UAE, Saudi,<br/>Qatar"]
-
-    DL -->|Remittances| BH
-    MH -->|Remittances| BH
-    GJ -->|Remittances| BH
-
-    style BH fill:#c0392b,color:#fff,stroke:#922b21
-    style DL fill:#2a6496,color:#fff,stroke:#1a3a5c
-    style MH fill:#2a6496,color:#fff,stroke:#1a3a5c
-    style GJ fill:#2a6496,color:#fff,stroke:#1a3a5c
-    style PB fill:#27ae60,color:#fff,stroke:#1e8449
-    style KL fill:#27ae60,color:#fff,stroke:#1e8449
-    style GULF fill:#e67e22,color:#fff,stroke:#d35400
+BH["BIHAR 8-10M migrants"]
+BH -->|"Construction"| DL["Delhi-NCR"]
+BH -->|"Factories"| MH["Maharashtra"]
+BH -->|"Textiles"| GJ["Gujarat"]
+BH -->|"Agriculture"| PB["Punjab Haryana"]
+BH -->|"Services"| KL["Kerala"]
+BH -->|"Gulf labour"| GULF["UAE Saudi Qatar"]
+DL -->|"Remittances"| BH
+MH -->|"Remittances"| BH
+GJ -->|"Remittances"| BH
+style BH fill:#c0392b,color:#fff
+style DL fill:#2a6496,color:#fff
+style MH fill:#2a6496,color:#fff
+style GJ fill:#2a6496,color:#fff
+style PB fill:#27ae60,color:#fff
+style KL fill:#27ae60,color:#fff
+style GULF fill:#e67e22,color:#fff
                     </div>
                     <p class="diagram-caption">Estimated Rs 50,000-80,000 crore in annual remittances. Key source districts: Darbhanga, Madhubani, Siwan, Gopalganj, Supaul. COVID-19 reverse migration (2020) returned ~3 million workers within weeks, exposing the absence of local livelihood alternatives.</p>
                 </div>
@@ -1820,7 +1814,7 @@ graph LR
                     </div>
 
                     <!-- Tool 12: Timeline -->
-                    <div class="tool-card" style="grid-column: 1 / -1;">
+                    <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('timeline-tool')">
                             <h4>Bihar Timeline</h4>
                             <span class="tool-toggle" id="timeline-tool-toggle">&#9660;</span>
@@ -1836,7 +1830,7 @@ graph LR
                 <div class="tools-grid">
 
                     <!-- Tool 13: Quote Wall -->
-                    <div class="tool-card" style="grid-column: 1 / -1;">
+                    <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('quote-tool')">
                             <h4>Voices of Bihar</h4>
                             <span class="tool-toggle" id="quote-tool-toggle">&#9660;</span>
@@ -1873,7 +1867,7 @@ graph LR
                     </div>
 
                     <!-- Tool 15: Facilitator Guide -->
-                    <div class="tool-card" style="grid-column: 1 / -1;">
+                    <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('guide-tool')">
                             <h4>Listening Circle Facilitator Guide</h4>
                             <span class="tool-toggle" id="guide-tool-toggle">&#9660;</span>
@@ -1885,7 +1879,7 @@ graph LR
                     </div>
 
                     <!-- Tool 16: SMS Fact Cards -->
-                    <div class="tool-card" style="grid-column: 1 / -1;">
+                    <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('sms-tool')">
                             <h4>WhatsApp-Ready Fact Cards</h4>
                             <span class="tool-toggle" id="sms-tool-toggle">&#9660;</span>
