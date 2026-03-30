@@ -64,7 +64,26 @@
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { overflow-x: hidden; scroll-behavior: auto; }
-        body { font-family: var(--font-sans); background: var(--background); color: var(--text-primary); line-height: 1.7; font-size: 15px; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+        body {
+            font-family: var(--font-sans);
+            background: var(--background);
+            background-image:
+                radial-gradient(circle at 20px 20px, rgba(192,57,43,0.02) 1px, transparent 1px),
+                radial-gradient(circle at 60px 60px, rgba(211,84,0,0.02) 1px, transparent 1px),
+                radial-gradient(circle at 40px 80px, rgba(230,126,34,0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+        [data-theme="dark"] body {
+            background-image:
+                radial-gradient(circle at 20px 20px, rgba(192,57,43,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 60px 60px, rgba(211,84,0,0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
 
         /* === PASSWORD GATE === */
         #password-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: var(--background); }
@@ -82,7 +101,17 @@
         #main-app { display: none; }
 
         /* === HEADER === */
-        .site-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 44px 32px 36px; text-align: center; position: relative; }
+        .site-header {
+            background: var(--surface);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(192,57,43,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(230,126,34,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(211,84,0,0.02) 0%, transparent 70%);
+            border-bottom: 1px solid var(--border);
+            padding: 44px 32px 36px;
+            text-align: center;
+            position: relative;
+        }
         .site-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--madhubani); }
         .site-header-inner { max-width: 620px; margin: 0 auto; }
         .site-header-inner::after { content: '\0932\094B\0915  \092A\0930\093F\091A\092F'; display: block; font-family: 'Noto Serif Devanagari', serif; font-size: 0.78rem; color: var(--text-tertiary); margin-top: 8px; letter-spacing: 1px; opacity: 0.6; }
@@ -392,6 +421,9 @@
             border-radius: var(--radius-lg);
             position: relative;
             background: var(--surface);
+            background-image:
+                radial-gradient(circle at 95% 5%, rgba(192,57,43,0.04) 0%, transparent 40%),
+                radial-gradient(circle at 5% 95%, rgba(230,126,34,0.03) 0%, transparent 40%);
             overflow: hidden;
         }
         .madhubani-panel::before {
