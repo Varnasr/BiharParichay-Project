@@ -292,10 +292,11 @@
         .tool-category p { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 2px; }
 
         /* === DECORATIVE MADHUBANI SVG ELEMENTS === */
-        .deco-peacock { position: fixed; bottom: -10px; right: -5px; width: 220px; height: 220px; opacity: 0.15; pointer-events: none; z-index: 0; }
-        .deco-flower-tl { position: fixed; top: -20px; left: -20px; width: 180px; height: 180px; opacity: 0.12; pointer-events: none; z-index: 0; }
-        [data-theme="dark"] .deco-peacock { opacity: 0.08; }
-        [data-theme="dark"] .deco-flower-tl { opacity: 0.06; }
+        .deco-peacock { position: fixed; bottom: 20px; right: 20px; width: 180px; height: 180px; opacity: 0.25; pointer-events: none; z-index: 0; }
+        .deco-flower-tl { position: fixed; top: 80px; left: 10px; width: 140px; height: 140px; opacity: 0.2; pointer-events: none; z-index: 0; }
+        [data-theme="dark"] .deco-peacock { opacity: 0.12; }
+        [data-theme="dark"] .deco-flower-tl { opacity: 0.1; }
+        @media (max-width: 900px) { .deco-peacock { width: 120px; height: 120px; bottom: 10px; right: 10px; } .deco-flower-tl { display: none; } }
         @media (max-width: 600px) { .deco-peacock { width: 120px; height: 120px; } .deco-flower-tl { width: 100px; height: 100px; } }
 
         /* === ARTWORK (CSS-only art panels) === */
