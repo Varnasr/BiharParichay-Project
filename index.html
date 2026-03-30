@@ -1985,6 +1985,222 @@
         }
 
         // Init map when app is shown
+        // ===== TOOLS =====
+        function toggleTool(id) {
+            const body = document.getElementById(id);
+            const toggle = document.getElementById(id + '-toggle');
+            body.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        // Tool 1: Surname Lookup
+        const SURNAME_DB = {
+            'dusadh':{cat:'SC',sub:'Dusadh',rel:'Hindu'},'paswan':{cat:'SC',sub:'Paswan',rel:'Hindu'},'chamar':{cat:'SC',sub:'Chamar',rel:'Hindu'},'dhobi':{cat:'SC',sub:'Dhobi',rel:'Hindu'},'dom':{cat:'SC',sub:'Dom',rel:'Hindu'},'musahar':{cat:'SC',sub:'Musahar',rel:'Hindu'},'ravidas':{cat:'SC',sub:'Ravidas',rel:'Hindu'},'pasi':{cat:'SC',sub:'Pasi',rel:'Hindu'},'nat':{cat:'SC',sub:'Nat',rel:'Hindu'},'mehtar':{cat:'SC',sub:'Mehtar',rel:'Hindu'},'balmiki':{cat:'SC',sub:'Balmiki',rel:'Hindu'},
+            'santhal':{cat:'ST',sub:'Santhal',rel:'Hindu'},'oraon':{cat:'ST',sub:'Oraon',rel:'Hindu'},'munda':{cat:'ST',sub:'Munda',rel:'Hindu'},'gond':{cat:'ST',sub:'Gond',rel:'Hindu'},'kharwar':{cat:'ST',sub:'Kharwar',rel:'Hindu'},'chero':{cat:'ST',sub:'Chero',rel:'Hindu'},'paharia':{cat:'ST',sub:'Paharia',rel:'Hindu'},
+            'yadav':{cat:'OBC',sub:'Yadav',rel:'Hindu'},'koeri':{cat:'OBC',sub:'Koeri',rel:'Hindu'},'kurmi':{cat:'OBC',sub:'Kurmi',rel:'Hindu'},'kushwaha':{cat:'OBC',sub:'Kushwaha',rel:'Hindu'},'teli':{cat:'OBC',sub:'Teli',rel:'Hindu'},'gupta':{cat:'OBC',sub:'Gupta',rel:'Hindu'},'mahto':{cat:'OBC',sub:'Mahto',rel:'Hindu'},'ahir':{cat:'OBC',sub:'Ahir',rel:'Hindu'},'goala':{cat:'OBC',sub:'Goala',rel:'Hindu'},'mali':{cat:'OBC',sub:'Mali',rel:'Hindu'},
+            'nai':{cat:'EBC',sub:'Nai',rel:'Hindu'},'kumhar':{cat:'EBC',sub:'Kumhar',rel:'Hindu'},'mallah':{cat:'EBC',sub:'Mallah',rel:'Hindu'},'bind':{cat:'EBC',sub:'Bind',rel:'Hindu'},'kevat':{cat:'EBC',sub:'Kevat',rel:'Hindu'},'kahar':{cat:'EBC',sub:'Kahar',rel:'Hindu'},'halwai':{cat:'EBC',sub:'Halwai',rel:'Hindu'},'tanti':{cat:'EBC',sub:'Tanti',rel:'Hindu'},'lohar':{cat:'EBC',sub:'Lohar',rel:'Hindu'},'sonar':{cat:'EBC',sub:'Sonar',rel:'Hindu'},'barhi':{cat:'EBC',sub:'Barhi',rel:'Hindu'},
+            'singh':{cat:'General',sub:'Singh',rel:'Hindu'},'sharma':{cat:'General',sub:'Sharma (Brahmin)',rel:'Hindu'},'verma':{cat:'General',sub:'Verma',rel:'Hindu'},'sinha':{cat:'General',sub:'Sinha (Kayastha)',rel:'Hindu'},'jha':{cat:'General',sub:'Jha (Maithil Brahmin)',rel:'Hindu'},'thakur':{cat:'General',sub:'Thakur (Bhumihar/Rajput)',rel:'Hindu'},'pandey':{cat:'General',sub:'Pandey (Brahmin)',rel:'Hindu'},'mishra':{cat:'General',sub:'Mishra (Brahmin)',rel:'Hindu'},'tiwari':{cat:'General',sub:'Tiwari (Brahmin)',rel:'Hindu'},'roy':{cat:'General',sub:'Roy (Kayastha)',rel:'Hindu'},'chaudhary':{cat:'General',sub:'Chaudhary',rel:'Hindu'},'prasad':{cat:'General',sub:'Prasad',rel:'Hindu'},'srivastava':{cat:'General',sub:'Srivastava (Kayastha)',rel:'Hindu'},'dwivedi':{cat:'General',sub:'Dwivedi (Brahmin)',rel:'Hindu'},'tripathi':{cat:'General',sub:'Tripathi (Brahmin)',rel:'Hindu'},
+            'khan':{cat:'Minority',sub:'Khan',rel:'Muslim'},'ansari':{cat:'Minority',sub:'Ansari',rel:'Muslim'},'sheikh':{cat:'Minority',sub:'Sheikh',rel:'Muslim'},'ahmad':{cat:'Minority',sub:'Ahmad',rel:'Muslim'},'hussain':{cat:'Minority',sub:'Hussain',rel:'Muslim'},'qureshi':{cat:'Minority',sub:'Qureshi',rel:'Muslim'},'siddiqui':{cat:'Minority',sub:'Siddiqui',rel:'Muslim'}
+        };
+
+        function lookupSurname() {
+            const input = document.getElementById('surname-input').value.trim().toLowerCase();
+            const result = document.getElementById('surname-result');
+            if (!input) { result.style.display = 'none'; return; }
+            const match = SURNAME_DB[input];
+            if (match) {
+                result.innerHTML = '<table><tr><th>Surname</th><td>' + input.charAt(0).toUpperCase() + input.slice(1) + '</td></tr><tr><th>Category</th><td>' + match.cat + '</td></tr><tr><th>Sub-caste/Caste</th><td>' + match.sub + '</td></tr><tr><th>Religion</th><td>' + match.rel + '</td></tr></table><p style="margin-top:8px;font-size:0.75rem;color:var(--text-tertiary)">Source: Bihar Government caste classification lists, Census categories</p>';
+            } else {
+                result.innerHTML = '<p>Surname "<strong>' + input + '</strong>" not found in database (' + Object.keys(SURNAME_DB).length + ' entries). This does not mean the surname does not exist in Bihar -- only that it is not in our verified dataset.</p>';
+            }
+            result.style.display = 'block';
+        }
+
+        // Tool 2: Bihar Lexicon
+        const LEXICON = [
+            {term:'Sattu',origin:'Hindi/Bhojpuri',def:'Roasted gram flour, Bihar\'s staple protein. Consumed as drink (sharbat), stuffed in paratha, or as laddoo. Central to working-class and agricultural diet.'},
+            {term:'Makhana',origin:'Hindi',def:'Fox nuts (Euryale ferox), harvested from wetlands. Bihar produces 90%+ of India\'s makhana. Traditional harvesting done by Mallah community in chest-deep water.'},
+            {term:'Panchayat',origin:'Sanskrit/Hindi',def:'Village-level elected governance body. Bihar has 50% women\'s reservation in panchayats, producing 50,000+ women representatives -- though many serve as proxies for male relatives.'},
+            {term:'Diara',origin:'Hindi/Bhojpuri',def:'Alluvial riverine islands formed by silt deposition, typically in the Ganga and Kosi systems. Highly fertile but precarious land, settled predominantly by marginalised communities without formal land titles.'},
+            {term:'Niyojit Shikshak',origin:'Hindi',def:'Contract teachers appointed by panchayats at a fraction of regular teacher salaries. A controversial policy that expanded teacher numbers but created a two-tier system with implications for education quality.'},
+            {term:'Patta',origin:'Hindi',def:'Land title document. Absence of patta locks farmers out of formal credit. Land record digitisation remains incomplete across Bihar.'},
+            {term:'Bidesia',origin:'Bhojpuri',def:'Literally "foreigner" or "one who has gone abroad." Also a folk theatre form created by Bhikhari Thakur depicting the pain of migration and marital separation.'},
+            {term:'Chhath',origin:'Maithili/Bhojpuri',def:'Ancient solar worship festival unique to Bihar. Involves 36-hour waterless fast, river bathing, and sunrise/sunset offerings. Pre-Vedic origins. Submitted for UNESCO Intangible Cultural Heritage.'},
+            {term:'Seemanchal',origin:'Hindi',def:'The northeastern border region of Bihar (Purnia, Kishanganj, Katihar, Araria). High Muslim population, lowest HDI in the state, poorest infrastructure.'},
+            {term:'Zamindari',origin:'Persian/Urdu',def:'Feudal land revenue system under which zamindars (landlords) collected rent from cultivators. Abolished in Bihar by the Bihar Land Reforms Act (1950), but its legacy of concentrated land ownership persists.'},
+            {term:'Musahari',origin:'Hindi',def:'Related to Musahar community (SC). Among the most marginalised Dalit groups in Bihar, historically associated with rat-catching. Musahari tola (settlements) are among the poorest habitations in India.'},
+            {term:'Mahadalit',origin:'Hindi',def:'Administrative category created by Bihar government (2007) for the most marginalised SC sub-castes (Musahar, Dom, Chamar, etc.), entitling them to targeted welfare schemes.'},
+            {term:'Sampoorna Kranti',origin:'Hindi',def:'"Total Revolution" -- JP Narayan\'s 1974 movement calling for systemic change in governance, leading to mass protests and eventually contributing to the fall of Indira Gandhi\'s government.'},
+            {term:'Litti',origin:'Bhojpuri/Magahi',def:'Whole wheat ball stuffed with sattu, baked over dung-cake or coal fire. The most iconic Bihari dish, predating tandoor cooking. Eaten with chokha (roasted vegetable mash).'},
+            {term:'Ranvir Sena',origin:'Hindi',def:'Private upper-caste (Bhumihar) militia active in central Bihar from 1994-2012. Responsible for multiple massacres of Dalit communities. Formally dissolved but its legacy marks Bihar\'s caste violence history.'},
+            {term:'Kosi',origin:'Hindi/Maithili',def:'"Sorrow of Bihar." River originating in Nepal that has shifted 150km westward in 200 years. 2008 breach displaced 3.3 million people. Annual flooding affects millions.'}
+        ];
+
+        function searchLexicon() {
+            const query = document.getElementById('lexicon-input').value.trim().toLowerCase();
+            const container = document.getElementById('lexicon-result');
+            const filtered = query ? LEXICON.filter(e => e.term.toLowerCase().includes(query) || e.def.toLowerCase().includes(query)) : LEXICON;
+            container.innerHTML = filtered.map(e => '<div class="lexicon-entry"><span class="lexicon-term">' + e.term + '</span><span class="lexicon-origin">' + e.origin + '</span><div class="lexicon-def">' + e.def + '</div></div>').join('');
+        }
+
+        // Tool 3: District Data Explorer
+        const DISTRICT_DATA = {
+            'Patna':{pop:5838465,area:3202,density:1823,literacy:70.68,sexRatio:897,urban:43.07},
+            'East Champaran':{pop:5099371,area:3968,density:1285,literacy:55.79,sexRatio:902,urban:5.62},
+            'Muzaffarpur':{pop:4801062,area:3173,density:1513,literacy:63.43,sexRatio:900,urban:11.17},
+            'Madhubani':{pop:4487379,area:3501,density:1282,literacy:58.62,sexRatio:926,urban:3.78},
+            'Gaya':{pop:4391418,area:4976,density:883,literacy:64.67,sexRatio:937,urban:12.15},
+            'Samastipur':{pop:4261566,area:2904,density:1467,literacy:61.86,sexRatio:911,urban:5.36},
+            'Darbhanga':{pop:3937385,area:2279,density:1728,literacy:56.56,sexRatio:911,urban:8.67},
+            'Vaishali':{pop:3495021,area:2036,density:1717,literacy:66.60,sexRatio:895,urban:6.78},
+            'Bhagalpur':{pop:3037766,area:2569,density:1183,literacy:63.14,sexRatio:880,urban:19.45},
+            'Begusarai':{pop:2970541,area:1918,density:1549,literacy:63.87,sexRatio:895,urban:8.59},
+            'Siwan':{pop:3330464,area:2219,density:1501,literacy:69.45,sexRatio:988,urban:5.83},
+            'Gopalganj':{pop:2562012,area:2033,density:1260,literacy:65.47,sexRatio:1021,urban:4.81},
+            'Kishanganj':{pop:1690400,area:1884,density:898,literacy:57.04,sexRatio:950,urban:8.29},
+            'Purnia':{pop:3264619,area:3229,density:1011,literacy:51.08,sexRatio:921,urban:10.35},
+            'Katihar':{pop:3071029,area:3056,density:1005,literacy:52.24,sexRatio:919,urban:8.15},
+            'Araria':{pop:2811569,area:2830,density:993,literacy:53.53,sexRatio:921,urban:5.47},
+            'Nalanda':{pop:2877653,area:2355,density:1222,literacy:65.73,sexRatio:921,urban:7.90},
+            'Rohtas':{pop:2959918,area:3847,density:770,literacy:73.37,sexRatio:918,urban:9.24},
+            'Aurangabad':{pop:2540073,area:3305,density:768,literacy:70.32,sexRatio:926,urban:7.33},
+            'Jehanabad':{pop:1125313,area:1569,density:717,literacy:66.80,sexRatio:922,urban:7.14}
+        };
+
+        function showDistrictData() {
+            const name = document.getElementById('district-select').value;
+            const result = document.getElementById('district-result');
+            if (!name) { result.style.display = 'none'; return; }
+            const d = DISTRICT_DATA[name];
+            result.innerHTML = '<table><tr><th>Population</th><td>' + d.pop.toLocaleString() + '</td></tr><tr><th>Area</th><td>' + d.area.toLocaleString() + ' sq km</td></tr><tr><th>Density</th><td>' + d.density + '/sq km</td></tr><tr><th>Literacy</th><td>' + d.literacy + '%</td></tr><tr><th>Sex Ratio</th><td>' + d.sexRatio + ' females per 1000 males</td></tr><tr><th>Urban %</th><td>' + d.urban + '%</td></tr></table><p style="margin-top:8px;font-size:0.75rem;color:var(--text-tertiary)">Source: Census of India 2011</p>';
+            result.style.display = 'block';
+        }
+
+        // Tool 4: Flood Risk Checker
+        const FLOOD_DATA = {
+            'Supaul':{risk:'Very High',rivers:'Kosi',freq:'Annual',notes:'Kosi embankment breach zone. 2008 disaster epicentre. Chronic waterlogging. Among most flood-affected districts in India.'},
+            'Saharsa':{risk:'Very High',rivers:'Kosi',freq:'Annual',notes:'Kosi delta region. Severe annual flooding. High poverty, high migration.'},
+            'Madhepura':{risk:'Very High',rivers:'Kosi',freq:'Annual',notes:'Kosi impact zone. 2008 breach caused massive displacement. Limited infrastructure recovery.'},
+            'Darbhanga':{risk:'High',rivers:'Bagmati, Kamla',freq:'Annual',notes:'Bagmati floods inundate large areas annually. Cultural capital of Mithila.'},
+            'Muzaffarpur':{risk:'High',rivers:'Burhi Gandak, Bagmati',freq:'Annual',notes:'Multiple river systems create compound flood risk. Major litchi growing area affected.'},
+            'Sitamarhi':{risk:'High',rivers:'Bagmati',freq:'Annual',notes:'Nepal border district. Bagmati origin flooding. Frequent cross-border water disputes.'},
+            'East Champaran':{risk:'High',rivers:'Gandak',freq:'Annual',notes:'Gandak river flooding. Nepal border area. High population density exacerbates impact.'},
+            'West Champaran':{risk:'Moderate',rivers:'Gandak',freq:'Periodic',notes:'Gandak western bank. Less severe than East Champaran but significant risk.'},
+            'Kishanganj':{risk:'Moderate',rivers:'Mahananda',freq:'Periodic',notes:'Mahananda river flooding. Seemanchal region with compounding poverty.'},
+            'Purnia':{risk:'Moderate',rivers:'Kosi, Mahananda',freq:'Periodic',notes:'Confluence zone. Periodic flooding compounds already poor development indicators.'},
+            'Patna':{risk:'Low-Moderate',rivers:'Ganga, Punpun',freq:'Periodic',notes:'Ganga flooding affects low-lying areas. Urban flooding in Patna city during heavy monsoon. 2019 floods inundated large parts of the capital.'},
+            'Gaya':{risk:'Low',rivers:'Falgu',freq:'Rare',notes:'South Bihar plateau fringe. Falgu river is seasonal. Relatively flood-safe.'},
+            'Rohtas':{risk:'Low',rivers:'Son',freq:'Rare',notes:'Elevated terrain, Son river well-banked. One of least flood-affected districts.'},
+            'Nalanda':{risk:'Low',rivers:'None major',freq:'Rare',notes:'South Bihar, elevated. Minimal flood risk. Better agricultural stability.'}
+        };
+
+        function showFloodData() {
+            const name = document.getElementById('flood-select').value;
+            const result = document.getElementById('flood-result');
+            if (!name) { result.style.display = 'none'; return; }
+            const d = FLOOD_DATA[name];
+            const riskColor = d.risk.includes('Very High') ? '#c0392b' : d.risk.includes('High') ? '#e67e22' : d.risk.includes('Moderate') ? '#f1c40f' : '#27ae60';
+            result.innerHTML = '<table><tr><th>Flood Risk</th><td style="color:' + riskColor + ';font-weight:700">' + d.risk + '</td></tr><tr><th>Major Rivers</th><td>' + d.rivers + '</td></tr><tr><th>Flood Frequency</th><td>' + d.freq + '</td></tr><tr><th>Assessment</th><td>' + d.notes + '</td></tr></table><p style="margin-top:8px;font-size:0.75rem;color:var(--text-tertiary)">Source: BSDMA flood zone classifications; CWC annual flood reports</p>';
+            result.style.display = 'block';
+        }
+
+        // Tool 5: Development Comparator
+        let comparatorChart = null;
+
+        function runComparator() {
+            const selected = Array.from(document.querySelectorAll('#comparator-chips .chip.active')).map(c => c.dataset.district);
+            if (selected.length < 2) { alert('Select at least 2 districts'); return; }
+            const canvas = document.getElementById('comparatorChart');
+            if (comparatorChart) comparatorChart.destroy();
+            comparatorChart = new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Literacy (%)','Sex Ratio\n(/1000)','Urban (%)','Density\n(/100 sq km)'],
+                    datasets: selected.map((name, i) => {
+                        const d = DISTRICT_DATA[name];
+                        const colors = ['rgba(74,144,226,0.75)','rgba(192,57,43,0.75)','rgba(39,174,96,0.75)','rgba(230,126,34,0.75)'];
+                        return { label: name, data: [d.literacy, d.sexRatio/10, d.urban, d.density/100], backgroundColor: colors[i % 4] };
+                    })
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } }, scales: { y: { beginAtZero: true } } }
+            });
+        }
+
+        // Tool 6: Reading List Generator
+        const READING_LIST = [
+            {title:'Bihar: Towards a Development Strategy',author:'World Bank',year:2005,topic:'economy',url:'https://documents.worldbank.org/en/publication/documents-reports/documentdetail/880461468284359125/',type:'Report'},
+            {title:'An Uncertain Glory: India and Its Contradictions (Bihar chapters)',author:'Dreze, J. & Sen, A.',year:2013,topic:'economy',url:'',type:'Book'},
+            {title:'NFHS-5 Bihar State Report',author:'IIPS & ICF',year:2021,topic:'health',url:'http://rchiips.org/nfhs/NFHS-5_FCTS/Bihar.pdf',type:'Report'},
+            {title:'National MPI: A Progress Review',author:'NITI Aayog',year:2023,topic:'economy',url:'https://www.niti.gov.in/sites/default/files/2023-07/National-Multidimensional-Poverty-Index-2023-Final.pdf',type:'Report'},
+            {title:'Migration and Human Development in India',author:'Deshingkar, P. & Akter, S.',year:2009,topic:'migration',url:'https://hdr.undp.org/content/migration-and-human-development-india',type:'Paper'},
+            {title:'Temporary and Seasonal Migration in Bihar',author:'Keshri, K. & Bhagat, R.B.',year:2012,topic:'migration',url:'',type:'Paper (EPW 47:4)'},
+            {title:'Bihar Caste Survey Report 2022-23',author:'Govt. of Bihar',year:2023,topic:'caste',url:'',type:'Government Report'},
+            {title:'The Naxalites and Their Ideology (Bihar focus)',author:'Bhatia, B.',year:2005,topic:'caste',url:'',type:'Paper (EPW)'},
+            {title:'Everyday Resistance to Untouchability in Bihar',author:'Kunnath, G.',year:2012,topic:'caste',url:'',type:'Book'},
+            {title:'Annual Status of Education Report (Rural) 2022',author:'ASER Centre',year:2023,topic:'education',url:'https://asercentre.org/aser-2022/',type:'Report'},
+            {title:'Bihar Economic Survey 2022-23',author:'Finance Dept., GoB',year:2023,topic:'economy',url:'https://state.bihar.gov.in/finance/',type:'Government Report'},
+            {title:'RBI Handbook of Statistics on Indian States',author:'RBI',year:2023,topic:'economy',url:'https://rbi.org.in/Scripts/AnnualPublications.aspx?head=Handbook%20of%20Statistics%20on%20Indian%20States',type:'Data'},
+            {title:'Nalanda Mahavihara -- UNESCO Nomination Dossier',author:'UNESCO/ASI',year:2016,topic:'culture',url:'https://whc.unesco.org/en/list/1502',type:'Heritage Document'},
+            {title:'Mahabodhi Temple Complex -- UNESCO Entry',author:'UNESCO',year:2002,topic:'culture',url:'https://whc.unesco.org/en/list/1056',type:'Heritage Document'},
+            {title:'Bihar Flood Reports (Annual)',author:'CWC',year:2022,topic:'flood',url:'https://cwc.gov.in/',type:'Data'},
+            {title:'Kosi: The Price of Taming a River',author:'Mishra, D.K.',year:2008,topic:'flood',url:'',type:'Paper'},
+            {title:'Bihar UDISE+ School Statistics',author:'MoE',year:2022,topic:'education',url:'https://udiseplus.gov.in/',type:'Data'},
+            {title:'India State of Forest Report -- Bihar',author:'FSI',year:2021,topic:'flood',url:'https://fsi.nic.in/',type:'Report'},
+            {title:'Sachar Committee Report (Muslim socio-economic status)',author:'GoI',year:2006,topic:'caste',url:'',type:'Government Report'},
+            {title:'SDG India Index 2020-21',author:'NITI Aayog',year:2021,topic:'governance',url:'https://sdgindiaindex.niti.gov.in/',type:'Report'},
+            {title:'Women and Men in India 2022 (Bihar data)',author:'MoSPI',year:2022,topic:'caste',url:'https://mospi.gov.in/',type:'Data'},
+            {title:'Chattopadhyay & Duflo: Women as Policy Makers (Panchayat study)',author:'Chattopadhyay, R. & Duflo, E.',year:2004,topic:'governance',url:'',type:'Paper (Econometrica 72:5)'},
+            {title:'History of Mithila',author:'Thakur, U.',year:1956,topic:'culture',url:'',type:'Book'},
+            {title:'Census of India 2011 -- Bihar Tables',author:'RGI',year:2011,topic:'caste',url:'https://censusindia.gov.in/',type:'Data'}
+        ];
+
+        let activeReadingTopic = 'all';
+        function toggleReadingChip(el) {
+            document.querySelectorAll('#reading-chips .chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            activeReadingTopic = el.dataset.topic;
+            renderReadingList();
+        }
+
+        function renderReadingList() {
+            const container = document.getElementById('reading-result');
+            const filtered = activeReadingTopic === 'all' ? READING_LIST : READING_LIST.filter(r => r.topic === activeReadingTopic);
+            container.innerHTML = filtered.map(r => {
+                const link = r.url ? '<a href="' + r.url + '" target="_blank" rel="noopener noreferrer">' + r.title + '</a>' : r.title;
+                return '<div class="reading-item">' + link + '<div class="reading-meta">' + r.author + ' (' + r.year + ') -- ' + r.type + '</div></div>';
+            }).join('') || '<p style="color:var(--text-tertiary)">No results for this topic.</p>';
+        }
+
+        // Tools initialization
+        function initTools() {
+            // Populate district dropdowns
+            const districts = Object.keys(DISTRICT_DATA).sort();
+            ['district-select','flood-select'].forEach(id => {
+                const sel = document.getElementById(id);
+                if (!sel) return;
+                const pool = id === 'flood-select' ? Object.keys(FLOOD_DATA).sort() : districts;
+                pool.forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; sel.appendChild(o); });
+            });
+
+            // Comparator chips
+            const chipContainer = document.getElementById('comparator-chips');
+            if (chipContainer) {
+                districts.forEach(d => {
+                    const span = document.createElement('span');
+                    span.className = 'chip';
+                    span.dataset.district = d;
+                    span.textContent = d;
+                    span.onclick = function() { this.classList.toggle('active'); };
+                    chipContainer.appendChild(span);
+                });
+            }
+
+            // Initial lexicon render
+            searchLexicon();
+            // Initial reading list render
+            renderReadingList();
+        }
+
         // Lazy initialization: init charts/maps when their tab is first shown
         const initialized = {};
         const sectionInits = {
@@ -1992,7 +2208,8 @@
             'demographics': () => initDemographicsCharts(),
             'economy': () => initEconomyCharts(),
             'social-issues': () => initSocialCharts(),
-            'data': () => { initDataCharts(); initHeritageMap(); }
+            'data': () => { initDataCharts(); initHeritageMap(); },
+            'tools': () => { initTools(); }
         };
 
         const origSwitchTab = switchTab;
