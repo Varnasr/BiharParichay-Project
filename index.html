@@ -645,8 +645,6 @@
                     <li><a href="#perspectives">Stories</a></li>
                     <li><a href="#data">Data</a></li>
                     <li><a href="#tools">Tools</a></li>
-                    <li><a href="#briefing">Briefing</a></li>
-                    <li><a href="#compare">Compare</a></li>
                     <li><a href="#references">Sources</a></li>
                 </ul>
                 <button class="nav-cmd-btn" onclick="openCmdOverlay()" title="Quick navigation (Ctrl+K)">&#8984;K</button>
@@ -2848,28 +2846,34 @@
                         </div>
                     </div>
 
+                    <!-- Tool 17: District Briefing -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('briefing-tool')">
+                            <h4>District Briefing</h4>
+                            <span class="tool-toggle" id="briefing-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="briefing-tool">
+                            <p class="tool-desc">Everything about one district on one page -- data, issues, schemes, flood risk, constituency. Printable.</p>
+                            <select class="tool-select" id="briefing-district" onchange="generateBriefing()" style="max-width:320px;">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div id="briefing-content"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 18: Bihar vs States -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('compare-tool')">
+                            <h4>Bihar vs States</h4>
+                            <span class="tool-toggle" id="compare-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="compare-tool">
+                            <p class="tool-desc">Compare Bihar against 9 states on 9 indicators. Interactive chart + full data table.</p>
+                            <div id="compare-content"></div>
+                        </div>
+                    </div>
+
                 </div>
-            </section>
-
-            <section id="briefing" class="content-section">
-                <h2 class="section-title">District Briefing</h2>
-                <div class="hindi-sub">&#x091C;&#x093F;&#x0932;&#x093E; &#x092C;&#x094D;&#x0930;&#x0940;&#x092B;&#x093F;&#x0902;&#x0917;</div>
-                <p class="section-subtitle lang-en">Everything about one district on one page -- data, issues, schemes, flood risk, and constituency</p>
-                <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">एक जिले की पूरी जानकारी एक पेज पर -- आँकड़े, मुद्दे, योजनाएँ, बाढ़ जोखिम, और निर्वाचन क्षेत्र</p>
-
-                <select class="tool-select" id="briefing-district" onchange="generateBriefing()" style="max-width:320px;margin-bottom:20px;">
-                    <option value="">-- Select a district --</option>
-                </select>
-                <div id="briefing-content"></div>
-            </section>
-
-            <section id="compare" class="content-section">
-                <h2 class="section-title">Compare</h2>
-                <div class="hindi-sub">&#x0924;&#x0941;&#x0932;&#x0928;&#x093E;</div>
-                <p class="section-subtitle lang-en">Bihar vs other states -- where does it actually stand?</p>
-                <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार बनाम अन्य राज्य -- वास्तव में कहाँ खड़ा है?</p>
-
-                <div id="compare-content"></div>
             </section>
 
             <section id="references" class="content-section">
@@ -4688,9 +4692,9 @@
             'economy': () => initEconomyCharts(),
             'social-issues': () => initSocialCharts(),
             'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); setTimeout(updateDistrictMap, 200); },
-            'tools': () => { initTools(); },
-            'briefing': () => { initBriefingDropdown(); },
-            'compare': () => { initCompare(); }
+            'tools': () => { initTools(); initBriefingDropdown(); initCompare(); },
+            'briefing': () => { initBriefingDropdown(); }, /* kept for direct hash access */
+            'compare': () => { initCompare(); } /* kept for direct hash access */
         };
 
         const origSwitchTab = switchTab;
