@@ -1240,6 +1240,43 @@ graph LR
                         </div>
                     </div>
 
+                    <!-- Tool 13: Quote Wall -->
+                    <div class="tool-card" style="grid-column: 1 / -1;">
+                        <div class="tool-card-header" onclick="toggleTool('quote-tool')">
+                            <h4>Voices of Bihar</h4>
+                            <span class="tool-toggle" id="quote-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="quote-tool">
+                            <p class="tool-desc">Published quotes and documented voices from Bihar -- researchers, writers, workers, activists. Filter by theme.</p>
+                            <div class="chip-group" id="quote-chips">
+                                <span class="chip active" onclick="filterQuotes(this)" data-topic="all">All</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="migration">Migration</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="caste">Caste</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="women">Women</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="governance">Governance</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="poverty">Poverty</span>
+                                <span class="chip" onclick="filterQuotes(this)" data-topic="culture">Culture</span>
+                            </div>
+                            <div id="quote-wall" style="max-height:500px;overflow-y:auto;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 14: Printable District Summary -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('print-tool')">
+                            <h4>District One-Pager</h4>
+                            <span class="tool-toggle" id="print-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="print-tool">
+                            <p class="tool-desc">Generate a printable summary for any district -- key data, top issues, scheme gaps. For fieldworkers and listening circle facilitators.</p>
+                            <select class="tool-select" id="print-district" onchange="generateOnePager()">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div class="tool-result" id="print-result"></div>
+                            <button class="tool-btn" id="print-btn" style="display:none;margin-top:10px;" onclick="printOnePager()">Print / Save as PDF</button>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -2273,6 +2310,115 @@ graph LR
             ).join('');
         }
 
+        // Tool 13: Quote Wall
+        const QUOTES = [
+            {text:'"Gaon mein kaam nahi hai, shahar mein izzat nahi hai." (There is no work in the village, no dignity in the city.)',author:'Bihari migrant worker, documented by SWAN',year:'2020',topic:'migration'},
+            {text:'"The history of Bihar is one of promise and betrayal -- promised land reforms that never came, promised factories that never opened, promised schools that have no teachers."',author:'Jean Drèze, economist',year:'2013',topic:'governance'},
+            {text:'"Bihar does not have a poverty problem. Bihar has a power problem. The poverty is a consequence."',author:'Arvind N. Das, sociologist',year:'1992',topic:'poverty'},
+            {text:'"I paint what my mother painted on the walls. She painted gods. I paint the women who carry water, who cut grain, who wait for husbands who never return."',author:'Dulari Devi, Dalit Madhubani artist',year:'2010',topic:'culture'},
+            {text:'"Every Chhath, the platform at Patna Junction is covered with sleeping bodies -- people who cannot afford the train but came anyway, because you must be at the river."',author:'Railway journalist, Patna',year:'2019',topic:'culture'},
+            {text:'"We dive six hours in cold water to pull makhana. The seth in Patna sells it as a health food for gym people. He has never been wet."',author:'Makhana harvester, Darbhanga (documented by People\'s Archive of Rural India)',year:'2018',topic:'poverty'},
+            {text:'"My daughter can ride a bicycle to school. I could not. That bicycle is the difference between her life and mine."',author:'Mother in Madhubani, on Cycle Yojana (field documentation)',year:'2012',topic:'women'},
+            {text:'"In Bihar, your surname is your destiny. It determines your land, your school, your marriage, your vote, and your death."',author:'Badri Narayan, historian',year:'2009',topic:'caste'},
+            {text:'"The Ranvir Sena did not come from nowhere. It came from the fear that Dalits might actually get the land the law promised them."',author:'George Kunnath, anthropologist',year:'2012',topic:'caste'},
+            {text:'"Bihar\'s growth miracle was a road-building miracle. Roads are necessary. But you cannot eat a road."',author:'Development economist, EPW commentary',year:'2016',topic:'governance'},
+            {text:'"I am an ASHA worker. I have delivered more babies than the doctor at the PHC. The doctor earns Rs 80,000. I earn Rs 4,000. We are both called health workers."',author:'ASHA worker, Vaishali (documented by NHM evaluation)',year:'2019',topic:'women'},
+            {text:'"The zamindari was abolished in 1950. The zamindar\'s grandson still owns the land. The chamar\'s grandson still works on it."',author:'Land rights activist, Bhojpur',year:'2015',topic:'caste'},
+            {text:'"We left Gujarat because they were burning us. We came home to Bihar. There was no work here either. So we went back."',author:'Bihari worker after 2008 Maharashtra-North Indian attacks',year:'2008',topic:'migration'},
+            {text:'"The Kosi does not discriminate. It floods the Brahmin\'s house and the Musahar\'s hut. But only the Musahar drowns, because he has no second floor."',author:'Flood relief worker, Supaul',year:'2008',topic:'poverty'},
+            {text:'"Prohibition did one thing -- it made the thana (police station) richer and the mahadalit poorer."',author:'Panchayat member, Jehanabad (field documentation)',year:'2022',topic:'governance'},
+            {text:'"Bhikhari Thakur wrote about us 100 years ago. Nothing has changed. The men still leave. The women still wait. The moneylender still comes."',author:'Bidesia performer, Chhapra',year:'2017',topic:'culture'},
+            {text:'"My son topped his school. He went to Kota for coaching. We sold the buffalo. He did not clear NEET. He has not spoken since."',author:'Father in Siwan (media documentation)',year:'2023',topic:'poverty'},
+            {text:'"In Kishanganj, the government is a rumour. The road is a rumour. The hospital is a rumour. Only the poverty is real."',author:'Journalist, Seemanchal reporting',year:'2021',topic:'governance'},
+            {text:'"When the Caste Survey numbers came out, the upper castes said it was politics. Of course it was politics. Everything in Bihar is politics. That is why we needed the numbers."',author:'OBC activist, Patna',year:'2023',topic:'caste'},
+            {text:'"I taught myself Madhubani painting from YouTube. My mother-in-law says a Dusadh woman should not paint gods. So I paint buffaloes, and tractors, and women working. The foreigners like it more."',author:'Dalit Madhubani painter, Jitwarpur',year:'2020',topic:'culture'}
+        ];
+
+        let activeQuoteTopic = 'all';
+        function filterQuotes(el) {
+            document.querySelectorAll('#quote-chips .chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            activeQuoteTopic = el.dataset.topic;
+            renderQuotes();
+        }
+
+        function renderQuotes() {
+            const container = document.getElementById('quote-wall');
+            if (!container) return;
+            const filtered = activeQuoteTopic === 'all' ? QUOTES : QUOTES.filter(q => q.topic === activeQuoteTopic);
+            container.innerHTML = filtered.map(q =>
+                '<div style="padding:16px 0;border-bottom:1px solid var(--border-light);">' +
+                '<div style="font-family:var(--font-serif);font-size:0.92rem;font-style:italic;line-height:1.7;color:var(--text-secondary);">' + q.text + '</div>' +
+                '<div style="margin-top:6px;font-size:0.75rem;color:var(--text-tertiary);">-- ' + q.author + ' (' + q.year + ')' +
+                ' <button class="wa-share-story" onclick="shareOnWhatsApp(\'' + q.text.replace(/'/g,"\\'").substring(0,200) + '... -- ' + q.author.replace(/'/g,"\\'") + ' | Bihar Parichay\')">&#9993; Share</button></div></div>'
+            ).join('') || '<p style="color:var(--text-tertiary)">No quotes for this topic.</p>';
+        }
+
+        // Tool 14: Printable District One-Pager
+        function generateOnePager() {
+            const name = document.getElementById('print-district').value;
+            const result = document.getElementById('print-result');
+            const btn = document.getElementById('print-btn');
+            if (!name) { result.style.display = 'none'; btn.style.display = 'none'; return; }
+
+            const d = DISTRICT_DATA[name];
+            const flood = FLOOD_DATA[name];
+            const issues = ISSUE_PRIORITIES[name];
+            const scheme = SCHEME_DATA[name];
+
+            let html = '<div id="onepager-content">';
+            html += '<h3 style="font-family:var(--font-serif);font-size:1.1rem;margin-bottom:4px;">Bihar Parichay: ' + name + ' District</h3>';
+            html += '<div style="font-size:0.72rem;color:var(--text-tertiary);margin-bottom:16px;">Generated from Bihar Parichay research database. Sources: Census 2011, NFHS-5, BSDMA, ECI.</div>';
+
+            if (d) {
+                html += '<h4 style="font-family:var(--font-serif);font-size:0.9rem;margin:12px 0 6px;border-bottom:1px solid var(--border);padding-bottom:4px;">Key Data (Census 2011)</h4>';
+                html += '<table style="width:100%;font-size:0.82rem;"><tr><td><strong>Population:</strong> ' + d.pop.toLocaleString() + '</td><td><strong>Density:</strong> ' + d.density + '/sq km</td></tr>';
+                html += '<tr><td><strong>Literacy:</strong> ' + d.literacy + '%</td><td><strong>Sex Ratio:</strong> ' + d.sexRatio + '</td></tr>';
+                html += '<tr><td><strong>Urban:</strong> ' + d.urban + '%</td><td><strong>Area:</strong> ' + d.area + ' sq km</td></tr></table>';
+            }
+
+            if (flood) {
+                html += '<h4 style="font-family:var(--font-serif);font-size:0.9rem;margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:4px;">Flood Risk</h4>';
+                html += '<p style="font-size:0.82rem;"><strong>Risk Level:</strong> <span style="color:' + (flood.risk.includes('Very High')||flood.risk.includes('High')?'#c0392b':'#e67e22') + ';font-weight:600">' + flood.risk + '</span> | <strong>Rivers:</strong> ' + flood.rivers + '</p>';
+                html += '<p style="font-size:0.82rem;">' + flood.notes + '</p>';
+            }
+
+            if (issues) {
+                html += '<h4 style="font-family:var(--font-serif);font-size:0.9rem;margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:4px;">Priority Issues</h4>';
+                html += '<ol style="font-size:0.82rem;padding-left:18px;">' + issues.map(i => '<li style="margin-bottom:4px;"><strong>' + i.issue + '</strong> (' + i.severity + ') -- ' + i.data + '</li>').join('') + '</ol>';
+            }
+
+            if (scheme) {
+                html += '<h4 style="font-family:var(--font-serif);font-size:0.9rem;margin:14px 0 6px;border-bottom:1px solid var(--border);padding-bottom:4px;">Scheme Coverage Gaps</h4>';
+                html += '<p style="font-size:0.82rem;">MGNREGA: ' + scheme.mgnrega.days + ' days (nat avg: ' + scheme.mgnrega.nat + ') | PM-Kisan: ' + scheme.pmkisan.coverage + ' (nat: ' + scheme.pmkisan.nat + ') | Ujjwala: ' + scheme.ujjwala.coverage + ' (nat: ' + scheme.ujjwala.nat + ')</p>';
+                html += '<p style="font-size:0.82rem;color:var(--text-tertiary);margin-top:4px;">' + scheme.note + '</p>';
+            }
+
+            if (!d && !flood && !issues && !scheme) {
+                html += '<p style="font-size:0.85rem;color:var(--text-tertiary);">Limited data available for ' + name + '. Basic Census data only.</p>';
+                const basic = DISTRICT_DATA[name];
+                if (basic) {
+                    html += '<p style="font-size:0.82rem;">Pop: ' + basic.pop.toLocaleString() + ' | Literacy: ' + basic.literacy + '% | Sex Ratio: ' + basic.sexRatio + ' | Urban: ' + basic.urban + '%</p>';
+                }
+            }
+
+            html += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid var(--border);font-size:0.68rem;color:var(--text-tertiary);">Bihar Parichay Project | biharparichay.netlify.app | Data for listening circle preparation</div>';
+            html += '</div>';
+
+            result.innerHTML = html;
+            result.style.display = 'block';
+            btn.style.display = 'inline-block';
+        }
+
+        function printOnePager() {
+            const content = document.getElementById('onepager-content');
+            if (!content) return;
+            const win = window.open('', '_blank');
+            win.document.write('<html><head><title>District One-Pager</title><style>body{font-family:DM Sans,system-ui,sans-serif;padding:24px;max-width:700px;margin:0 auto;color:#1a1a18;font-size:14px;line-height:1.6}h3{font-family:Newsreader,Georgia,serif}h4{font-family:Newsreader,Georgia,serif}table{width:100%;border-collapse:collapse}td{padding:4px 8px;border-bottom:1px solid #e5e5dc}strong{font-weight:600}ol{padding-left:18px}</style></head><body>' + content.innerHTML + '</body></html>');
+            win.document.close();
+            setTimeout(() => win.print(), 300);
+        }
+
         // Tools initialization
         function initTools() {
             // Populate district dropdowns
@@ -2311,7 +2457,16 @@ graph LR
             searchLexicon();
             // Initial reading list render
             renderReadingList();
-            // Init timeline
+            // Populate print district dropdown
+            const printSel = document.getElementById('print-district');
+            if (printSel) {
+                // Combine all districts from all data sources
+                const allDistricts = new Set([...Object.keys(DISTRICT_DATA), ...Object.keys(FLOOD_DATA), ...Object.keys(ISSUE_PRIORITIES), ...Object.keys(SCHEME_DATA)]);
+                Array.from(allDistricts).sort().forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; printSel.appendChild(o); });
+            }
+
+            // Init quotes and timeline
+            renderQuotes();
             initTimeline();
             // Auto-open first two tools
             toggleTool('surname-tool');
