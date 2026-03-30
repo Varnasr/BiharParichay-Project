@@ -226,6 +226,25 @@
         .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
         .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
 
+        /* === TOOL CATEGORIES === */
+        .tool-category { margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+        .tool-category:first-child { margin-top: 0; }
+        .tool-category h3 { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+        .tool-category p { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 2px; }
+
+        /* === CRAFTS === */
+        .craft-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: box-shadow 0.15s, transform 0.15s; }
+        .craft-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .craft-card-accent { height: 4px; background: var(--madhubani); }
+        .craft-card-body { padding: 22px; }
+        .craft-card-body h4 { font-family: var(--font-serif); font-size: 0.95rem; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+        .craft-card-body .craft-origin { font-size: 0.72rem; color: var(--text-tertiary); margin-bottom: 10px; font-style: italic; }
+        .craft-card-body p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+        .craft-economics { background: var(--surface-alt); border-radius: var(--radius); padding: 10px 14px; margin-top: 10px; font-size: 0.78rem; }
+        .craft-economics strong { color: var(--accent); }
+        .crafts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 20px; }
+        @media (max-width: 600px) { .crafts-grid { grid-template-columns: 1fr; } }
+
         /* === BACK TO TOP === */
         .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 38px; height: 38px; background: var(--accent); color: #fff; border: none; border-radius: 50%; font-size: 16px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 99; transition: transform 0.15s; }
         .back-to-top.visible { display: flex; }
@@ -459,6 +478,7 @@
                     <li><a href="#people">People</a></li>
                     <li><a href="#food">Food</a></li>
                     <li><a href="#culture">Culture</a></li>
+                    <li><a href="#crafts">Crafts</a></li>
                     <li><a href="#perspectives">Stories</a></li>
                     <li><a href="#data">Data</a></li>
                     <li><a href="#tools">Tools</a></li>
@@ -1037,6 +1057,100 @@ graph LR
                     </div>
                 </div>
             </section>
+            <section id="crafts" class="content-section">
+                <h2 class="section-title">Crafts of Bihar</h2>
+                <div class="hindi-sub">&#x092C;&#x093F;&#x0939;&#x093E;&#x0930; &#x0915;&#x0940; &#x0939;&#x0938;&#x094D;&#x0924;&#x0915;&#x0932;&#x093E;&#x090F;&#x0901;</div>
+                <p class="section-subtitle lang-en">Six living craft traditions -- who makes them, who profits, and what's being lost</p>
+                <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">छह जीवित हस्तकला परंपराएँ -- कौन बनाता है, मुनाफ़ा किसे मिलता है, और क्या खो रहा है</p>
+
+                <div class="crafts-grid">
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Madhubani / Mithila Painting</h4>
+                            <div class="craft-origin">Madhubani, Darbhanga districts | GI Tag: 2007 | Practised primarily by women</div>
+                            <p>Centuries-old tradition of wall and floor painting using natural pigments, characterised by geometric patterns, vivid colours, and mythological/natural themes. Two main styles: Bharni (coloured, traditionally upper-caste women) and Kachni (line drawing, increasingly practised by Dalit women who are creating powerful counter-narratives depicting labour, dignity, and daily life rather than mythology).</p>
+                            <p>Celebrated practitioners include Padma Shri <strong>Sita Devi</strong> (1914-2005), <strong>Ganga Devi</strong> (1928-1991, exhibited at MoMA, Smithsonian), and contemporary Dalit artist <strong>Dulari Devi</strong> who taught herself to paint and now exhibits internationally.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> An artist in Jitwarpur village spends weeks on a painting, sells to visiting dealers for Rs 500-2,000. The same painting retails in Delhi galleries or online for Rs 25,000-1,00,000. The GI tag has not changed village economics. International recognition has not translated into fair prices for makers.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Sujini Embroidery</h4>
+                            <div class="craft-origin">Muzaffarpur, Vaishali, Saran districts | Women's quilting tradition</div>
+                            <p>Sujini involves quilting layers of old saris together with intricate narrative threadwork. Originally a utilitarian practice -- repurposing worn fabric into usable blankets -- it evolved into an art form depicting village life, festivals, animals, and increasingly, social commentary. The narratives stitched into Sujini quilts are often autobiographical: women stitch stories of their marriages, children, harvests, and floods.</p>
+                            <p>Government craft promotion programmes and NGOs like ADITHI (now defunct) helped Sujini artisans access urban markets. But the model remains fragile -- without institutional buyers, artisans revert to making quilts for family use.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> A Sujini quilt takes 2-4 weeks to complete. Village price: Rs 500-1,500. Urban retail: Rs 3,000-15,000. Most artisans are landless or marginal farmer women for whom stitching is supplementary income, not livelihood.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Sikki Grass Craft</h4>
+                            <div class="craft-origin">Madhubani, Darbhanga, Sitamarhi districts | Women's craft using golden Sikki grass</div>
+                            <p>Sikki (Saccharum munja) is a golden-coloured wild grass harvested from wetlands. Women in Mithila coil and weave it into ornamental baskets, containers, animal figures, and decorative objects. The golden shimmer of Sikki gives the products a distinctive appearance. It is exclusively a women's craft, passed from mother to daughter-in-law, practised primarily by EBC and SC women.</p>
+                            <p>The craft faces an existential threat: <strong>wetland shrinkage</strong> due to climate change and encroachment is reducing Sikki grass availability. Younger women prefer migration-linked income (husband's remittances) over the painstaking labour of Sikki weaving.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> A set of Sikki baskets: Rs 200-800 at village level, Rs 1,500-5,000 in urban craft exhibitions. Raw material increasingly scarce. No formal supply chain or cold storage for grass preservation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Tikuli Art</h4>
+                            <div class="craft-origin">Patna | Glass bead and lacquer work | Nearly extinct</div>
+                            <p>Tikuli is a form of miniature painting on small pieces of glass, originally used as forehead decorations (bindis) by women in the Mughal and post-Mughal period. Patna was once a major centre of Tikuli production. The craft involves applying gold and silver leaf on glass, then painting intricate designs using fine brushes. The level of detail rivals Persian miniature painting.</p>
+                            <p>Tikuli art is <strong>critically endangered</strong>. Fewer than a dozen artisans in Patna still practise it. The shift to machine-made bindis destroyed the commercial market. Government revival efforts exist but have been sporadic and underfunded.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> A Tikuli piece takes 3-7 days. Museum-quality pieces sell for Rs 5,000-50,000 at exhibitions, but there are almost no regular buyers. The art survives on government commissions and occasional exhibitions, not market demand.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Manjusha Art</h4>
+                            <div class="craft-origin">Bhagalpur, Banka districts | Narrative scroll painting on boxes</div>
+                            <p>Manjusha art involves painting on temple-shaped boxes (manjusha) used in the Bishhari Puja festival of the Anga region. The distinctive style features serpent motifs and narrative scenes from the Bihula-Bishari legend. It is one of India's few surviving scroll-like narrative painting traditions, predating Mughal miniature painting.</p>
+                            <p>The art form nearly disappeared in the mid-20th century and has been revived through efforts by local artists and academic documentation. It remains confined to a small number of families in the Bhagalpur region.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> A Manjusha painting takes 1-3 weeks. Prices range from Rs 1,000-20,000 depending on size and detail. Market is primarily institutional (government buildings, cultural centres) and collector-driven.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="craft-card">
+                        <div class="craft-card-accent"></div>
+                        <div class="craft-card-body">
+                            <h4>Lacquerware &amp; Wood Carving</h4>
+                            <div class="craft-origin">Muzaffarpur, Hajipur, across Bihar | Traditional artisan communities (Barhi, Lohar)</div>
+                            <p>Bihar has a long tradition of lacquerware -- wooden toys, bangles, and decorative items coated in coloured lac. Muzaffarpur is the main centre. The craft is practised by Barhi (carpenter) and related EBC communities. Wood carving for furniture, doors, and temple decorations also has a strong tradition in south Bihar.</p>
+                            <p>Like many traditional crafts, lacquerware faces competition from <strong>cheap plastic alternatives</strong> and loss of skilled artisans to migration. The irony: many Bihar craft artisans who migrate work in factories making the machine-produced goods that replaced their handmade products.</p>
+                            <div class="craft-economics">
+                                <strong>Economics:</strong> Lac bangles: Rs 50-200/set (once a staple purchase at every Bihar mela). Carved wooden items: Rs 500-10,000. Artisan monthly income from craft alone: Rs 3,000-8,000 -- less than unskilled migration wage of Rs 10,000-15,000.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="madhubani-panel" style="margin-top:28px;">
+                    <div class="mp-title lang-en">The Craft Economy's Central Problem</div>
+                    <div class="mp-title lang-hi" style="font-family:'Noto Serif Devanagari',serif;">हस्तकला अर्थव्यवस्था की मूल समस्या</div>
+                    <div class="mp-text lang-en">Bihar's crafts share a common structural problem: <strong>the maker earns a fraction of the retail price</strong>. GI tags, government exhibitions, and NGO interventions have increased visibility but have not fundamentally changed the economics. The value chain is captured by middlemen, urban retailers, and online platforms. A Madhubani painting that sells for Rs 50,000 in a gallery gives Rs 2,000 to the artist. A Sujini quilt retailing at Rs 10,000 gives Rs 1,000 to the woman who stitched it for a month. Until artisans have <strong>direct market access, fair trade infrastructure, and collective bargaining power</strong>, Bihar's crafts will remain beautiful objects produced by poor people for the enjoyment of rich ones.</div>
+                    <div class="mp-text lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार की हस्तकलाओं में एक साझा संरचनात्मक समस्या है: <strong>बनाने वाले को खुदरा मूल्य का एक अंश ही मिलता है</strong>। GI टैग, सरकारी प्रदर्शनियों और NGO हस्तक्षेपों ने दृश्यता बढ़ाई है लेकिन अर्थशास्त्र को मूल रूप से नहीं बदला। मूल्य श्रृंखला बिचौलियों, शहरी खुदरा विक्रेताओं और ऑनलाइन प्लेटफ़ॉर्म द्वारा कब्ज़ा की गई है। जब तक कारीगरों को <strong>सीधी बाज़ार पहुँच, उचित व्यापार ढाँचा और सामूहिक सौदेबाज़ी की शक्ति</strong> नहीं मिलती, बिहार की हस्तकलाएँ गरीब लोगों द्वारा बनाई गई सुंदर वस्तुएँ बनी रहेंगी जिनका आनंद अमीर लोग उठाते हैं।</div>
+                </div>
+            </section>
+
             <section id="perspectives" class="content-section">
                 <h2 class="section-title">Perspectives</h2>
                 <div class="hindi-sub">&#x0926;&#x0943;&#x0937;&#x094D;&#x091F;&#x093F;&#x0915;&#x094B;&#x0923;</div>
@@ -1296,6 +1410,7 @@ graph LR
                 <div class="hindi-sub">&#x0936;&#x094B;&#x0927; &#x0909;&#x092A;&#x0915;&#x0930;&#x0923;</div>
                 <p class="section-subtitle">Interactive, data-first tools for Bihar-specific research -- all sources verifiable</p>
 
+                <div class="tool-category"><h3>Lookup &amp; Explore</h3><p>Search Bihar's demographic, electoral, and geographic data</p></div>
                 <div class="tools-grid">
 
                     <!-- Tool 1: Caste/Surname Lookup -->
@@ -1373,8 +1488,6 @@ graph LR
 
                     <!-- Tool 6: Reading List Generator -->
 
-                    <!-- NEW TOOLS -->
-
                     <!-- Tool 7: Constituency Lookup -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('constituency-tool')">
@@ -1389,6 +1502,10 @@ graph LR
                             <div class="tool-result" id="constituency-result"></div>
                         </div>
                     </div>
+
+                </div>
+                <div class="tool-category"><h3>Analysis &amp; Planning</h3><p>Issue mapping, scheme gaps, and election data for fieldwork preparation</p></div>
+                <div class="tools-grid">
 
                     <!-- Tool 8: Issue Priority Ranker -->
                     <div class="tool-card">
@@ -1441,6 +1558,10 @@ graph LR
                         </div>
                     </div>
 
+                </div>
+                <div class="tool-category"><h3>Maps, Data &amp; History</h3><p>Visual exploration of Bihar's districts and timeline</p></div>
+                <div class="tools-grid">
+
                     <!-- Tool 10: District Map -->
                     <div class="tool-card" style="grid-column: 1 / -1;">
                         <div class="tool-card-header" onclick="toggleTool('map-tool')">
@@ -1491,6 +1612,10 @@ graph LR
                             <div id="timeline-container" style="max-height:500px;overflow-y:auto;"></div>
                         </div>
                     </div>
+
+                </div>
+                <div class="tool-category"><h3>Voices &amp; Resources</h3><p>Published quotes, reading lists, and printable materials for fieldworkers</p></div>
+                <div class="tools-grid">
 
                     <!-- Tool 13: Quote Wall -->
                     <div class="tool-card" style="grid-column: 1 / -1;">
