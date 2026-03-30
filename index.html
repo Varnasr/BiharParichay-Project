@@ -718,6 +718,26 @@
             </section>
             <section id="social-issues" class="content-section">
                 <h2 class="section-title">Social Issues &amp; Challenges</h2>
+                <p class="section-subtitle">Poverty, floods, health, education gaps, gender, and migration</p>
+                <div class="section-prose">
+                    <p><strong>Poverty &amp; Inequality.</strong> Bihar has the highest incidence of multidimensional poverty in India. According to the NITI Aayog's National Multidimensional Poverty Index (2021), 51.91% of Bihar's population was multidimensionally poor -- the highest share among all states. While this represents significant improvement from 77.4% in 2005-06, the absolute numbers remain staggering. Poverty is concentrated in rural areas and disproportionately affects SC/ST and EBC households.</p>
+                    <p><strong>Flooding.</strong> North Bihar is among India's most flood-prone regions. The Kosi, Gandak, Bagmati, Kamla, and Burhi Gandak rivers, originating in Nepal, carry enormous sediment loads that elevate riverbeds over time. An estimated 73.06% of the North Bihar plain is flood-affected (Bihar State Disaster Management Authority). The 2008 Kosi embankment breach displaced 3.3 million people across 993 villages. Annual monsoon flooding continues to affect 15-20 million people, destroy crops, and damage infrastructure.</p>
+                    <p><strong>Health.</strong> Key health indicators from NFHS-5 (2019-21) show Bihar lagging behind national averages: the Infant Mortality Rate stands at 46.8 per 1,000 live births (India: 35.2), under-5 stunting at 42.9% (India: 35.5%), and full immunisation coverage at 75.9% (India: 76.4%). The Total Fertility Rate of 3.0 remains the highest in India, contributing to rapid population growth. The institutional delivery rate has improved significantly to 74.4% but gaps persist in rural areas.</p>
+                    <p><strong>Education.</strong> Despite improvements in enrolment driven by schemes like the mid-day meal programme and Mukhyamantri Cycle Yojana (providing bicycles to girls), quality remains a concern. The ASER 2022 report found that only 27.8% of Class V students in Bihar could read a Class II level text, and learning outcomes consistently rank among the lowest nationally. Teacher absenteeism and vacant posts (estimated at 1.5-2 lakh unfilled positions) compound these challenges.</p>
+                    <p><strong>Gender.</strong> Bihar has one of India's highest rates of child marriage. NFHS-5 reports that 40.8% of women aged 20-24 were married before age 18 (India: 23.3%). Women's workforce participation is low -- only 9.8% of women aged 15-49 are employed (NFHS-5). These indicators reflect deeply rooted patriarchal norms that limit women's mobility, education, and economic agency.</p>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>Health Indicators: Bihar vs India (NFHS-5)</h4>
+                        <canvas id="healthChart"></canvas>
+                        <p class="chart-source">Source: National Family Health Survey 5, 2019-21</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Multidimensional Poverty Headcount (%)</h4>
+                        <canvas id="povertyChart"></canvas>
+                        <p class="chart-source">Source: NITI Aayog MPI 2021; Oxford MPI 2023</p>
+                    </div>
+                </div>
             </section>
             <section id="people" class="content-section">
                 <h2 class="section-title">Notable People &amp; Leadership</h2>
@@ -937,6 +957,36 @@
             });
         }
 
+        // Social issues charts
+        function initSocialCharts() {
+            // Health indicators grouped bar
+            new Chart(document.getElementById('healthChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['IMR\n(per 1000)','Stunting\n(%)','Wasting\n(%)','Anaemia\nWomen (%)','Full\nImmun. (%)','Inst.\nDelivery (%)'],
+                    datasets: [
+                        { label: 'Bihar', data: [46.8,42.9,22.0,63.5,75.9,74.4], backgroundColor: 'rgba(192,57,43,0.75)' },
+                        { label: 'India', data: [35.2,35.5,19.3,57.0,76.4,88.6], backgroundColor: 'rgba(74,144,226,0.75)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } }, scales: { y: { beginAtZero: true } } }
+            });
+
+            // Poverty trend
+            new Chart(document.getElementById('povertyChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Bihar\n2005-06','Bihar\n2015-16','Bihar\n2019-21','India\n2005-06','India\n2015-16','India\n2019-21'],
+                    datasets: [{
+                        label: 'MPI Headcount (%)',
+                        data: [77.4,56.0,51.9,55.1,27.9,14.96],
+                        backgroundColor: ['#c0392b','#e67e22','#f1c40f','#7f8c8d','#95a5a6','#bdc3c7']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } } }
+            });
+        }
+
         // Economy charts
         function initEconomyCharts() {
             // GSDP trend
@@ -1056,6 +1106,7 @@
             setTimeout(initMap, 100);
             setTimeout(initDemographicsCharts, 150);
             setTimeout(initEconomyCharts, 200);
+            setTimeout(initSocialCharts, 250);
         };
 
         // Initialize
