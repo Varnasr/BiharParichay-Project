@@ -685,6 +685,36 @@
             </section>
             <section id="economy" class="content-section">
                 <h2 class="section-title">Economy &amp; Development</h2>
+                <p class="section-subtitle">GSDP trends, sectoral composition, agriculture, and migration economy</p>
+                <div class="section-prose">
+                    <p>Bihar's economy presents a paradox of rapid growth from a low base. Between 2005-06 and 2014-15, the state's Gross State Domestic Product (GSDP) grew at an average of 10.5% annually -- among the fastest in India -- driven by improvements in governance, road construction, and public investment. However, Bihar's per capita Net State Domestic Product (NSDP) remains among the lowest nationally: Rs 54,383 in 2021-22 (at current prices), compared to the all-India average of Rs 1,50,726 (RBI Handbook of Statistics on Indian States, 2023).</p>
+                    <p>The economy remains heavily service-oriented by contribution to GSDP, but agriculture continues to employ the majority of the workforce. Over 76% of Bihar's population depends on agriculture and allied activities for livelihood, though agriculture contributes only about 18-20% of GSDP. Key crops include rice (kharif), wheat (rabi), maize, lentils (masoor, arhar), and sugarcane. Bihar is India's largest producer of litchi and makhana (fox nuts), and a significant producer of vegetables.</p>
+                    <p>The remittance economy is a critical but often underappreciated dimension. Bihar is one of India's largest source states for internal migration. Millions of Bihari workers migrate to states like Maharashtra, Gujarat, Delhi, Punjab, and Kerala for employment. Remittances are estimated to contribute significantly to household income, particularly in districts like Darbhanga, Madhubani, Siwan, and Gopalganj (Deshingkar &amp; Akter, 2009; Keshri &amp; Bhagat, 2012).</p>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>GSDP Growth (Rs Lakh Crore, Current Prices)</h4>
+                        <canvas id="gsdpChart"></canvas>
+                        <p class="chart-source">Source: Bihar Economic Survey 2022-23; RBI</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Sectoral Composition of GSDP</h4>
+                        <canvas id="sectorChart"></canvas>
+                        <p class="chart-source">Source: MOSPI, State Domestic Product estimates 2021-22</p>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>Per Capita Income: Bihar vs India vs Top States</h4>
+                        <canvas id="pcIncomeChart"></canvas>
+                        <p class="chart-source">Source: RBI Handbook of Statistics on Indian States, 2023</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Key Agricultural Products</h4>
+                        <canvas id="agriChart"></canvas>
+                        <p class="chart-source">Source: Directorate of Economics &amp; Statistics, MoA&amp;FW 2021-22</p>
+                    </div>
+                </div>
             </section>
             <section id="social-issues" class="content-section">
                 <h2 class="section-title">Social Issues &amp; Challenges</h2>
@@ -907,6 +937,65 @@
             });
         }
 
+        // Economy charts
+        function initEconomyCharts() {
+            // GSDP trend
+            new Chart(document.getElementById('gsdpChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['2012-13','2013-14','2014-15','2015-16','2016-17','2017-18','2018-19','2019-20','2020-21','2021-22'],
+                    datasets: [{
+                        label: 'GSDP (Rs Lakh Crore)',
+                        data: [3.07,3.54,3.83,4.31,4.88,5.33,5.87,6.12,5.89,6.88],
+                        backgroundColor: 'rgba(74,144,226,0.7)',
+                        borderColor: '#4A90E2',
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+
+            // Sectoral composition
+            new Chart(document.getElementById('sectorChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Agriculture & Allied (18.8%)', 'Industry (19.2%)', 'Services (62.0%)'],
+                    datasets: [{ data: [18.8,19.2,62.0], backgroundColor: ['#27ae60','#e67e22','#4A90E2'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+            });
+
+            // Per capita income comparison
+            new Chart(document.getElementById('pcIncomeChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Bihar','Jharkhand','UP','India Avg','Tamil Nadu','Karnataka','Haryana','Goa'],
+                    datasets: [{
+                        label: 'Per Capita NSDP (Rs, 2021-22)',
+                        data: [54383,72185,72630,150726,271293,298078,303506,546646],
+                        backgroundColor: ['#c0392b','#e67e22','#e67e22','#2c3e50','#27ae60','#27ae60','#27ae60','#27ae60']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+
+            // Agriculture
+            new Chart(document.getElementById('agriChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Rice','Wheat','Maize','Litchi','Makhana','Sugarcane','Potato'],
+                    datasets: [{
+                        label: 'Production (Lakh Tonnes)',
+                        data: [68.0,55.0,35.0,3.0,0.4,12.0,16.0],
+                        backgroundColor: 'rgba(39,174,96,0.7)',
+                        borderColor: '#27ae60',
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+        }
+
         // Map initialization
         function initMap() {
             const mapEl = document.getElementById('bihar-map');
@@ -966,6 +1055,7 @@
             origShowApp();
             setTimeout(initMap, 100);
             setTimeout(initDemographicsCharts, 150);
+            setTimeout(initEconomyCharts, 200);
         };
 
         // Initialize
