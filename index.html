@@ -226,6 +226,11 @@
         .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
         .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
 
+        /* === DOWNLOAD BUTTONS === */
+        .dl-btn { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; font-size: 0.62rem; font-family: var(--font-sans); font-weight: 600; color: var(--text-tertiary); background: var(--surface-alt); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.15s; margin-top: 6px; }
+        .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .dl-btn svg { width: 10px; height: 10px; }
+
         /* === TOOL CATEGORIES === */
         .tool-category { margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
         .tool-category:first-child { margin-top: 0; }
@@ -1899,6 +1904,106 @@ graph LR
             });
         }
 
+        // Add download buttons to all charts and diagrams
+        function addDownloadButtons() {
+            // Charts (canvas-based)
+            document.querySelectorAll('.chart-box').forEach(box => {
+                if (box.querySelector('.dl-btn')) return;
+                const canvas = box.querySelector('canvas');
+                const title = box.querySelector('h4');
+                const source = box.querySelector('.chart-source');
+                if (!canvas || !title) return;
+                const btn = document.createElement('button');
+                btn.className = 'dl-btn';
+                btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12zm-5 2h10v1H3v-1z"/></svg> PNG';
+                btn.onclick = () => downloadChartAsPNG(canvas.id, title.textContent, source ? source.textContent : 'Bihar Parichay');
+                box.appendChild(btn);
+            });
+
+            // Mermaid diagrams (SVG-based)
+            document.querySelectorAll('.diagram-container').forEach(container => {
+                if (container.querySelector('.dl-btn')) return;
+                const title = container.querySelector('h4');
+                const caption = container.querySelector('.diagram-caption');
+                const btn = document.createElement('button');
+                btn.className = 'dl-btn';
+                btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12zm-5 2h10v1H3v-1z"/></svg> PNG';
+                btn.onclick = () => {
+                    const mermaidDiv = container.querySelector('.mermaid');
+                    if (mermaidDiv) {
+                        // Create temp container with ID for the function
+                        const tempId = 'dl-' + Date.now();
+                        mermaidDiv.id = tempId;
+                        downloadDiagramAsPNG(tempId, title ? title.textContent : 'diagram', caption ? caption.textContent.substring(0, 100) : 'Bihar Parichay');
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Download chart/diagram as PNG
+        function downloadChartAsPNG(canvasId, title, source) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            // Create a new canvas with watermark
+            const w = canvas.width;
+            const h = canvas.height + 40;
+            const tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = w;
+            tmpCanvas.height = h;
+            const ctx = tmpCanvas.getContext('2d');
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(canvas, 0, 0);
+            // Add source watermark
+            ctx.fillStyle = '#888';
+            ctx.font = '11px DM Sans, sans-serif';
+            ctx.fillText(source || 'Bihar Parichay | biharparichay.netlify.app', 8, h - 12);
+            // Download
+            const link = document.createElement('a');
+            link.download = (title || 'chart').replace(/[^a-zA-Z0-9]/g, '_') + '.png';
+            link.href = tmpCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadDiagramAsPNG(containerId, title, source) {
+            const container = document.getElementById(containerId) || document.querySelector('#' + containerId);
+            if (!container) return;
+            const svg = container.querySelector('svg');
+            if (!svg) { alert('Diagram not rendered yet. Please wait and try again.'); return; }
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const pad = 50;
+                canvas.width = img.width + 20;
+                canvas.height = img.height + pad;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 10, 10);
+                ctx.fillStyle = '#888';
+                ctx.font = '11px DM Sans, sans-serif';
+                ctx.fillText(source || 'Bihar Parichay | biharparichay.netlify.app', 10, canvas.height - 14);
+                const link = document.createElement('a');
+                link.download = (title || 'diagram').replace(/[^a-zA-Z0-9]/g, '_') + '.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+
+        function downloadElementAsPNG(element, title, source) {
+            // For CSS-only elements like the pyramid
+            const el = typeof element === 'string' ? document.querySelector(element) : element;
+            if (!el) return;
+            // Use html2canvas if available, otherwise alert
+            alert('This visualization is CSS-based. Please use your browser\'s screenshot tool (Ctrl+Shift+S on Firefox, or print to PDF).');
+        }
+
         // Language switching
         function setLang(lang) {
             document.documentElement.setAttribute('data-lang', lang);
@@ -2922,6 +3027,7 @@ graph LR
             origShowApp();
             showWaButton();
             addStoryShareButtons();
+            addDownloadButtons();
             const hash = location.hash.replace('#', '');
             if (hash && document.getElementById(hash)) {
                 switchTab(hash);
