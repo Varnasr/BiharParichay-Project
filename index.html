@@ -788,6 +788,32 @@ graph LR
 
                     <p><strong>बुनियादी ढाँचा और औद्योगीकरण।</strong> 2005 के बाद बिहार के सड़क नेटवर्क में नाटकीय सुधार हुआ है, लेकिन रेलवे कनेक्टिविटी, बिजली आपूर्ति की विश्वसनीयता, और अंतिम-छोर ग्रामीण बुनियादी ढाँचा प्रमुख बाधाएँ बनी हुई हैं। राज्य के पास कोई बड़ा बंदरगाह नहीं, पटना से परे कोई कार्यशील हवाई अड्डा नहीं (Gaya की सीमित सेवा), और ग्रामीण क्षेत्रों में रुक-रुककर बिजली। ये बुनियादी ढाँचे की कमियाँ, ख़राब क़ानून-व्यवस्था की साख (अब कुछ सुधरी) और कमज़ोर संस्थागत क्षमता के साथ मिलकर, निजी औद्योगिक निवेश को रोकती रही हैं। प्रस्तावित औद्योगिक गलियारे (पटना-गया, हाजीपुर) और बिहार से गुज़रने वाला अमृतसर-कोलकाता औद्योगिक गलियारा अभी शुरुआती चरणों में हैं।</p>
                 </div>
+
+                <div class="diagram-container">
+                    <h4>Where Bihar's Money Comes From -- and Where It Goes</h4>
+                    <div class="mermaid">
+graph TD
+CENTRE["Central Govt Transfers<br/>70%+ of Bihar revenue"]
+STATE["Bihar State Budget"]
+REMIT["Migrant Remittances<br/>Rs 50-80K Crore/year"]
+AGRI["Agriculture<br/>76% workforce, 19% GSDP"]
+FAMILIES["Bihar Families"]
+CENTRE --> STATE
+STATE --> SCHEMES["Schemes:<br/>MGNREGA, MDM, JSY,<br/>Cycle Yojana, Kanya Utthan"]
+STATE --> INFRA["Roads, Buildings,<br/>Salaries"]
+SCHEMES -->|"Reaches 40-70%"| FAMILIES
+REMIT --> FAMILIES
+AGRI -->|"Low returns"| FAMILIES
+FAMILIES -->|"Sons migrate"| REMIT
+style CENTRE fill:#2a6496,color:#fff
+style REMIT fill:#c0392b,color:#fff
+style AGRI fill:#27ae60,color:#fff
+style FAMILIES fill:#e67e22,color:#fff
+style SCHEMES fill:#8e6f4e,color:#fff
+                    </div>
+                    <p class="diagram-caption">Bihar depends on central transfers for 70%+ of revenue and migrant remittances for household income. The state's own tax base is thin. Scheme delivery reaches 40-70% of intended beneficiaries. Source: RBI State Finances; Bihar Economic Survey.</p>
+                </div>
+
                 <div class="charts-row">
                     <div class="chart-box">
                         <h4>GSDP Growth (Rs Lakh Crore, Current Prices)</h4>
@@ -839,6 +865,29 @@ graph LR
                     <p><strong>शिक्षा: नामांकन बिना सीखने के।</strong> बिहार ने मध्याह्न भोजन (रोज़ाना 1.5 करोड़ बच्चों को), मुख्यमंत्री साइकिल योजना (लड़कियों के लिए साइकिल), और मुख्यमंत्री कन्या उत्थान योजना (स्नातक प्रोत्साहन) जैसी योजनाओं से लगभग सार्वभौमिक प्राथमिक नामांकन हासिल किया है। लेकिन शिक्षण परिणाम भयावह बने हुए हैं। ASER 2022 ने पाया कि बिहार में कक्षा V के केवल 27.8% छात्र कक्षा II का पाठ पढ़ सकते थे। सरकारी स्कूल बुनियादी ढाँचा सुधर रहा है लेकिन शिक्षक गुणवत्ता, जवाबदेही, और संविदा-शिक्षक प्रणाली (नियोजित शिक्षक) -- जो शिक्षकों को नियमित वेतन का अंश देती है -- प्रणालीगत समस्याएँ हैं। परिणाम: जो खर्च कर सकता है वह बच्चों को निजी स्कूल या कोचिंग भेजता है, दोहरी शिक्षा प्रणाली बनाकर जो वर्ग असमानता को पुनरुत्पादित करती है।</p>
 
                     <p><strong>स्वास्थ्य: आँकड़ों के पीछे के आँकड़े।</strong> बिहार के स्वास्थ्य संकेतक केवल निम्न नहीं -- वे व्यवस्थागत विफलताएँ उजागर करते हैं। शिशु मृत्यु दर: 46.8/1000 (भारत: 35.2)। Stunting: 42.9% (भारत: 35.5%)। महिलाओं में रक्ताल्पता: 63.5% (भारत: 57%)। कुल प्रजनन दर: 3.0 (भारत में सर्वाधिक)। केवल 74.4% प्रसव संस्थागत हैं। केवल 38.2% महिलाओं को 4+ प्रसवपूर्व जाँच मिलती है। सार्वजनिक स्वास्थ्य प्रणाली -- जहाँ सामुदायिक स्वास्थ्य केंद्र 1,00,000+ आबादी की सेवा करते हैं -- संरचनात्मक रूप से पर्याप्त देखभाल देने में असमर्थ है। ASHA कार्यकर्ता प्रणाली ने अंतिम-छोर पहुँच सुधारी है, लेकिन ASHA को वेतन नहीं, प्रोत्साहन-आधारित भत्ते मिलते हैं, और उनकी कार्य दशाएँ अनिश्चित हैं। गरीबी, कुपोषण, ख़राब स्वच्छता और कमज़ोर स्वास्थ्य बुनियादी ढाँचे का प्रतिच्छेदन एक ऐसा चक्र बनाता है जो बड़े पैमाने पर सार्वजनिक निवेश के बिना तोड़ना कठिन है (Dreze &amp; Sen, 2013)।</p>
+                </div>
+
+                <div class="madhubani-panel" style="border-color:var(--accent-warm);background:linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);">
+                <div class="diagram-container">
+                    <h4>Why Schemes Don't Reach People: The Delivery Chain</h4>
+                    <div class="mermaid">
+graph LR
+POLICY["Delhi:<br/>Scheme Announced"] --> BUDGET["Budget<br/>Allocated"]
+BUDGET --> STATE["State Govt<br/>Implements"]
+STATE --> DISTRICT["District<br/>Administration"]
+DISTRICT --> BLOCK["Block Office"]
+BLOCK --> PANCHAYAT["Panchayat"]
+PANCHAYAT --> FAMILY["Family"]
+BUDGET -->|"30% lost to<br/>delays"| LEAK1["Bureaucratic<br/>Bottleneck"]
+DISTRICT -->|"Documentation<br/>barriers"| LEAK2["Aadhaar/Patta<br/>Requirements"]
+PANCHAYAT -->|"Local capture"| LEAK3["Elite<br/>Capture"]
+style POLICY fill:#2a6496,color:#fff
+style FAMILY fill:#c0392b,color:#fff
+style LEAK1 fill:#e67e22,color:#fff
+style LEAK2 fill:#e67e22,color:#fff
+style LEAK3 fill:#e67e22,color:#fff
+                    </div>
+                    <p class="diagram-caption">Every link in the chain loses beneficiaries. Budget delays, documentation requirements (Aadhaar, land titles), and local elite capture mean that only 40-70% of eligible families actually receive scheme benefits. The poorest -- who lack documents and connections -- are systematically excluded.</p>
                 </div>
 
                 <div class="madhubani-panel" style="border-color:var(--accent-warm);background:linear-gradient(135deg, var(--surface) 0%, var(--surface-alt) 100%);">
@@ -3445,10 +3494,21 @@ graph LR
             if (!section) return;
             const els = section.querySelectorAll('.mermaid:not([data-processed])');
             if (els.length === 0) return;
+            // Clean whitespace from mermaid code before rendering
+            els.forEach(el => {
+                const lines = el.textContent.split('\n').map(l => l.trim()).filter(l => l);
+                el.textContent = lines.join('\n');
+            });
             try {
-                await mermaid.run({ nodes: els });
+                await mermaid.run({ nodes: Array.from(els) });
             } catch (e) {
                 console.warn('Mermaid run failed for', sectionId, e);
+                // Fallback: show as pre-formatted code
+                els.forEach(el => {
+                    if (!el.querySelector('svg')) {
+                        el.innerHTML = '<pre style="font-size:0.72rem;color:var(--text-tertiary);overflow-x:auto;">' + el.textContent + '</pre>';
+                    }
+                });
             }
             mermaidRendered[sectionId] = true;
         }
