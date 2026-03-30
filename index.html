@@ -1902,7 +1902,7 @@ graph LR
                 </div>
                 <div class="footer-cite">
                     <strong>How to Cite</strong>
-                    <code>Bihar Parichay Project. (2025). Bihar Parichay: An Academic Deep Dive. Retrieved from https://biharparichay.netlify.app</code>
+                    <code>Bihar Parichay Project. (2025). Bihar Parichay: An Academic Deep Dive. Retrieved from https://on-web.link/BiharParichay</code>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -2165,7 +2165,7 @@ graph LR
             // Add source watermark
             ctx.fillStyle = '#888';
             ctx.font = '11px DM Sans, sans-serif';
-            ctx.fillText(source || 'Bihar Parichay | biharparichay.netlify.app', 8, h - 12);
+            ctx.fillText(source || 'Bihar Parichay | on-web.link/BiharParichay', 8, h - 12);
             // Download
             const link = document.createElement('a');
             link.download = (title || 'chart').replace(/[^a-zA-Z0-9]/g, '_') + '.png';
@@ -2193,7 +2193,7 @@ graph LR
                 ctx.drawImage(img, 10, 10);
                 ctx.fillStyle = '#888';
                 ctx.font = '11px DM Sans, sans-serif';
-                ctx.fillText(source || 'Bihar Parichay | biharparichay.netlify.app', 10, canvas.height - 14);
+                ctx.fillText(source || 'Bihar Parichay | on-web.link/BiharParichay', 10, canvas.height - 14);
                 const link = document.createElement('a');
                 link.download = (title || 'diagram').replace(/[^a-zA-Z0-9]/g, '_') + '.png';
                 link.href = canvas.toDataURL('image/png');
@@ -2299,7 +2299,7 @@ graph LR
             const content = document.getElementById('briefing-content');
             if (!content) return;
             const win = window.open('', '_blank');
-            win.document.write('<html><head><title>' + name + ' District Briefing</title><style>body{font-family:DM Sans,system-ui,sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1a1a18;font-size:13px;line-height:1.6}h3{font-family:Newsreader,Georgia,serif;margin-bottom:12px}table{width:100%;border-collapse:collapse}td{padding:3px 6px;border-bottom:1px solid #eee}strong{font-weight:600}.fact-card{display:inline-block;text-align:center;padding:8px;border:1px solid #ddd;border-radius:6px;margin:3px}.fact-value{font-family:JetBrains Mono,monospace;font-weight:600;color:#c0392b}.fact-label{font-size:0.7rem;color:#888;text-transform:uppercase}</style></head><body>' + content.innerHTML + '<div style="margin-top:20px;font-size:0.7rem;color:#888;border-top:1px solid #ddd;padding-top:8px;">Bihar Parichay | biharparichay.netlify.app | Printed ' + new Date().toLocaleDateString() + '</div></body></html>');
+            win.document.write('<html><head><title>' + name + ' District Briefing</title><style>body{font-family:DM Sans,system-ui,sans-serif;padding:24px;max-width:800px;margin:0 auto;color:#1a1a18;font-size:13px;line-height:1.6}h3{font-family:Newsreader,Georgia,serif;margin-bottom:12px}table{width:100%;border-collapse:collapse}td{padding:3px 6px;border-bottom:1px solid #eee}strong{font-weight:600}.fact-card{display:inline-block;text-align:center;padding:8px;border:1px solid #ddd;border-radius:6px;margin:3px}.fact-value{font-family:JetBrains Mono,monospace;font-weight:600;color:#c0392b}.fact-label{font-size:0.7rem;color:#888;text-transform:uppercase}</style></head><body>' + content.innerHTML + '<div style="margin-top:20px;font-size:0.7rem;color:#888;border-top:1px solid #ddd;padding-top:8px;">Bihar Parichay | on-web.link/BiharParichay | Printed ' + new Date().toLocaleDateString() + '</div></body></html>');
             win.document.close();
             setTimeout(() => win.print(), 300);
         }
@@ -3316,7 +3316,7 @@ graph LR
                 '<div class="share-fact-text">' + f.text + '<br><span style="font-size:0.68rem;color:var(--text-tertiary);">' + f.en + '</span></div>' +
                 '<div class="share-fact-btns">' +
                 '<button class="share-fact-btn" onclick="navigator.clipboard.writeText(\'' + f.text.replace(/'/g,"\\'") + ' -- Bihar Parichay\');this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy\',1500)">Copy</button>' +
-                '<button class="share-fact-btn wa" onclick="shareOnWhatsApp(\'' + f.text.replace(/'/g,"\\'") + ' -- Bihar Parichay biharparichay.netlify.app\')">WA</button>' +
+                '<button class="share-fact-btn wa" onclick="shareOnWhatsApp(\'' + f.text.replace(/'/g,"\\'") + ' -- Bihar Parichay on-web.link/BiharParichay\')">WA</button>' +
                 '</div></div>'
             ).join('') + '</div>';
         }
@@ -3369,7 +3369,7 @@ graph LR
                 }
             }
 
-            html += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid var(--border);font-size:0.68rem;color:var(--text-tertiary);">Bihar Parichay Project | biharparichay.netlify.app | Data for listening circle preparation</div>';
+            html += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid var(--border);font-size:0.68rem;color:var(--text-tertiary);">Bihar Parichay Project | on-web.link/BiharParichay | Data for listening circle preparation</div>';
             html += '</div>';
 
             result.innerHTML = html;
