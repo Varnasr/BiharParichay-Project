@@ -297,6 +297,97 @@
             .map-container { display: none; }
             body { background: #fff; color: #000; }
         }
+
+        /* === MADHUBANI CSS ART === */
+        .madhubani-panel {
+            margin: 32px 0;
+            padding: 28px;
+            border: 3px solid var(--accent);
+            border-radius: var(--radius-lg);
+            position: relative;
+            background: var(--surface);
+            overflow: hidden;
+        }
+        .madhubani-panel::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid var(--accent-warm);
+            border-radius: var(--radius);
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .madhubani-panel::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 80px; height: 80px;
+            background:
+                radial-gradient(circle at 60px 20px, var(--accent) 3px, transparent 3px),
+                radial-gradient(circle at 40px 40px, var(--accent-warm) 4px, transparent 4px),
+                radial-gradient(circle at 20px 15px, var(--accent-saffron) 2px, transparent 2px),
+                radial-gradient(circle at 65px 55px, var(--accent) 2px, transparent 2px),
+                radial-gradient(circle at 30px 65px, var(--accent-warm) 3px, transparent 3px);
+            opacity: 0.3;
+        }
+        .madhubani-panel .mp-title {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .madhubani-panel .mp-text {
+            font-size: 0.86rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        .madhubani-panel .mp-text strong { color: var(--text-primary); }
+
+        /* Madhubani corner ornaments for overview */
+        .madhubani-corners {
+            position: relative;
+            padding: 20px;
+        }
+        .madhubani-corners::before,
+        .madhubani-corners::after {
+            content: '';
+            position: absolute;
+            width: 40px; height: 40px;
+            opacity: 0.25;
+        }
+        .madhubani-corners::before {
+            top: 0; left: 0;
+            border-top: 3px solid var(--accent);
+            border-left: 3px solid var(--accent);
+            border-radius: 4px 0 0 0;
+        }
+        .madhubani-corners::after {
+            bottom: 0; right: 0;
+            border-bottom: 3px solid var(--accent-warm);
+            border-right: 3px solid var(--accent-warm);
+            border-radius: 0 0 4px 0;
+        }
+
+        /* Madhubani fish motif (CSS only) */
+        .madhubani-fish {
+            display: inline-block;
+            width: 24px; height: 12px;
+            border: 2px solid var(--accent);
+            border-radius: 50% / 100%;
+            position: relative;
+            margin: 0 4px;
+            opacity: 0.35;
+        }
+        .madhubani-fish::after {
+            content: '';
+            position: absolute;
+            right: -6px; top: 1px;
+            width: 0; height: 0;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 6px solid var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -372,6 +463,11 @@
 
                     <p><strong>What this resource covers.</strong> This site provides a data-driven, source-verified academic introduction to Bihar across multiple dimensions: geography and flood vulnerability, demographic and social structure, economic realities and the migration economy, health and education challenges, food systems and agricultural production, cultural heritage, and a set of interactive research tools. Every data point is traceable to an authenticated open-access source. The goal is depth over breadth -- not a tourist brochure, but a resource for anyone who needs to understand what is actually happening in Bihar.</p>
                 </div>
+                <div class="madhubani-panel">
+                    <div class="mp-title">The Core Question <span class="madhubani-fish"></span><span class="madhubani-fish"></span></div>
+                    <div class="mp-text">Bihar has <strong>128 million people</strong>, the <strong>highest poverty rate</strong> in India, and the <strong>highest fertility rate</strong>. It also has the richest historical legacy, the most politically mobilised population, and a diaspora that powers the economies of a dozen other states. The question is not whether Bihar can develop -- it is <strong>who benefits when it does</strong>, and who is left behind.</div>
+                </div>
+
                 <div class="key-facts-grid">
                     <div class="fact-card"><div class="fact-value">128M</div><div class="fact-label">Population (est. 2024)</div></div>
                     <div class="fact-card"><div class="fact-value">51.9%</div><div class="fact-label">Multidimensional Poverty</div></div>
@@ -565,6 +661,11 @@ graph LR
                     <p><strong>Education: enrolment without learning.</strong> Bihar has achieved near-universal primary enrolment through schemes like mid-day meals (reaching 1.5 crore children daily), Mukhyamantri Cycle Yojana (bicycles for girls), and Mukhyamantri Kanya Utthan Yojana (graduation incentive). But learning outcomes remain dire. ASER 2022 found only 27.8% of Class V students in Bihar could read a Class II text. Government school infrastructure is improving but teacher quality, accountability, and the contractual-teacher system (niyojit shikshak) -- which pays teachers a fraction of regular salaries -- remain systemic problems. The result: anyone who can afford it sends children to private schools or coaching centres, creating a two-tier education system that reproduces class inequality.</p>
 
                     <p><strong>Health: the numbers behind the numbers.</strong> Bihar's health indicators are not merely low -- they reveal systematic failures. IMR: 46.8/1000 (India: 35.2). Stunting: 42.9% (India: 35.5%). Anaemia in women: 63.5% (India: 57%). TFR: 3.0 (highest in India). Only 74.4% of births are institutional. Only 38.2% of women get 4+ antenatal visits. The public health system -- with Community Health Centres serving populations of 100,000+ -- is structurally incapable of delivering adequate care. The ASHA worker system (Accredited Social Health Activists) has improved last-mile outreach, but ASHAs are paid incentive-based stipends, not salaries, and their working conditions are precarious. The intersection of poverty, malnutrition, poor sanitation, and weak health infrastructure creates a cycle that is difficult to break without massive public investment (Dreze &amp; Sen, 2013).</p>
+                </div>
+
+                <div class="madhubani-panel">
+                    <div class="mp-title">What People Actually Say <span class="madhubani-fish"></span></div>
+                    <div class="mp-text">"<strong>Gaon mein kaam nahi hai</strong>" (there's no work in the village) -- this is the most common sentence in rural Bihar. It drives everything: migration, child marriage, educational dropouts, debt. Every policy debate in Bihar ultimately returns to this single fact: <strong>there are no jobs where people live</strong>. The data below quantifies what this sentence means in practice.</div>
                 </div>
 
                 <!-- Cycle of Deprivation Diagram -->
@@ -807,6 +908,18 @@ graph LR
                         <h4>Employment Sector Distribution</h4>
                         <canvas id="employmentChart"></canvas>
                         <p class="chart-source">Source: PLFS 2021-22; Bihar Economic Survey</p>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>Gender Gap: Male vs Female Literacy by District</h4>
+                        <canvas id="genderGapChart"></canvas>
+                        <p class="chart-source">Source: Census of India 2011</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>2024 Lok Sabha: Close-Margin Seats</h4>
+                        <canvas id="electionMarginChart"></canvas>
+                        <p class="chart-source">Source: ECI 2024 results (margins in thousands)</p>
                     </div>
                 </div>
                 <h3 style="font-family:var(--font-serif);margin:32px 0 12px;font-size:1.1rem;">Heritage &amp; Pilgrimage Sites Map</h3>
@@ -1374,6 +1487,35 @@ graph LR
             });
         }
 
+        function initGenderAndElectionCharts() {
+            // Gender gap chart
+            new Chart(document.getElementById('genderGapChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Patna','Rohtas','Gaya','Muzaffarpur','Darbhanga','Madhubani','Purnia','Kishanganj','Katihar'],
+                    datasets: [
+                        { label: 'Male Literacy %', data: [80.3,82.9,76.1,74.2,68.4,68.5,62.1,67.4,63.4], backgroundColor: 'rgba(192,57,43,0.65)' },
+                        { label: 'Female Literacy %', data: [60.0,62.8,52.2,51.5,44.0,48.1,39.1,46.2,40.1], backgroundColor: 'rgba(230,126,34,0.65)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }, scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } } }
+            });
+
+            // Election margin chart
+            new Chart(document.getElementById('electionMarginChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Bhagalpur\n(INC)','Arrah\n(RJD)','Katihar\n(INC)','Siwan\n(RJD)','Sasaram\n(BJP/VIP)','Kishanganj\n(INC ally)','Jehanabad\n(RJD)','Purnia\n(Ind)'],
+                    datasets: [{
+                        label: 'Win Margin (thousands)',
+                        data: [8.5,9.2,12,15,18,23,28,30],
+                        backgroundColor: ['#2a6496','#c0392b','#2a6496','#c0392b','#e67e22','#2a6496','#c0392b','#8e6f4e']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { callback: v => v + 'K' } } } }
+            });
+        }
+
         function initHeritageMap() {
             const el = document.getElementById('heritage-map');
             if (!el || el._leaflet_id) return;
@@ -1861,7 +2003,7 @@ graph LR
             'demographics': () => initDemographicsCharts(),
             'economy': () => initEconomyCharts(),
             'social-issues': () => initSocialCharts(),
-            'data': () => { initDataCharts(); initHeritageMap(); },
+            'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); },
             'tools': () => { initTools(); }
         };
 
