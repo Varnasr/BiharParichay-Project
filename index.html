@@ -884,6 +884,36 @@
             </section>
             <section id="data" class="content-section">
                 <h2 class="section-title">Data &amp; Analysis</h2>
+                <p class="section-subtitle">Consolidated data dashboard -- development indicators, district-level comparisons, and heritage mapping</p>
+                <div class="section-prose">
+                    <p>This section consolidates key data from across the site into comparative visualisations. All data is sourced from government publications and peer-reviewed research. Figures should be interpreted with awareness of methodological differences across surveys and time periods.</p>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>Development Radar: Bihar vs India Average</h4>
+                        <canvas id="radarChart"></canvas>
+                        <p class="chart-source">Source: NFHS-5, Census 2011, RBI, NITI Aayog</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Population Growth by Decade (Millions)</h4>
+                        <canvas id="popGrowthChart"></canvas>
+                        <p class="chart-source">Source: Census of India, decadal reports 1951-2011</p>
+                    </div>
+                </div>
+                <div class="charts-row">
+                    <div class="chart-box">
+                        <h4>Top 10 Most Populated Districts</h4>
+                        <canvas id="districtPopChart"></canvas>
+                        <p class="chart-source">Source: Census of India 2011</p>
+                    </div>
+                    <div class="chart-box">
+                        <h4>Employment Sector Distribution</h4>
+                        <canvas id="employmentChart"></canvas>
+                        <p class="chart-source">Source: PLFS 2021-22; Bihar Economic Survey</p>
+                    </div>
+                </div>
+                <h3 style="font-family:var(--font-serif);margin:32px 0 12px;font-size:1.1rem;">Heritage &amp; Pilgrimage Sites Map</h3>
+                <div id="heritage-map" class="map-container"></div>
             </section>
             <section id="references" class="content-section">
                 <h2 class="section-title">References &amp; Sources</h2>
@@ -1091,6 +1121,91 @@
             });
         }
 
+        // Data dashboard charts
+        function initDataCharts() {
+            // Radar: Bihar vs India
+            new Chart(document.getElementById('radarChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['Literacy Rate','Urbanisation','Per Capita Income\n(normalised)','Life Expectancy\n(est.)','IMR\n(inverse, higher=better)','Women in\nWorkforce'],
+                    datasets: [
+                        { label: 'Bihar', data: [63.8,11.3,36,68.7,53.2,9.8], borderColor: '#c0392b', backgroundColor: 'rgba(192,57,43,0.15)', pointBackgroundColor: '#c0392b' },
+                        { label: 'India', data: [74.0,31.2,100,70.4,64.8,32.8], borderColor: '#4A90E2', backgroundColor: 'rgba(74,144,226,0.15)', pointBackgroundColor: '#4A90E2' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: true, scales: { r: { beginAtZero: true, max: 100, ticks: { font: { size: 9 } }, pointLabels: { font: { size: 10 } } } }, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
+            });
+
+            // Population growth
+            new Chart(document.getElementById('popGrowthChart'), {
+                type: 'line',
+                data: {
+                    labels: ['1951','1961','1971','1981','1991','2001','2011'],
+                    datasets: [{
+                        label: 'Population (Millions)',
+                        data: [29.1,34.8,42.1,52.3,64.5,82.9,104.1],
+                        borderColor: '#4A90E2', backgroundColor: 'rgba(74,144,226,0.15)',
+                        fill: true, tension: 0.3, pointRadius: 5
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false } } }
+            });
+
+            // Top districts by population
+            new Chart(document.getElementById('districtPopChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Patna','East\nChamparan','Muzaffarpur','Madhubani','Samastipur','Vaishali','Begusarai','Bhagalpur','Darbhanga','Gaya'],
+                    datasets: [{
+                        label: 'Population (Lakhs)',
+                        data: [58.4,50.9,48.0,44.9,42.6,34.9,29.7,30.4,39.4,43.8],
+                        backgroundColor: 'rgba(74,144,226,0.7)'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+
+            // Employment sectors
+            new Chart(document.getElementById('employmentChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Agriculture & Allied (76%)','Manufacturing (5%)','Construction (8%)','Trade/Hotels (4%)','Transport (2%)','Other Services (5%)'],
+                    datasets: [{ data: [76,5,8,4,2,5], backgroundColor: ['#27ae60','#e67e22','#c0392b','#3498db','#9b59b6','#95a5a6'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+            });
+        }
+
+        function initHeritageMap() {
+            const el = document.getElementById('heritage-map');
+            if (!el || el._leaflet_id) return;
+            const map = L.map('heritage-map', { scrollWheelZoom: false }).setView([25.3, 85.5], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors', maxZoom: 12
+            }).addTo(map);
+
+            const sites = [
+                { name: 'Nalanda Mahavihara', lat: 25.1367, lng: 85.4437, desc: 'UNESCO World Heritage (2016). Ancient university, 5th-12th c. CE', color: '#c0392b' },
+                { name: 'Mahabodhi Temple, Bodh Gaya', lat: 24.6961, lng: 84.9869, desc: 'UNESCO World Heritage (2002). Site of Buddha\'s enlightenment', color: '#c0392b' },
+                { name: 'Vikramshila', lat: 25.3205, lng: 87.2715, desc: 'Ancient Buddhist university (8th-12th c.), Antichak excavations', color: '#e67e22' },
+                { name: 'Rajgir (Rajagriha)', lat: 25.0280, lng: 85.4206, desc: 'Ancient capital of Magadha. Cyclopean Wall, hot springs, Gridhrakuta hill', color: '#e67e22' },
+                { name: 'Vaishali', lat: 25.9840, lng: 85.1278, desc: 'Birthplace of Lord Mahavira. Site of the world\'s first republic (Licchavi)', color: '#e67e22' },
+                { name: 'Patna Sahib', lat: 25.6078, lng: 85.1726, desc: 'Birthplace of Guru Gobind Singh. Major Sikh pilgrimage site', color: '#9b59b6' },
+                { name: 'Kesaria Stupa', lat: 26.3370, lng: 84.8510, desc: 'One of the tallest Buddhist stupas in the world (104 ft)', color: '#e67e22' },
+                { name: 'Pawapuri', lat: 25.2733, lng: 85.7767, desc: 'Jain pilgrimage. Jalmandir -- Lord Mahavira\'s cremation site', color: '#27ae60' },
+                { name: 'Sonepur', lat: 25.6903, lng: 85.1750, desc: 'Sonepur Mela -- Asia\'s largest cattle fair at Ganga-Gandak confluence', color: '#3498db' },
+                { name: 'Madhubani', lat: 26.3567, lng: 86.0712, desc: 'Centre of Mithila/Madhubani painting tradition (GI tagged)', color: '#3498db' }
+            ];
+
+            sites.forEach(s => {
+                L.circleMarker([s.lat, s.lng], {
+                    radius: 7, fillColor: s.color, color: '#fff', weight: 2, fillOpacity: 0.9
+                }).addTo(map).bindPopup('<strong>' + s.name + '</strong><br>' + s.desc);
+            });
+
+            setTimeout(() => map.invalidateSize(), 200);
+        }
+
         // Social issues charts
         function initSocialCharts() {
             // Health indicators grouped bar
@@ -1241,6 +1356,8 @@
             setTimeout(initDemographicsCharts, 150);
             setTimeout(initEconomyCharts, 200);
             setTimeout(initSocialCharts, 250);
+            setTimeout(initDataCharts, 300);
+            setTimeout(initHeritageMap, 350);
         };
 
         // Initialize
