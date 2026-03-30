@@ -358,6 +358,81 @@
             margin-bottom: 16px;
         }
 
+        /* ===== KEY FACTS GRID ===== */
+        .key-facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .fact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 14px;
+            text-align: center;
+        }
+
+        .fact-value {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .fact-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* ===== MAP ===== */
+        .map-container {
+            height: 420px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            margin: 20px 0;
+        }
+
+        .geo-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .geo-detail-grid { grid-template-columns: 1fr; }
+        }
+
+        .geo-detail-grid h4 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .geo-detail-grid ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .geo-detail-grid li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .geo-detail-grid li:last-child {
+            border-bottom: none;
+        }
+
         /* ===== FOOTER ===== */
         .site-footer {
             background: var(--surface);
@@ -484,10 +559,59 @@
         <div class="container">
             <section id="overview" class="content-section">
                 <h2 class="section-title">Overview</h2>
-                <p class="section-subtitle">Content coming next</p>
+                <p class="section-subtitle">An introduction to one of India's most historically significant and complex states</p>
+                <div class="section-prose">
+                    <p>Bihar, located in eastern India, is the third most populous state in the country with an estimated population exceeding 128 million (Registrar General of India, 2011 Census projected to 2024). It occupies 94,163 square kilometres of the eastern Gangetic plain, bounded by Nepal to the north, Jharkhand to the south, West Bengal to the east, and Uttar Pradesh to the west.</p>
+                    <p>The state's significance extends far beyond its demographic weight. Bihar is the historical heartland of some of the world's oldest civilisations and philosophical traditions. The Maurya Empire (322-185 BCE), one of the largest in antiquity, was administered from Pataliputra (modern Patna). The ancient university of Nalanda, a UNESCO World Heritage Site, drew scholars from across Asia for over seven centuries. Buddhism and Jainism both trace foundational moments to this region -- Siddhartha Gautama attained enlightenment at Bodh Gaya, and Mahavira, the 24th Tirthankara, was born in Vaishali.</p>
+                    <p>Contemporary Bihar presents a study in contrasts. Despite its rich historical legacy, the state ranks among India's least developed on multiple indicators: per capita income, urbanisation rates, and human development indices. Yet it has also demonstrated periods of rapid economic growth -- averaging over 10% GSDP growth between 2005 and 2015 -- and has made notable strides in road infrastructure, law enforcement, and poverty reduction. Understanding Bihar requires engaging with its layered history, complex social structure, economic challenges, and cultural richness simultaneously.</p>
+                </div>
+                <div class="key-facts-grid">
+                    <div class="fact-card"><div class="fact-value">94,163</div><div class="fact-label">Area (sq km)</div></div>
+                    <div class="fact-card"><div class="fact-value">~128M</div><div class="fact-label">Population (est. 2024)</div></div>
+                    <div class="fact-card"><div class="fact-value">Patna</div><div class="fact-label">Capital</div></div>
+                    <div class="fact-card"><div class="fact-value">38</div><div class="fact-label">Districts</div></div>
+                    <div class="fact-card"><div class="fact-value">9</div><div class="fact-label">Divisions</div></div>
+                    <div class="fact-card"><div class="fact-value">61.8%</div><div class="fact-label">Literacy (Census 2011)</div></div>
+                    <div class="fact-card"><div class="fact-value">Hindi</div><div class="fact-label">Official Language</div></div>
+                    <div class="fact-card"><div class="fact-value">1,106/km&sup2;</div><div class="fact-label">Pop. Density (2011)</div></div>
+                </div>
             </section>
             <section id="geography" class="content-section">
                 <h2 class="section-title">Geography &amp; Maps</h2>
+                <p class="section-subtitle">The eastern Gangetic plain -- rivers, terrain, and administrative divisions</p>
+                <div class="section-prose">
+                    <p>Bihar lies entirely within the middle and lower Gangetic plain, one of the most fertile alluvial regions in the world. The Ganga river bisects the state roughly east-west, creating a natural division between the flood-prone northern plains (Mithila, Tirhut, and Kosi regions) and the relatively elevated southern plateau fringes. The state's geography is dominated by its river systems: the Ganga, Gandak, Budhi Gandak, Bagmati, Kamla, Kosi, and Son rivers shape both the physical landscape and the livelihoods of millions.</p>
+                    <p>Northern Bihar is particularly vulnerable to seasonal flooding. The Kosi river, historically known as the "Sorrow of Bihar," has shifted its course by over 150 km westward in the past 200 years, creating one of the largest inland deltas in the world. The 2008 Kosi floods displaced over 3 million people and affected 16 districts.</p>
+                </div>
+                <div id="bihar-map" class="map-container"></div>
+                <div class="geo-detail-grid">
+                    <div>
+                        <h4>Major Rivers</h4>
+                        <ul>
+                            <li>Ganga -- primary artery, ~445 km through Bihar</li>
+                            <li>Kosi -- "Sorrow of Bihar," origin in Nepal</li>
+                            <li>Gandak -- flows from Nepal through NW Bihar</li>
+                            <li>Son -- major southern tributary of the Ganga</li>
+                            <li>Bagmati -- flows through Muzaffarpur, Darbhanga</li>
+                            <li>Punpun -- southern tributary, drains Patna region</li>
+                            <li>Falgu -- flows through Gaya (sacred river)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Administrative Divisions (9)</h4>
+                        <ul>
+                            <li>Patna Division (6 districts)</li>
+                            <li>Magadh Division (5 districts)</li>
+                            <li>Tirhut Division (6 districts)</li>
+                            <li>Darbhanga Division (3 districts)</li>
+                            <li>Kosi Division (3 districts)</li>
+                            <li>Purnia Division (4 districts)</li>
+                            <li>Bhagalpur Division (2 districts)</li>
+                            <li>Munger Division (6 districts)</li>
+                            <li>Saran Division (3 districts)</li>
+                        </ul>
+                    </div>
+                </div>
             </section>
             <section id="demographics" class="content-section">
                 <h2 class="section-title">Demographics &amp; Society</h2>
@@ -652,6 +776,66 @@
                 }
             });
         });
+
+        // Map initialization
+        function initMap() {
+            const mapEl = document.getElementById('bihar-map');
+            if (!mapEl || mapEl._leaflet_id) return;
+
+            const map = L.map('bihar-map', { scrollWheelZoom: false }).setView([25.6, 85.1], 7);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 12
+            }).addTo(map);
+
+            const cities = [
+                { name: 'Patna', lat: 25.6117, lng: 85.1446, desc: 'State capital, ancient Pataliputra. Pop. ~2.5M metro' },
+                { name: 'Gaya', lat: 24.7955, lng: 85.0002, desc: 'Religious centre, gateway to Bodh Gaya' },
+                { name: 'Muzaffarpur', lat: 26.1209, lng: 85.3647, desc: 'Litchi production hub, Tirhut division HQ' },
+                { name: 'Bhagalpur', lat: 25.2425, lng: 86.9842, desc: 'Silk City, Vikramshila university ruins nearby' },
+                { name: 'Darbhanga', lat: 26.1542, lng: 85.8918, desc: 'Cultural capital of Mithila, Maithili literature centre' },
+                { name: 'Purnia', lat: 25.7771, lng: 87.4753, desc: 'NE Bihar, jute and agricultural trade centre' },
+                { name: 'Nalanda', lat: 25.1367, lng: 85.4437, desc: 'UNESCO World Heritage Site, ancient university (5th-12th c.)' },
+                { name: 'Vaishali', lat: 25.9840, lng: 85.1278, desc: 'World\'s first republic, Jain pilgrimage site' },
+                { name: 'Rajgir', lat: 25.0280, lng: 85.4206, desc: 'Ancient Rajagriha, hot springs, Cyclopean Wall ruins' },
+                { name: 'Bodh Gaya', lat: 24.6961, lng: 84.9869, desc: 'UNESCO site: Mahabodhi Temple, site of Buddha\'s enlightenment' }
+            ];
+
+            cities.forEach(c => {
+                L.circleMarker([c.lat, c.lng], {
+                    radius: 6, fillColor: '#c17f24', color: '#fff',
+                    weight: 2, fillOpacity: 0.9
+                }).addTo(map).bindPopup('<strong>' + c.name + '</strong><br>' + c.desc);
+            });
+
+            // Bihar approximate boundary
+            const biharBoundary = [
+                [27.52,83.33],[27.40,83.85],[27.13,84.09],[27.10,84.64],
+                [26.63,84.64],[26.60,85.07],[26.76,85.73],[26.52,86.00],
+                [26.63,86.56],[26.48,86.98],[26.12,87.08],[25.88,87.30],
+                [25.60,87.82],[25.18,87.82],[25.10,87.44],[24.87,87.08],
+                [24.52,87.08],[24.52,86.72],[24.27,86.37],[24.05,86.37],
+                [23.87,86.08],[24.05,85.73],[24.10,85.07],[24.27,84.64],
+                [24.10,84.09],[24.27,83.85],[24.52,83.85],[24.63,84.09],
+                [24.87,84.09],[25.18,83.85],[25.40,83.33],[25.88,83.33],
+                [26.12,83.85],[26.40,83.56],[26.80,83.56],[27.10,83.33],
+                [27.52,83.33]
+            ];
+
+            L.polygon(biharBoundary, {
+                color: '#1a3a5c', weight: 2, fillColor: '#4A90E2',
+                fillOpacity: 0.08, dashArray: '5,5'
+            }).addTo(map);
+
+            setTimeout(() => map.invalidateSize(), 200);
+        }
+
+        // Init map when app is shown
+        const origShowApp = showApp;
+        showApp = function() {
+            origShowApp();
+            setTimeout(initMap, 100);
+        };
 
         // Initialize
         initTheme();
