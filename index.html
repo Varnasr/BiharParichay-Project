@@ -237,6 +237,127 @@
             background: rgba(255,255,255,0.25);
         }
 
+        /* ===== NAVIGATION ===== */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .nav-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .nav-links::-webkit-scrollbar { display: none; }
+
+        .nav-links a {
+            display: block;
+            padding: 14px 14px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-primary);
+            font-size: 22px;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--surface);
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow-lg);
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                padding: 14px 24px;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            .nav-links a.active {
+                border-left-color: var(--primary-color);
+                border-bottom: none;
+            }
+        }
+
+        /* ===== SECTIONS ===== */
+        .content-section {
+            padding: 48px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            margin-bottom: 28px;
+        }
+
+        .section-prose {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .section-prose p {
+            margin-bottom: 16px;
+        }
+
         /* ===== CONTAINER ===== */
         .container {
             max-width: 960px;
@@ -275,7 +396,59 @@
             </div>
         </header>
 
-        <!-- Content sections will be added here -->
+        <!-- Navigation -->
+        <nav class="site-nav">
+            <div class="nav-inner">
+                <button class="hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#overview" class="active">Overview</a></li>
+                    <li><a href="#geography">Geography</a></li>
+                    <li><a href="#demographics">Demographics</a></li>
+                    <li><a href="#economy">Economy</a></li>
+                    <li><a href="#social-issues">Social Issues</a></li>
+                    <li><a href="#people">People</a></li>
+                    <li><a href="#food">Food</a></li>
+                    <li><a href="#culture">Art &amp; Culture</a></li>
+                    <li><a href="#data">Data</a></li>
+                    <li><a href="#references">References</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Content Container -->
+        <div class="container">
+            <section id="overview" class="content-section">
+                <h2 class="section-title">Overview</h2>
+                <p class="section-subtitle">Content coming next</p>
+            </section>
+            <section id="geography" class="content-section">
+                <h2 class="section-title">Geography &amp; Maps</h2>
+            </section>
+            <section id="demographics" class="content-section">
+                <h2 class="section-title">Demographics &amp; Society</h2>
+            </section>
+            <section id="economy" class="content-section">
+                <h2 class="section-title">Economy &amp; Development</h2>
+            </section>
+            <section id="social-issues" class="content-section">
+                <h2 class="section-title">Social Issues &amp; Challenges</h2>
+            </section>
+            <section id="people" class="content-section">
+                <h2 class="section-title">Notable People &amp; Leadership</h2>
+            </section>
+            <section id="food" class="content-section">
+                <h2 class="section-title">Food &amp; Cuisine</h2>
+            </section>
+            <section id="culture" class="content-section">
+                <h2 class="section-title">Art, Culture &amp; Heritage</h2>
+            </section>
+            <section id="data" class="content-section">
+                <h2 class="section-title">Data &amp; Analysis</h2>
+            </section>
+            <section id="references" class="content-section">
+                <h2 class="section-title">References &amp; Sources</h2>
+            </section>
+        </div>
     </div>
 
     <script>
@@ -349,6 +522,54 @@
                 showApp();
             }
         }
+
+        // Navigation
+        function toggleNav() {
+            document.getElementById('nav-links').classList.toggle('open');
+        }
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('open');
+            });
+        });
+
+        // Scroll-based active nav highlighting
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('.content-section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            let current = '';
+
+            sections.forEach(section => {
+                const top = section.offsetTop - 80;
+                if (window.scrollY >= top) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 60;
+                    const top = target.offsetTop - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
 
         // Initialize
         initTheme();
