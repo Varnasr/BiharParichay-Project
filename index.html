@@ -3449,6 +3449,11 @@ graph LR
         initTheme();
         initLang();
         checkAuth();
+
+        // Register service worker for offline access
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
     </script>
 </body>
 </html>
