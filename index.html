@@ -1189,6 +1189,57 @@ graph LR
                         </div>
                     </div>
 
+                    <!-- Tool 10: District Map -->
+                    <div class="tool-card" style="grid-column: 1 / -1;">
+                        <div class="tool-card-header" onclick="toggleTool('map-tool')">
+                            <h4>District Indicator Map</h4>
+                            <span class="tool-toggle" id="map-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="map-tool">
+                            <p class="tool-desc">Color-coded Bihar district map by indicator. Green = better, Red = needs attention.</p>
+                            <select class="tool-select" id="map-indicator" onchange="updateDistrictMap()">
+                                <option value="literacy">Literacy Rate (%)</option>
+                                <option value="sexRatio">Sex Ratio (per 1000)</option>
+                                <option value="urban">Urbanisation (%)</option>
+                                <option value="density">Pop. Density (/sq km)</option>
+                            </select>
+                            <div id="district-indicator-map" style="height:420px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);margin-top:10px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 11: Impact Calculator -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('calc-tool')">
+                            <h4>Impact Calculator</h4>
+                            <span class="tool-toggle" id="calc-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="calc-tool">
+                            <p class="tool-desc">What do Bihar's statistics mean for real families?</p>
+                            <select class="tool-select" id="calc-indicator" onchange="calculateImpact()">
+                                <option value="">-- Select --</option>
+                                <option value="poverty">Multidimensional Poverty (51.9%)</option>
+                                <option value="childmarriage">Child Marriage (40.8%)</option>
+                                <option value="stunting">Child Stunting (42.9%)</option>
+                                <option value="migration">Male Out-Migration (8-10M)</option>
+                                <option value="literacy_gap">Female Literacy Gap (20 pts)</option>
+                                <option value="flood">Annual Flood Displacement (15-20M)</option>
+                            </select>
+                            <div class="tool-result" id="calc-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 12: Timeline -->
+                    <div class="tool-card" style="grid-column: 1 / -1;">
+                        <div class="tool-card-header" onclick="toggleTool('timeline-tool')">
+                            <h4>Bihar Timeline</h4>
+                            <span class="tool-toggle" id="timeline-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="timeline-tool">
+                            <p class="tool-desc">Key moments from Maurya Empire to 2024 elections.</p>
+                            <div id="timeline-container" style="max-height:500px;overflow-y:auto;"></div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -2106,6 +2157,122 @@ graph LR
             result.style.display = 'block';
         }
 
+        // Tool 10: District Indicator Map
+        let districtMapInstance = null;
+        const DISTRICT_COORDS = {
+            'Patna':[25.61,85.14],'Gaya':[24.80,85.00],'Muzaffarpur':[26.12,85.36],'Bhagalpur':[25.24,86.98],
+            'Darbhanga':[26.15,85.89],'Purnia':[25.78,87.47],'Madhubani':[26.36,86.07],'Samastipur':[25.86,85.78],
+            'Begusarai':[25.42,86.13],'East Champaran':[26.65,84.85],'West Champaran':[27.00,84.35],
+            'Vaishali':[25.98,85.13],'Siwan':[26.22,84.35],'Gopalganj':[26.47,84.44],'Nalanda':[25.14,85.44],
+            'Rohtas':[24.97,84.01],'Katihar':[25.54,87.57],'Kishanganj':[26.10,87.95],'Araria':[26.15,87.51],
+            'Aurangabad':[24.75,84.37],'Jehanabad':[25.21,84.99],'Supaul':[26.12,86.60],'Saharsa':[25.88,86.60],
+            'Madhepura':[25.92,86.79],'Sitamarhi':[26.59,85.49],'Saran':[25.87,84.78],'Munger':[25.38,86.47],
+            'Lakhisarai':[25.16,86.09],'Jamui':[24.93,86.22],'Banka':[24.89,86.92],'Khagaria':[25.50,86.47],
+            'Sheikhpura':[25.14,85.84],'Nawada':[24.89,85.54],'Buxar':[25.56,83.98],'Bhojpur':[25.46,84.52],
+            'Sheohar':[26.52,85.30],'Arwal':[25.24,84.66]
+        };
+
+        function updateDistrictMap() {
+            const indicator = document.getElementById('map-indicator').value;
+            const mapEl = document.getElementById('district-indicator-map');
+            if (!mapEl) return;
+
+            if (!districtMapInstance) {
+                districtMapInstance = L.map('district-indicator-map', { scrollWheelZoom: false }).setView([25.6, 85.5], 7);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OSM', maxZoom: 10, opacity: 0.3
+                }).addTo(districtMapInstance);
+            }
+
+            // Clear existing markers
+            districtMapInstance.eachLayer(l => { if (l instanceof L.CircleMarker) districtMapInstance.removeLayer(l); });
+
+            const data = DISTRICT_DATA;
+            const vals = Object.values(data).map(d => d[indicator]).filter(v => v !== undefined);
+            const min = Math.min(...vals), max = Math.max(...vals);
+
+            Object.entries(data).forEach(([name, d]) => {
+                const coords = DISTRICT_COORDS[name];
+                if (!coords || d[indicator] === undefined) return;
+                const val = d[indicator];
+                const norm = (val - min) / (max - min || 1);
+                // For density, high = bad (red). For others, high = good (green)
+                const isInverse = indicator === 'density';
+                const r = isInverse ? Math.round(norm * 200 + 55) : Math.round((1 - norm) * 200 + 55);
+                const g = isInverse ? Math.round((1 - norm) * 200 + 55) : Math.round(norm * 200 + 55);
+                const color = 'rgb(' + r + ',' + g + ',60)';
+
+                L.circleMarker(coords, {
+                    radius: 12, fillColor: color, color: '#fff', weight: 1.5, fillOpacity: 0.85
+                }).addTo(districtMapInstance).bindPopup('<strong>' + name + '</strong><br>' + indicator + ': ' + val);
+            });
+
+            setTimeout(() => districtMapInstance.invalidateSize(), 100);
+        }
+
+        // Tool 11: Impact Calculator
+        function calculateImpact() {
+            const ind = document.getElementById('calc-indicator').value;
+            const result = document.getElementById('calc-result');
+            if (!ind) { result.style.display = 'none'; return; }
+
+            const impacts = {
+                poverty: { stat: '51.9%', pop: '128 million', html: '<strong>66.4 million people</strong> in Bihar are multidimensionally poor. That is more than the entire population of France (67M). It means <strong>1 in every 2 Biharis</strong> lacks adequate nutrition, education, AND living standards simultaneously. In a village of 500 people, roughly 260 are poor by this measure -- not just income-poor, but deprived across multiple dimensions of life.' },
+                childmarriage: { stat: '40.8%', pop: '~3M girls aged 15-19', html: 'Approximately <strong>12 lakh girls per year</strong> in Bihar are married before turning 18. That is <strong>3,300 child brides every single day</strong>. For each one, the consequences cascade: dropout from school, early pregnancy (Bihar has India\'s highest TFR of 3.0), health risks, economic dependency. The Cycle Yojana (bicycles for girls) delayed many marriages. But after Class 12, with no college nearby and no jobs, families often see marriage as the only option.' },
+                stunting: { stat: '42.9%', pop: '~18M children under 5', html: 'An estimated <strong>7.7 million children under 5</strong> in Bihar are stunted -- their bodies and brains permanently underdeveloped due to chronic malnutrition. Stunting is not just short height; it means reduced cognitive capacity, lower lifetime earnings, and higher disease vulnerability. These children will grow up in a knowledge economy with a <strong>permanent biological disadvantage</strong> imposed by poverty before age 2.' },
+                migration: { stat: '8-10 million', pop: 'working-age men', html: 'If Bihar\'s <strong>8-10 million migrant workers</strong> were a country, they would be larger than Switzerland. They produce an estimated <strong>Rs 50,000-80,000 crore</strong> in remittances annually -- roughly 15-20% of Bihar\'s GSDP. Behind each worker is a family: a wife managing the farm alone, children growing up without a father present 10 months a year, elderly parents without daily support. The migration economy is not a choice. It is the absence of a choice.' },
+                literacy_gap: { stat: '20 percentage points', pop: '~30M women', html: 'The gap between male literacy (73.4%) and female literacy (53.3%) in Bihar means approximately <strong>3 crore women cannot read</strong> a medicine label, a ration card, a bank form, or a text message. They are functionally excluded from the information economy. In districts like Kishanganj (female literacy ~40%), Purnia (~39%), and Katihar (~40%), the majority of women are illiterate. This is not individual failure. It is a system that decided girls\' education was optional.' },
+                flood: { stat: '15-20 million', pop: 'affected annually', html: 'Every monsoon, <strong>1.5-2 crore people</strong> in Bihar are affected by flooding -- roughly the population of the Netherlands. Crops are destroyed, homes inundated, roads cut off. In the worst years, entire districts are underwater for weeks. The affected are disproportionately the poorest -- those living in kutcha houses on low-lying land near embankments. Flood "relief" arrives late, is insufficient, and its distribution is often captured by local power brokers. The cycle repeats every year.' }
+            };
+
+            const d = impacts[ind];
+            result.innerHTML = '<div style="font-size:0.9rem;line-height:1.8;">' + d.html + '</div><p style="margin-top:10px;font-size:0.72rem;color:var(--text-tertiary)">Calculation based on: ' + d.stat + ' of relevant population. Sources: NITI Aayog MPI, NFHS-5, Census 2011, Bihar Labour Dept.</p>';
+            result.style.display = 'block';
+        }
+
+        // Tool 12: Timeline
+        const TIMELINE = [
+            {year:'c. 600 BCE',event:'Licchavi Republic of Vaishali',detail:'Considered the world\'s first republic. Democratic governance with elected assembly.'},
+            {year:'c. 528 BCE',event:'Buddha attains enlightenment at Bodh Gaya',detail:'Siddhartha Gautama under the Bodhi Tree. Bihar becomes the birthplace of Buddhism.'},
+            {year:'c. 527 BCE',event:'Mahavira born in Vaishali',detail:'24th Tirthankara of Jainism. Bihar the birthplace of two world religions.'},
+            {year:'322 BCE',event:'Chandragupta Maurya founds the Maurya Empire',detail:'Administered from Pataliputra (Patna). One of the largest empires of antiquity.'},
+            {year:'268 BCE',event:'Ashoka becomes emperor',detail:'After Kalinga War, embraces non-violence. Edicts across subcontinent.'},
+            {year:'476 CE',event:'Aryabhata born (likely Patna)',detail:'Mathematician who introduced zero, calculated pi, proposed heliocentric model.'},
+            {year:'5th c. CE',event:'Nalanda University founded',detail:'Attracted 10,000 students from across Asia. Active for 700 years.'},
+            {year:'1193',event:'Bakhtiyar Khilji destroys Nalanda',detail:'Library burned for months. End of ancient Bihar\'s intellectual golden age.'},
+            {year:'1574',event:'Akbar conquers Bihar',detail:'Incorporated into Mughal Empire. Sher Shah Suri (from Sasaram) had earlier built Grand Trunk Road.'},
+            {year:'1666',event:'Guru Gobind Singh born at Patna Sahib',detail:'Tenth Sikh Guru. Patna becomes one of five Sikh takhts (seats of authority).'},
+            {year:'1765',event:'British East India Company acquires Bihar (Diwani)',detail:'Beginning of colonial extraction. Bengal Presidency includes Bihar.'},
+            {year:'1857',event:'Kunwar Singh leads revolt in Bihar',detail:'80-year-old Rajput chieftain from Jagdishpur leads anti-British uprising.'},
+            {year:'1917',event:'Champaran Satyagraha',detail:'Gandhi\'s first civil disobedience in India. Indigo farmers against British planters. Rajendra Prasad joins.'},
+            {year:'1936',event:'Bihar separated from Bengal as distinct province',detail:'Bihar gets own provincial legislature and governance.'},
+            {year:'1947',event:'Independence. Rajendra Prasad elected Constituent Assembly president',detail:'Bihar\'s leader chairs the body that drafts India\'s Constitution.'},
+            {year:'1950',event:'Bihar Land Reforms Act',detail:'Zamindari abolition on paper. Implementation remains incomplete decades later.'},
+            {year:'1967',event:'Naxalbari movement reaches Bihar',detail:'Armed peasant uprising for land rights spreads to Bhojpur, Jehanabad, Gaya.'},
+            {year:'1974',event:'JP Movement (Sampoorna Kranti)',detail:'Jayaprakash Narayan leads Total Revolution from Bihar. Contributed to Emergency fall.'},
+            {year:'1980',event:'Mandal Commission report submitted',detail:'Chaired by B.P. Mandal from Bihar. Recommends 27% OBC reservation. Transforms Indian politics.'},
+            {year:'1990',event:'Lalu Prasad Yadav becomes CM',detail:'MY (Muslim-Yadav) coalition. "Social justice" era begins. 15 years of RJD rule.'},
+            {year:'1997',event:'Laxmanpur Bathe massacre',detail:'58 Dalits killed by Ranvir Sena in Jehanabad. Worst caste massacre in modern Bihar.'},
+            {year:'2000',event:'Jharkhand carved out of Bihar',detail:'Bihar loses its mineral-rich southern districts. GSDP drops sharply.'},
+            {year:'2005',event:'Nitish Kumar becomes CM',detail:'"Sushasan" (good governance) era. Roads, law and order, girls\' education improve.'},
+            {year:'2006',event:'Mukhyamantri Cycle Yojana launched',detail:'Free bicycles for girls. Girls\' secondary enrolment doubles in 5 years.'},
+            {year:'2008',event:'Kosi embankment breach',detail:'3.3 million displaced. 993 villages inundated. Worst flood disaster in modern Bihar.'},
+            {year:'2016',event:'Bihar enacts total alcohol prohibition',detail:'Popular among women voters. Creates parallel economy. Hooch deaths follow.'},
+            {year:'2023',event:'Bihar Caste Survey released',detail:'First comprehensive caste enumeration since colonial era. OBC+EBC: 63%. Political earthquake.'},
+            {year:'2024',event:'Lok Sabha elections',detail:'INDIA alliance wins 12 of 40 seats. Several seats decided by margins under 15,000 votes.'}
+        ];
+
+        function initTimeline() {
+            const container = document.getElementById('timeline-container');
+            if (!container || container.innerHTML) return;
+            container.innerHTML = TIMELINE.map(t =>
+                '<div style="display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border-light);">' +
+                '<div style="min-width:90px;font-family:var(--font-mono);font-size:0.78rem;font-weight:600;color:var(--accent);white-space:nowrap;">' + t.year + '</div>' +
+                '<div><div style="font-weight:600;font-size:0.88rem;margin-bottom:2px;">' + t.event + '</div>' +
+                '<div style="font-size:0.8rem;color:var(--text-tertiary);">' + t.detail + '</div></div></div>'
+            ).join('');
+        }
+
         // Tools initialization
         function initTools() {
             // Populate district dropdowns
@@ -2144,9 +2311,19 @@ graph LR
             searchLexicon();
             // Initial reading list render
             renderReadingList();
+            // Init timeline
+            initTimeline();
             // Auto-open first two tools
             toggleTool('surname-tool');
             toggleTool('lexicon-tool');
+            // Init district map (after short delay for DOM)
+            setTimeout(() => {
+                const mapTool = document.getElementById('map-tool');
+                if (mapTool) {
+                    toggleTool('map-tool');
+                    setTimeout(updateDistrictMap, 200);
+                }
+            }, 100);
         }
 
         // Lazy initialization: init charts/maps when their tab is first shown
