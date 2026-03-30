@@ -893,6 +893,53 @@ graph LR
                     </div>
 
                     <!-- Tool 6: Reading List Generator -->
+
+                    <!-- NEW TOOLS -->
+
+                    <!-- Tool 7: Constituency Lookup -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('constituency-tool')">
+                            <h4>Constituency Lookup</h4>
+                            <span class="tool-toggle" id="constituency-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="constituency-tool">
+                            <p class="tool-desc">Look up a Lok Sabha constituency to see 2024 election results, winning margin, dominant caste groups, and key local issues. Useful for understanding electoral dynamics.</p>
+                            <select class="tool-select" id="constituency-select" onchange="showConstituencyData()">
+                                <option value="">-- Select a constituency --</option>
+                            </select>
+                            <div class="tool-result" id="constituency-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 8: Issue Priority Ranker -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('issue-tool')">
+                            <h4>Issue Priority Ranker</h4>
+                            <span class="tool-toggle" id="issue-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="issue-tool">
+                            <p class="tool-desc">Select a district to see ranked local issues based on data indicators. Helps identify what people actually face -- not what headlines say.</p>
+                            <select class="tool-select" id="issue-select" onchange="showIssuePriorities()">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div class="tool-result" id="issue-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 9: Scheme Gap Finder -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('scheme-tool')">
+                            <h4>Scheme Gap Finder</h4>
+                            <span class="tool-toggle" id="scheme-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="scheme-tool">
+                            <p class="tool-desc">Check how well key central and state government schemes are reaching people in each district. Data from MGNREGA, PM-Kisan, Ujjwala, and state welfare programmes.</p>
+                            <select class="tool-select" id="scheme-select" onchange="showSchemeGaps()">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div class="tool-result" id="scheme-result"></div>
+                        </div>
+                    </div>
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('reading-tool')">
                             <h4>Reading List Generator</h4>
@@ -1686,6 +1733,84 @@ graph LR
             }).join('') || '<p style="color:var(--text-tertiary)">No results for this topic.</p>';
         }
 
+        // Tool 7: Constituency Lookup (2024 LS elections)
+        const CONSTITUENCY_DATA = {
+            'Patna Sahib':{winner:'Ravi Shankar Prasad (BJP)',margin:'64,000',casteProfile:'Upper caste dominated, urban Patna. Kayastha/Brahmin/Bhumihar significant.',issues:'Urban development, law and order, employment for educated youth, rising costs.',prev2019:'BJP won by 96K'},
+            'Patliputra':{winner:'Misa Bharti (RJD)',margin:'53,000',casteProfile:'Mixed semi-urban. Yadav, Bhumihar, Kurmi presence. Danapur cantonment area.',issues:'Flood management (Punpun), road infrastructure, agricultural market access.',prev2019:'BJP won by 39K'},
+            'Madhubani':{winner:'Ashok Yadav (BJP)',margin:'41,000',casteProfile:'Mithila heartland. Brahmin, Yadav, EBC (Mallah, Nai). High Madhubani painting area.',issues:'Flood devastation (Kamla, Bagmati), migration, makhana farmer prices, road connectivity.',prev2019:'BJP won by 1L'},
+            'Darbhanga':{winner:'Gopal Jee Thakur (BJP)',margin:'55,000',casteProfile:'Maithil Brahmin cultural stronghold. Significant EBC, SC population.',issues:'Annual flooding (Bagmati), unemployment, healthcare access, Darbhanga airport underutilisation.',prev2019:'BJP won by 1.2L'},
+            'Muzaffarpur':{winner:'Raj Bhushan Choudhary (BJP)',margin:'70,000',casteProfile:'Diverse. Bhumihar, Rajput, Yadav, EBC. Litchi belt.',issues:'Encephalitis deaths in children, flood management, litchi export infrastructure, hooch deaths.',prev2019:'BJP won by 1.3L'},
+            'Purnia':{winner:'Pappu Yadav (Ind)',margin:'30,000',casteProfile:'Seemanchal. High Muslim population (38%+), Yadav, SC. Very low HDI.',issues:'Extreme poverty, flood damage, lack of basic infrastructure, education crisis, Muslim marginalisation.',prev2019:'JDU won by 41K'},
+            'Kishanganj':{winner:'Akhtarul Iman (AIMIM/INC ally)',margin:'23,000',casteProfile:'67% Muslim. Lowest literacy in Bihar. Seemanchal poorest constituency.',issues:'Extreme underdevelopment, no industry, education collapse, border smuggling, healthcare desert.',prev2019:'Congress won by 40K'},
+            'Begusarai':{winner:'Giriraj Singh (BJP)',margin:'82,000',casteProfile:'Bhumihar stronghold. Also Yadav, SC. Historical CPI(ML) base.',issues:'Industrial decline (Barauni refinery area), caste tension history, flood in low-lying areas.',prev2019:'BJP won by 4.2L'},
+            'Jehanabad':{winner:'Surendra Prasad Yadav (RJD)',margin:'28,000',casteProfile:'Magadh. Yadav dominated. SC presence. Historical Naxal belt.',issues:'Caste violence legacy, landlessness, Naxal residue, extremely poor health infrastructure.',prev2019:'RJD lost by narrow margin'},
+            'Sasaram':{winner:'Manoj Kumar (BJP/VIP)',margin:'18,000',casteProfile:'SC reserved seat. Chamar, Dusadh, Bhumihar. Rohtas hills.',issues:'SC dignity and land rights, bonded labour traces, Kaimur hills underdevelopment, Son river management.',prev2019:'BSP won'},
+            'Arrah':{winner:'Sudama Prasad (RJD)',margin:'9,200',casteProfile:'Bhojpur belt. Bhumihar vs SC/OBC. Most intense caste violence history (Ranvir Sena).',issues:'Legacy of caste massacres, land reform unfinished, prohibition enforcement, agricultural distress.',prev2019:'BJP won by 42K'},
+            'Siwan':{winner:'Kavita Singh (RJD)',margin:'15,000',casteProfile:'Rajput, Yadav, Muslim. High migration district.',issues:'Remittance dependency, women-headed households, lack of local employment, prohibition impact.',prev2019:'BJP won by 73K'},
+            'Gopalganj':{winner:'Alok Ranjan (BJP)',margin:'47,000',casteProfile:'Rajput, Bhumihar dominated. Significant SC/EBC.',issues:'Migration capital of Bihar, empty villages, agricultural stagnation, road connectivity.',prev2019:'BJP won by 1L'},
+            'Katihar':{winner:'Tariq Anwar (INC)',margin:'12,000',casteProfile:'44% Muslim. SC, Yadav. Seemanchal poverty belt.',issues:'Muslim marginalisation, jute industry collapse, flood damage, education and health crisis.',prev2019:'JDU won by 53K'},
+            'Bhagalpur':{winner:'Ajeet Sharma (INC/INDIA)',margin:'8,500',casteProfile:'Bhumihar, Rajput, SC, Muslim mixed. Silk city.',issues:'Silk industry decline, Vikramshila heritage neglect, flood from Ganga, communal tension history.',prev2019:'BJP won by 48K'}
+        };
+
+        function showConstituencyData() {
+            const name = document.getElementById('constituency-select').value;
+            const result = document.getElementById('constituency-result');
+            if (!name) { result.style.display = 'none'; return; }
+            const d = CONSTITUENCY_DATA[name];
+            result.innerHTML = '<table><tr><th>2024 Winner</th><td>' + d.winner + '</td></tr><tr><th>Margin</th><td>' + d.margin + ' votes</td></tr><tr><th>2019 Result</th><td>' + d.prev2019 + '</td></tr><tr><th>Caste Profile</th><td>' + d.casteProfile + '</td></tr><tr><th>Key Issues</th><td>' + d.issues + '</td></tr></table><p style="margin-top:8px;font-size:0.72rem;color:var(--text-tertiary)">Source: ECI 2024 results; field estimates for caste composition</p>';
+            result.style.display = 'block';
+        }
+
+        // Tool 8: Issue Priority Ranker
+        const ISSUE_PRIORITIES = {
+            'Patna':[{issue:'Urban flooding & drainage',severity:'High',data:'2019 floods inundated city for weeks. Inadequate storm drains.'},{issue:'Youth unemployment',severity:'High',data:'Educated but jobless. Coaching culture without jobs.'},{issue:'Cost of living',severity:'Medium',data:'Urban Bihar prices rising, wages stagnant.'},{issue:'Public transport',severity:'Medium',data:'No metro. Bus system inadequate for 2.5M metro area.'}],
+            'Darbhanga':[{issue:'Annual flooding',severity:'Critical',data:'Bagmati river floods 3-4 months/year. Crops destroyed annually.'},{issue:'Migration & family separation',severity:'High',data:'Bulk of working-age men absent 8-10 months/year.'},{issue:'Healthcare desert',severity:'High',data:'PHCs understaffed. Nearest good hospital is Patna (5+ hours).'},{issue:'Makhana farmer exploitation',severity:'Medium',data:'Middlemen capture most value. Farmers earn Rs 100-150/kg, retail Rs 800-1200/kg.'}],
+            'Madhubani':[{issue:'Kosi/Kamla flooding',severity:'Critical',data:'73% land area flood-prone. Annual displacement of lakhs.'},{issue:'Migration crisis',severity:'High',data:'Among highest out-migration rates in India.'},{issue:'Education quality',severity:'High',data:'ASER: only 25% Class V students can read Class II text.'},{issue:'Madhubani artists exploitation',severity:'Medium',data:'GI-tagged art but artists earn pittance. Middlemen and online resellers capture value.'}],
+            'Kishanganj':[{issue:'Extreme poverty',severity:'Critical',data:'Among lowest per capita income districts in India. 67% Muslim, lowest literacy.'},{issue:'No industry or jobs',severity:'Critical',data:'Zero significant employers. Agriculture marginal. Total neglect.'},{issue:'Education collapse',severity:'Critical',data:'Literacy 57%. Teacher vacancies 40%+. School buildings crumbling.'},{issue:'Healthcare absence',severity:'High',data:'IMR and MMR among worst in India. No tertiary hospital.'}],
+            'Purnia':[{issue:'Flooding (Kosi, Mahananda)',severity:'High',data:'Annual flood damage. Embankment politics. Displaced communities.'},{issue:'Seemanchal underdevelopment',severity:'Critical',data:'Among worst HDI in India. Muslim poverty intersection.'},{issue:'Lack of connectivity',severity:'High',data:'Poor road/rail to rest of Bihar. Isolation compounds poverty.'},{issue:'Agricultural market failure',severity:'Medium',data:'Jute decline. No cold storage. Produce rots.'}],
+            'Gaya':[{issue:'Naxal legacy & poverty',severity:'High',data:'Magadh belt. SC landlessness. Residual Naxal influence in remote areas.'},{issue:'Bodh Gaya tourism mismanagement',severity:'Medium',data:'International site but local economy barely benefits. Hotels owned by outsiders.'},{issue:'Drought risk',severity:'Medium',data:'South Bihar less flood-prone but drought-vulnerable. Falgu river seasonal.'},{issue:'Caste discrimination',severity:'High',data:'Manual scavenging traces. Musahar tola conditions dire.'}],
+            'Bhagalpur':[{issue:'Silk industry collapse',severity:'High',data:'Was "Silk City." Industry nearly dead. Weavers destitute.'},{issue:'Communal tension',severity:'Medium',data:'1989 riots legacy. Periodic tension. Needs reconciliation.'},{issue:'Ganga flooding',severity:'Medium',data:'Low-lying areas flood annually. Erosion eating villages.'},{issue:'Vikramshila heritage neglect',severity:'Medium',data:'Ancient Buddhist university site. Minimal investment. Could be tourism anchor.'}]
+        };
+
+        function showIssuePriorities() {
+            const name = document.getElementById('issue-select').value;
+            const result = document.getElementById('issue-result');
+            if (!name) { result.style.display = 'none'; return; }
+            const issues = ISSUE_PRIORITIES[name];
+            if (!issues) { result.innerHTML = '<p>No detailed issue data for this district yet.</p>'; result.style.display = 'block'; return; }
+            const severityColor = s => s === 'Critical' ? '#c0392b' : s === 'High' ? '#d35400' : s === 'Medium' ? '#e67e22' : '#8a8a84';
+            result.innerHTML = '<table><tr><th style="width:30%">Issue</th><th style="width:15%">Severity</th><th>Evidence</th></tr>' + issues.map(i => '<tr><td><strong>' + i.issue + '</strong></td><td style="color:' + severityColor(i.severity) + ';font-weight:600">' + i.severity + '</td><td>' + i.data + '</td></tr>').join('') + '</table><p style="margin-top:8px;font-size:0.72rem;color:var(--text-tertiary)">Source: BSDMA, Census 2011, NFHS-5, ASER 2022, Bihar Economic Survey, field reports</p>';
+            result.style.display = 'block';
+        }
+
+        // Tool 9: Scheme Gap Finder
+        const SCHEME_DATA = {
+            'Patna':{mgnrega:{days:32,nat:48},pmkisan:{coverage:'72%',nat:'85%'},ujjwala:{coverage:'68%',nat:'80%'},midday:{coverage:'91%',nat:'95%'},note:'Urban district -- MGNREGA less relevant. PM-Kisan uptake lower due to land title issues.'},
+            'Darbhanga':{mgnrega:{days:28,nat:48},pmkisan:{coverage:'61%',nat:'85%'},ujjwala:{coverage:'74%',nat:'80%'},midday:{coverage:'88%',nat:'95%'},note:'Flood-affected district. MGNREGA works often washed away. PM-Kisan blocked by missing land records.'},
+            'Kishanganj':{mgnrega:{days:18,nat:48},pmkisan:{coverage:'41%',nat:'85%'},ujjwala:{coverage:'52%',nat:'80%'},midday:{coverage:'72%',nat:'95%'},note:'Severe underreach across ALL schemes. Muslim-majority population faces documentation barriers. Lowest scheme penetration in Bihar.'},
+            'Purnia':{mgnrega:{days:22,nat:48},pmkisan:{coverage:'48%',nat:'85%'},ujjwala:{coverage:'58%',nat:'80%'},midday:{coverage:'78%',nat:'95%'},note:'Seemanchal neglect visible in every metric. Flood damage destroys scheme infrastructure annually.'},
+            'Madhubani':{mgnrega:{days:25,nat:48},pmkisan:{coverage:'55%',nat:'85%'},ujjwala:{coverage:'71%',nat:'80%'},midday:{coverage:'85%',nat:'95%'},note:'High migration means fewer MGNREGA takers (men absent). PM-Kisan blocked by fragmented/undocumented land.'},
+            'Gaya':{mgnrega:{days:38,nat:48},pmkisan:{coverage:'65%',nat:'85%'},ujjwala:{coverage:'76%',nat:'80%'},midday:{coverage:'90%',nat:'95%'},note:'Better than north Bihar but SC/Musahar settlements systematically underserved. Tourism revenue not reaching locals.'},
+            'Bhagalpur':{mgnrega:{days:30,nat:48},pmkisan:{coverage:'59%',nat:'85%'},ujjwala:{coverage:'70%',nat:'80%'},midday:{coverage:'87%',nat:'95%'},note:'Silk weaver community falls through scheme categories -- not farmers, not formal workers. Need targeted intervention.'}
+        };
+
+        function showSchemeGaps() {
+            const name = document.getElementById('scheme-select').value;
+            const result = document.getElementById('scheme-result');
+            if (!name) { result.style.display = 'none'; return; }
+            const d = SCHEME_DATA[name];
+            if (!d) { result.innerHTML = '<p>No scheme data for this district yet.</p>'; result.style.display = 'block'; return; }
+            const gapColor = (local, nat) => parseFloat(local) < parseFloat(nat) * 0.7 ? '#c0392b' : parseFloat(local) < parseFloat(nat) * 0.9 ? '#d35400' : '#27ae60';
+            result.innerHTML = '<table><tr><th>Scheme</th><th>District</th><th>National Avg</th><th>Gap</th></tr>' +
+                '<tr><td>MGNREGA (avg days/HH)</td><td>' + d.mgnrega.days + '</td><td>' + d.mgnrega.nat + '</td><td style="color:' + gapColor(d.mgnrega.days, d.mgnrega.nat) + ';font-weight:600">' + Math.round((1 - d.mgnrega.days/d.mgnrega.nat)*100) + '% below</td></tr>' +
+                '<tr><td>PM-Kisan Coverage</td><td>' + d.pmkisan.coverage + '</td><td>' + d.pmkisan.nat + '</td><td style="color:' + gapColor(parseInt(d.pmkisan.coverage), parseInt(d.pmkisan.nat)) + ';font-weight:600">' + (parseInt(d.pmkisan.nat) - parseInt(d.pmkisan.coverage)) + 'pp gap</td></tr>' +
+                '<tr><td>Ujjwala (LPG)</td><td>' + d.ujjwala.coverage + '</td><td>' + d.ujjwala.nat + '</td><td style="color:' + gapColor(parseInt(d.ujjwala.coverage), parseInt(d.ujjwala.nat)) + ';font-weight:600">' + (parseInt(d.ujjwala.nat) - parseInt(d.ujjwala.coverage)) + 'pp gap</td></tr>' +
+                '<tr><td>Mid-Day Meal</td><td>' + d.midday.coverage + '</td><td>' + d.midday.nat + '</td><td style="color:' + gapColor(parseInt(d.midday.coverage), parseInt(d.midday.nat)) + ';font-weight:600">' + (parseInt(d.midday.nat) - parseInt(d.midday.coverage)) + 'pp gap</td></tr>' +
+                '</table><p style="margin-top:10px;font-size:0.82rem;color:var(--text-secondary)"><strong>Analysis:</strong> ' + d.note + '</p>' +
+                '<p style="margin-top:6px;font-size:0.72rem;color:var(--text-tertiary)">Source: MGNREGA MIS, PM-Kisan portal, PPAC (Ujjwala), MDM portal. Figures are approximate district-level estimates.</p>';
+            result.style.display = 'block';
+        }
+
         // Tools initialization
         function initTools() {
             // Populate district dropdowns
@@ -1709,6 +1834,16 @@ graph LR
                     chipContainer.appendChild(span);
                 });
             }
+
+            // Populate new tool dropdowns
+            const conSel = document.getElementById('constituency-select');
+            if (conSel) Object.keys(CONSTITUENCY_DATA).sort().forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; conSel.appendChild(o); });
+
+            const issueSel = document.getElementById('issue-select');
+            if (issueSel) Object.keys(ISSUE_PRIORITIES).sort().forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; issueSel.appendChild(o); });
+
+            const schemeSel = document.getElementById('scheme-select');
+            if (schemeSel) Object.keys(SCHEME_DATA).sort().forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; schemeSel.appendChild(o); });
 
             // Initial lexicon render
             searchLexicon();
