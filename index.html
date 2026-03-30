@@ -433,6 +433,34 @@
             border-bottom: none;
         }
 
+        /* ===== PEOPLE GRID ===== */
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .person-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .person-card h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .person-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
         /* ===== CHARTS ===== */
         .charts-row {
             display: grid;
@@ -741,6 +769,44 @@
             </section>
             <section id="people" class="content-section">
                 <h2 class="section-title">Notable People &amp; Leadership</h2>
+                <p class="section-subtitle">Historical figures, intellectual legacy, and contributions to India's democratic fabric</p>
+                <div class="section-prose">
+                    <p>Bihar's contribution to Indian civilisation and democratic governance is disproportionately large relative to its contemporary economic standing. The region has been the birthplace or formative ground of emperors, philosophers, mathematicians, and political leaders whose influence extends across centuries and borders.</p>
+                </div>
+                <div class="people-grid">
+                    <div class="person-card">
+                        <h4>Chandragupta Maurya (c. 340-298 BCE)</h4>
+                        <p>Founder of the Maurya Empire, one of the largest empires of antiquity, administered from Pataliputra (Patna). United most of the Indian subcontinent under a single administration for the first time.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Ashoka the Great (c. 304-232 BCE)</h4>
+                        <p>Mauryan emperor who, after the Kalinga War, embraced Buddhism and propagated principles of non-violence and dharma through edicts across the subcontinent. Widely regarded as one of history's most enlightened rulers.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Aryabhata (476-550 CE)</h4>
+                        <p>Mathematician and astronomer, likely born in Kusumapura (Patna). His work <em>Aryabhatiya</em> introduced the concept of zero as a placeholder, calculated pi to four decimal places, and proposed a heliocentric model of the solar system.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Guru Gobind Singh (1666-1708)</h4>
+                        <p>The tenth Sikh Guru was born at Patna Sahib. He founded the Khalsa in 1699 and is revered for his contributions to Sikh theology, warrior tradition, and literary works.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Dr. Rajendra Prasad (1884-1963)</h4>
+                        <p>First President of independent India (1950-1962). Born in Ziradei, Siwan district. A leading figure in the Indian independence movement and President of the Constituent Assembly that drafted India's Constitution.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Jayaprakash Narayan (1902-1979)</h4>
+                        <p>Known as "Loknayak" (People's Hero). Led the Total Revolution (Sampoorna Kranti) movement in 1974 that contributed to the fall of the Indira Gandhi government. Born in Sitab Diara, Saran district. A pivotal figure in Indian democratic history.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Anugrah Narayan Sinha (1887-1957)</h4>
+                        <p>Bihar's first Deputy Chief Minister and Finance Minister. Known as "Bihar Vibhuti." Led the Champaran Satyagraha alongside Gandhi and was central to Bihar's land reform legislation.</p>
+                    </div>
+                    <div class="person-card">
+                        <h4>Vidyapati Thakur (c. 1352-1448)</h4>
+                        <p>Maithili poet, considered one of the greatest lyric poets of medieval India. His works on love and devotion profoundly influenced Bengali, Assamese, and Odia literary traditions, and he is a foundational figure in Maithili cultural identity.</p>
+                    </div>
+                </div>
             </section>
             <section id="food" class="content-section">
                 <h2 class="section-title">Food &amp; Cuisine</h2>
