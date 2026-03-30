@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bihar Parichay - An Academic Deep Dive</title>
     <meta name="description" content="Bihar Parichay: A comprehensive academic resource on Bihar's geography, society, economy, culture, and development challenges. Data-driven analysis with authenticated sources.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sargam-icons@1.0.0/css/sargam.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <meta property="og:title" content="Bihar Parichay - An Academic Deep Dive">
+    <meta property="og:description" content="Comprehensive academic resource on Bihar: geography, society, economy, culture, and development.">
+    <meta property="og:type" content="website">
     <style>
         :root {
             --primary-color: #1a3a5c;
@@ -604,6 +607,145 @@
             margin: 0 auto;
             padding: 0 24px;
         }
+
+        /* ===== MADHUBANI DECORATIVE ELEMENTS ===== */
+        .madhubani-border {
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                #c0392b 0px, #c0392b 8px,
+                #e67e22 8px, #e67e22 16px,
+                #f1c40f 16px, #f1c40f 24px,
+                #27ae60 24px, #27ae60 32px,
+                #4A90E2 32px, #4A90E2 40px,
+                #9b59b6 40px, #9b59b6 48px
+            );
+        }
+
+        .site-header::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: repeating-linear-gradient(
+                90deg,
+                #c0392b 0px, #c0392b 10px,
+                #e67e22 10px, #e67e22 20px,
+                #f1c40f 20px, #f1c40f 30px,
+                #27ae60 30px, #27ae60 40px,
+                #9b59b6 40px, #9b59b6 50px
+            );
+        }
+
+        /* Madhubani-inspired corner decoration on section titles */
+        .section-title::before {
+            content: '\25C6';
+            color: var(--accent);
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            margin-top: 8px;
+            background: linear-gradient(90deg, #c0392b, #e67e22, #f1c40f, #27ae60);
+            border-radius: 2px;
+        }
+
+        /* Madhubani-style decorative divider between major sections */
+        .content-section + .content-section::before {
+            content: '\25C8  \25C7  \25C8';
+            display: block;
+            text-align: center;
+            color: var(--accent);
+            font-size: 0.75rem;
+            letter-spacing: 8px;
+            padding-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        /* Card header accent */
+        .person-card::before {
+            content: '';
+            display: block;
+            height: 3px;
+            margin: -20px -20px 16px;
+            background: linear-gradient(90deg,
+                var(--accent) 0%, var(--accent) 33%,
+                #c0392b 33%, #c0392b 66%,
+                #27ae60 66%, #27ae60 100%
+            );
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Devanagari quote decoration for header */
+        .site-header-inner::after {
+            content: '\0932\094B\0915  \092A\0930\093F\091A\092F';
+            display: block;
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 0.85rem;
+            opacity: 0.5;
+            margin-top: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 42px;
+            height: 42px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: opacity 0.3s, transform 0.2s;
+            z-index: 99;
+        }
+
+        [data-theme="dark"] .back-to-top {
+            background: #3a6a9e;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-to-top.visible {
+            display: flex;
+        }
+
+        /* ===== RESPONSIVE FINE-TUNING ===== */
+        @media (max-width: 480px) {
+            .site-header { padding: 36px 20px 32px; }
+            .site-header h1 { font-size: 1.6rem; }
+            .site-header .tagline { font-size: 0.88rem; }
+            .key-facts-grid { grid-template-columns: repeat(2, 1fr); }
+            .people-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.3rem; }
+        }
+
+        /* Print stylesheet */
+        @media print {
+            #password-gate, .site-nav, .back-to-top, .header-theme-toggle { display: none !important; }
+            .site-header { padding: 20px; }
+            .map-container { display: none; }
+            body { background: #fff; color: #000; }
+        }
+
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -1026,6 +1168,9 @@
             </section>
         </div>
 
+        <!-- Madhubani decorative border -->
+        <div class="madhubani-border"></div>
+
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-inner">
@@ -1044,8 +1189,11 @@
         </footer>
     </div>
 
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
+
     <script>
-        // SHA-256 hash of the password "bihar2024parichay"
+        // SHA-256 hash of the password "bihar2026parichay"
         const EXPECTED_HASH = ''; // Will be computed on first load
 
         // Theme management
@@ -1085,7 +1233,7 @@
 
         async function getExpectedHash() {
             // Compute hash of correct password for comparison
-            return await sha256('bihar2024parichay');
+            return await sha256('bihar2026parichay');
         }
 
         async function handlePasswordSubmit(e) {
@@ -1149,7 +1297,11 @@
             });
         }
 
-        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('scroll', function() {
+            updateActiveNav();
+            const btn = document.getElementById('backToTop');
+            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+        });
 
         // Smooth scroll for nav links
         document.querySelectorAll('.nav-links a').forEach(link => {
