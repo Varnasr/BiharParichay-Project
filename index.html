@@ -2944,20 +2944,10 @@ graph LR
             if (!section) return;
             const els = section.querySelectorAll('.mermaid:not([data-processed])');
             if (els.length === 0) return;
-            for (let i = 0; i < els.length; i++) {
-                const el = els[i];
-                const code = el.textContent.trim();
-                if (!code) continue;
-                try {
-                    const id = 'mermaid-' + sectionId + '-' + i + '-' + Date.now();
-                    const { svg } = await mermaid.render(id, code);
-                    el.innerHTML = svg;
-                    el.setAttribute('data-processed', 'true');
-                } catch (e) {
-                    console.warn('Mermaid render failed for', sectionId, i, e);
-                    el.innerHTML = '<pre style="font-size:0.75rem;color:var(--text-tertiary);white-space:pre-wrap;">' + code + '</pre>';
-                    el.setAttribute('data-processed', 'true');
-                }
+            try {
+                await mermaid.run({ nodes: els });
+            } catch (e) {
+                console.warn('Mermaid run failed for', sectionId, e);
             }
             mermaidRendered[sectionId] = true;
         }
