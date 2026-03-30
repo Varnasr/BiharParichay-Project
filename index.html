@@ -226,6 +226,23 @@
         .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
         .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
 
+        /* === SEARCH BAR === */
+        .search-bar { max-width: 1040px; margin: 0 auto; padding: 10px 32px; }
+        .search-input-wrap { position: relative; }
+        .search-input { width: 100%; padding: 9px 16px 9px 34px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.85rem; font-family: var(--font-sans); background: var(--surface); color: var(--text-primary); outline: none; transition: border-color 0.15s; }
+        .search-input:focus { border-color: var(--accent); }
+        .search-input::placeholder { color: var(--text-tertiary); }
+        .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 13px; pointer-events: none; }
+        .search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 var(--radius) var(--radius); box-shadow: var(--shadow-lg); max-height: 360px; overflow-y: auto; z-index: 50; display: none; }
+        .search-results.visible { display: block; }
+        .search-result-item { padding: 10px 16px; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.1s; }
+        .search-result-item:hover { background: var(--surface-alt); }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-title { font-weight: 600; font-size: 0.85rem; }
+        .search-result-section { font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; }
+        .search-result-snippet { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 2px; }
+        @media (max-width: 600px) { .search-bar { padding: 8px 16px; } }
+
         /* === DOWNLOAD BUTTONS === */
         .dl-btn { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; font-size: 0.62rem; font-family: var(--font-sans); font-weight: 600; color: var(--text-tertiary); background: var(--surface-alt); border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.15s; margin-top: 6px; }
         .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -492,6 +509,15 @@
                 <button class="nav-cmd-btn" onclick="openCmdOverlay()" title="Quick navigation (Ctrl+K)">&#8984;K</button>
             </div>
         </nav>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-input-wrap">
+                <span class="search-icon">&#128269;</span>
+                <input class="search-input" type="text" id="site-search" placeholder="Search Bihar Parichay -- type any topic, district, person, issue..." oninput="handleSearch()" onfocus="handleSearch()">
+                <div class="search-results" id="search-results"></div>
+            </div>
+        </div>
 
         <!-- Content Container -->
         <div class="container">
@@ -1903,6 +1929,86 @@ graph LR
                 panel.appendChild(btn);
             });
         }
+
+        // Search functionality
+        let searchIndex = [];
+        function buildSearchIndex() {
+            searchIndex = [];
+            // Index section prose
+            document.querySelectorAll('.content-section').forEach(section => {
+                const id = section.id;
+                const title = section.querySelector('.section-title');
+                const sectionName = title ? title.textContent.trim() : id;
+                // Index prose paragraphs
+                section.querySelectorAll('.section-prose.lang-en p, .section-prose:not(.lang-hi):not(.lang-en) p').forEach(p => {
+                    const text = p.textContent.trim();
+                    if (text.length > 30) searchIndex.push({ section: id, sectionName, title: sectionName, text, type: 'content' });
+                });
+                // Index story panels
+                section.querySelectorAll('.madhubani-panel').forEach(panel => {
+                    const mpTitle = panel.querySelector('.mp-title.lang-en') || panel.querySelector('.mp-title:not(.lang-hi)');
+                    const mpText = panel.querySelector('.mp-text.lang-en') || panel.querySelector('.mp-text:not(.lang-hi)');
+                    if (mpTitle && mpText) {
+                        searchIndex.push({ section: id, sectionName, title: mpTitle.textContent.trim(), text: mpText.textContent.trim(), type: 'story' });
+                    }
+                });
+                // Index person cards
+                section.querySelectorAll('.person-card').forEach(card => {
+                    const h = card.querySelector('h4');
+                    const p = card.querySelector('p');
+                    if (h && p) searchIndex.push({ section: id, sectionName, title: h.textContent.trim(), text: p.textContent.trim(), type: 'person' });
+                });
+                // Index craft cards
+                section.querySelectorAll('.craft-card').forEach(card => {
+                    const h = card.querySelector('h4');
+                    const ps = card.querySelectorAll('p');
+                    const text = Array.from(ps).map(p => p.textContent).join(' ');
+                    if (h) searchIndex.push({ section: id, sectionName, title: h.textContent.trim(), text, type: 'craft' });
+                });
+            });
+            // Index quotes
+            QUOTES.forEach(q => searchIndex.push({ section: 'tools', sectionName: 'Voices', title: q.author, text: q.text, type: 'quote' }));
+            // Index lexicon
+            LEXICON.forEach(l => searchIndex.push({ section: 'tools', sectionName: 'Lexicon', title: l.term, text: l.def, type: 'lexicon' }));
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('site-search').value.trim().toLowerCase();
+            const resultsDiv = document.getElementById('search-results');
+            if (!query || query.length < 2) { resultsDiv.classList.remove('visible'); return; }
+            if (searchIndex.length === 0) buildSearchIndex();
+            const matches = searchIndex.filter(item =>
+                item.title.toLowerCase().includes(query) || item.text.toLowerCase().includes(query)
+            ).slice(0, 12);
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-result-item"><div class="search-result-title" style="color:var(--text-tertiary)">No results for "' + query + '"</div></div>';
+            } else {
+                resultsDiv.innerHTML = matches.map(m => {
+                    const idx = m.text.toLowerCase().indexOf(query);
+                    const start = Math.max(0, idx - 40);
+                    const snippet = '...' + m.text.substring(start, start + 120) + '...';
+                    return '<div class="search-result-item" onclick="goToSearchResult(\'' + m.section + '\')">' +
+                        '<div class="search-result-section">' + m.sectionName + ' &middot; ' + m.type + '</div>' +
+                        '<div class="search-result-title">' + m.title + '</div>' +
+                        '<div class="search-result-snippet">' + snippet + '</div></div>';
+                }).join('');
+            }
+            resultsDiv.classList.add('visible');
+        }
+
+        function goToSearchResult(sectionId) {
+            document.getElementById('search-results').classList.remove('visible');
+            document.getElementById('site-search').value = '';
+            switchTab(sectionId);
+        }
+
+        // Close search on click outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-input-wrap')) {
+                const r = document.getElementById('search-results');
+                if (r) r.classList.remove('visible');
+            }
+        });
 
         // Add download buttons to all charts and diagrams
         function addDownloadButtons() {
