@@ -217,6 +217,15 @@
         .footer-cite code { display: block; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; font-size: 0.72rem; font-family: var(--font-mono); line-height: 1.6; margin-top: 6px; word-break: break-word; }
         .footer-bottom { max-width: 1040px; margin: 20px auto 0; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--text-tertiary); text-align: center; }
 
+        /* === LANGUAGE SYSTEM === */
+        .lang-toggle { display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-left: 8px; }
+        .lang-opt { padding: 4px 10px; font-size: 0.68rem; font-family: var(--font-sans); border: none; background: var(--surface); color: var(--text-tertiary); cursor: pointer; transition: all 0.15s; font-weight: 600; }
+        .lang-opt.active { background: var(--accent); color: #fff; }
+        [data-lang="hi"] .lang-en { display: none !important; }
+        [data-lang="en"] .lang-hi { display: none !important; }
+        .lang-hi { font-family: 'Noto Serif Devanagari', serif; }
+        .lang-hi .section-prose, .lang-hi .mp-text { font-size: 0.96rem; line-height: 1.9; }
+
         /* === BACK TO TOP === */
         .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 38px; height: 38px; background: var(--accent); color: #fff; border: none; border-radius: 50%; font-size: 16px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 99; transition: transform 0.15s; }
         .back-to-top.visible { display: flex; }
@@ -418,7 +427,11 @@
     <!-- Main Application (hidden until auth) -->
     <div id="main-app">
         <header class="site-header">
-            <div class="header-controls">
+            <div class="header-controls" style="display:flex;gap:6px;align-items:center;">
+                <div class="lang-toggle" id="lang-toggle">
+                    <button class="lang-opt active" data-lang-mode="en" onclick="setLang('en')">EN</button>
+                    <button class="lang-opt" data-lang-mode="hi" onclick="setLang('hi')">HI</button>
+                </div>
                 <div class="theme-selector" id="theme-selector">
                     <button class="theme-opt" data-theme-mode="light" onclick="setThemeMode('light')">Light</button>
                     <button class="theme-opt" data-theme-mode="dark" onclick="setThemeMode('dark')">Dark</button>
@@ -460,12 +473,14 @@
             <section id="overview" class="content-section active">
                 <h2 class="section-title">Overview</h2>
                 <div class="hindi-sub">&#x0905;&#x0935;&#x0932;&#x094B;&#x0915;&#x0928;</div>
-                <p class="section-subtitle">Why Bihar matters -- and why it is misunderstood</p>
+                <p class="section-subtitle lang-en">Why Bihar matters -- and why it is misunderstood</p>
+                <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">&#x092C;&#x093F;&#x0939;&#x093E;&#x0930; &#x0915;&#x094D;&#x092F;&#x094B;&#x0902; &#x092E;&#x093E;&#x092F;&#x0928;&#x0947; &#x0930;&#x0916;&#x0924;&#x093E; &#x0939;&#x0948; -- &#x0914;&#x0930; &#x0915;&#x094D;&#x092F;&#x094B;&#x0902; &#x0917;&#x0932;&#x0924; &#x0938;&#x092E;&#x091D;&#x093E; &#x091C;&#x093E;&#x0924;&#x093E; &#x0939;&#x0948;</p>
 
                 <!-- Hero stat: leads the page -->
                 <div style="margin:0 0 20px;text-align:center;padding:28px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);">
                     <div style="font-family:var(--font-mono);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;color:var(--accent);letter-spacing:-0.03em;">128 Million</div>
-                    <div style="font-size:0.88rem;color:var(--text-secondary);margin-top:4px;">people live in Bihar -- India's 3rd most populous state, with the highest poverty rate and lowest per capita income</div>
+                    <div class="lang-en" style="font-size:0.88rem;color:var(--text-secondary);margin-top:4px;">people live in Bihar -- India's 3rd most populous state, with the highest poverty rate and lowest per capita income</div>
+                    <div class="lang-hi" style="font-size:0.88rem;color:var(--text-secondary);margin-top:4px;font-family:'Noto Serif Devanagari',serif;">&#x092C;&#x093F;&#x0939;&#x093E;&#x0930; &#x092E;&#x0947;&#x0902; 12.8 &#x0915;&#x0930;&#x094B;&#x0921;&#x093C; &#x0932;&#x094B;&#x0917; &#x0930;&#x0939;&#x0924;&#x0947; &#x0939;&#x0948;&#x0902; -- &#x092D;&#x093E;&#x0930;&#x0924; &#x0915;&#x093E; &#x0924;&#x0940;&#x0938;&#x0930;&#x093E; &#x0938;&#x092C;&#x0938;&#x0947; &#x0905;&#x0927;&#x093F;&#x0915; &#x0906;&#x092C;&#x093E;&#x0926;&#x0940; &#x0935;&#x093E;&#x0932;&#x093E; &#x0930;&#x093E;&#x091C;&#x094D;&#x092F;, &#x0938;&#x092C;&#x0938;&#x0947; &#x0905;&#x0927;&#x093F;&#x0915; &#x0917;&#x0930;&#x0940;&#x092C;&#x0940; &#x0926;&#x0930; &#x0914;&#x0930; &#x0938;&#x092C;&#x0938;&#x0947; &#x0915;&#x092E; &#x092A;&#x094D;&#x0930;&#x0924;&#x093F; &#x0935;&#x094D;&#x092F;&#x0915;&#x094D;&#x0924;&#x093F; &#x0906;&#x092F;</div>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
                     <div class="fact-card" style="border-left:3px solid #c0392b;">
@@ -1626,6 +1641,20 @@ graph LR
             });
         }
 
+        // Language switching
+        function setLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            localStorage.setItem('bp-lang', lang);
+            document.querySelectorAll('.lang-opt').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.langMode === lang);
+            });
+        }
+
+        function initLang() {
+            const saved = localStorage.getItem('bp-lang') || 'en';
+            setLang(saved);
+        }
+
         // 3-mode theme (light / dark / system)
         function setThemeMode(mode) {
             localStorage.setItem('bp-theme-mode', mode);
@@ -2676,6 +2705,7 @@ graph LR
         }
 
         initTheme();
+        initLang();
         checkAuth();
     </script>
 </body>
