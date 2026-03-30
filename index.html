@@ -265,13 +265,7 @@
         .tool-category h3 { font-family: var(--font-serif); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
         .tool-category p { font-size: 0.76rem; color: var(--text-tertiary); margin-top: 2px; }
 
-        /* === ARTWORK === */
-        .artwork-banner { display: flex; gap: 12px; overflow-x: auto; padding: 16px 0; scrollbar-width: none; margin: 20px 0; }
-        .artwork-banner::-webkit-scrollbar { display: none; }
-        .artwork-item { flex: 0 0 auto; width: 200px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
-        .artwork-item img { width: 100%; height: 150px; object-fit: cover; display: block; }
-        .artwork-item .artwork-caption { padding: 6px 10px; font-size: 0.68rem; color: var(--text-tertiary); background: var(--surface); }
-        @media (max-width: 600px) { .artwork-item { width: 160px; } .artwork-item img { height: 120px; } }
+        /* === ARTWORK (CSS-only art panels) === */
 
         /* === CSS FLOWCHARTS === */
         .css-flow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; padding: 16px 0; }
@@ -1148,18 +1142,32 @@
                 <p class="section-subtitle lang-en">Six living craft traditions -- who makes them, who profits, and what's being lost</p>
                 <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">छह जीवित हस्तकला परंपराएँ -- कौन बनाता है, मुनाफ़ा किसे मिलता है, और क्या खो रहा है</p>
 
-                <div class="artwork-banner">
-                    <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Jadupatua_paintings_and_Madhubani_paintings.JPG/320px-Jadupatua_paintings_and_Madhubani_paintings.JPG" alt="Madhubani painting" loading="lazy">
-                        <div class="artwork-caption">Madhubani painting. CC BY-SA 3.0, Wikimedia</div>
+                <!-- CSS Madhubani-inspired art panels -->
+                <div style="display:flex;gap:12px;overflow-x:auto;padding:16px 0;scrollbar-width:none;">
+                    <div style="flex:0 0 200px;height:140px;border-radius:var(--radius);border:3px solid #c0392b;background:linear-gradient(135deg,#fef3e2 0%,#fce4c0 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:3rem;opacity:0.3;">&#x1F41F;</div>
+                        <div style="position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid #d35400;border-radius:4px;"></div>
+                        <div style="position:absolute;bottom:8px;font-size:0.6rem;color:#c0392b;font-weight:600;">MADHUBANI FISH MOTIF</div>
                     </div>
-                    <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Colorful_Madhubani_painting.jpg/320px-Colorful_Madhubani_painting.jpg" alt="Colorful Madhubani painting" loading="lazy">
-                        <div class="artwork-caption">Colourful Madhubani art. CC BY-SA, Wikimedia</div>
+                    <div style="flex:0 0 200px;height:140px;border-radius:var(--radius);border:3px solid #d35400;background:linear-gradient(135deg,#fef9e7 0%,#fdebd0 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:3rem;opacity:0.3;">&#x1F338;</div>
+                        <div style="position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid #e67e22;border-radius:4px;"></div>
+                        <div style="position:absolute;bottom:8px;font-size:0.6rem;color:#d35400;font-weight:600;">BHARNI STYLE</div>
                     </div>
-                    <div class="artwork-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Madhubani_art.jpg/320px-Madhubani_art.jpg" alt="Madhubani art fish motif" loading="lazy">
-                        <div class="artwork-caption">Madhubani fish motif. CC BY-SA, Wikimedia</div>
+                    <div style="flex:0 0 200px;height:140px;border-radius:var(--radius);border:3px solid #27ae60;background:linear-gradient(135deg,#eafaf1 0%,#d5f5e3 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:3rem;opacity:0.3;">&#x1F99A;</div>
+                        <div style="position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid #27ae60;border-radius:4px;"></div>
+                        <div style="position:absolute;bottom:8px;font-size:0.6rem;color:#27ae60;font-weight:600;">KACHNI LINE WORK</div>
+                    </div>
+                    <div style="flex:0 0 200px;height:140px;border-radius:var(--radius);border:3px solid #8e44ad;background:linear-gradient(135deg,#f4ecf7 0%,#e8daef 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:3rem;opacity:0.3;">&#x1F40D;</div>
+                        <div style="position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid #8e44ad;border-radius:4px;"></div>
+                        <div style="position:absolute;bottom:8px;font-size:0.6rem;color:#8e44ad;font-weight:600;">MANJUSHA SERPENT</div>
+                    </div>
+                    <div style="flex:0 0 200px;height:140px;border-radius:var(--radius);border:3px solid #c17f24;background:linear-gradient(135deg,#fef9e7 0%,#f9e79f 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:3rem;opacity:0.3;">&#x1F9FA;</div>
+                        <div style="position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid #c17f24;border-radius:4px;"></div>
+                        <div style="position:absolute;bottom:8px;font-size:0.6rem;color:#c17f24;font-weight:600;">SIKKI GRASS WEAVE</div>
                     </div>
                 </div>
 
