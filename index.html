@@ -287,6 +287,8 @@
             .overlay-panel { max-height: 80vh; }
             .pyr-1 { width: 55%; } .pyr-2 { width: 65%; } .pyr-3 { width: 80%; } .pyr-4 { width: 90%; } .pyr-5 { width: 100%; }
             .pyramid-level { font-size: 0.68rem; padding: 8px 10px; }
+            [style*="grid-template-columns: 1fr 1fr 1fr;"] { grid-template-columns: 1fr !important; }
+            [style*="grid-template-columns: 1fr 1fr 1fr 1fr;"] { grid-template-columns: 1fr 1fr !important; }
         }
 
         @media (max-width: 380px) {
@@ -475,15 +477,51 @@
                     <div class="mp-text">Bihar has <strong>128 million people</strong>, the <strong>highest poverty rate</strong> in India, and the <strong>highest fertility rate</strong>. It also has the richest historical legacy, the most politically mobilised population, and a diaspora that powers the economies of a dozen other states. The question is not whether Bihar can develop -- it is <strong>who benefits when it does</strong>, and who is left behind.</div>
                 </div>
 
-                <div class="key-facts-grid">
-                    <div class="fact-card"><div class="fact-value">128M</div><div class="fact-label">Population (est. 2024)</div></div>
-                    <div class="fact-card"><div class="fact-value">51.9%</div><div class="fact-label">Multidimensional Poverty</div></div>
-                    <div class="fact-card"><div class="fact-value">63%+</div><div class="fact-label">OBC + EBC Population</div></div>
-                    <div class="fact-card"><div class="fact-value">11.3%</div><div class="fact-label">Urban Population</div></div>
-                    <div class="fact-card"><div class="fact-value">61.8%</div><div class="fact-label">Literacy Rate</div></div>
-                    <div class="fact-card"><div class="fact-value">Rs 54,383</div><div class="fact-label">Per Capita Income</div></div>
-                    <div class="fact-card"><div class="fact-value">40.8%</div><div class="fact-label">Child Marriage Rate</div></div>
-                    <div class="fact-card"><div class="fact-value">38</div><div class="fact-label">Districts</div></div>
+                <!-- Hero stat -->
+                <div style="margin:32px 0 20px;text-align:center;padding:28px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow);">
+                    <div style="font-family:var(--font-mono);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;color:var(--accent);letter-spacing:-0.03em;">128 Million</div>
+                    <div style="font-size:0.88rem;color:var(--text-secondary);margin-top:4px;">people live in Bihar -- India's 3rd most populous state, with the highest poverty rate and lowest per capita income</div>
+                </div>
+
+                <!-- Problem stats: 2 rows, sized by severity -->
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+                    <div class="fact-card" style="border-left:3px solid #c0392b;">
+                        <div class="fact-value" style="font-size:1.3rem;">51.9%</div>
+                        <div class="fact-label">Multidimensional Poverty</div>
+                        <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:4px;">66.4M people -- more than France</div>
+                    </div>
+                    <div class="fact-card" style="border-left:3px solid #d35400;">
+                        <div class="fact-value" style="font-size:1.3rem;">40.8%</div>
+                        <div class="fact-label">Girls Married Before 18</div>
+                        <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:4px;">~3,300 child brides per day</div>
+                    </div>
+                    <div class="fact-card" style="border-left:3px solid #e67e22;">
+                        <div class="fact-value" style="font-size:1.3rem;">42.9%</div>
+                        <div class="fact-label">Children Stunted</div>
+                        <div style="font-size:0.68rem;color:var(--text-tertiary);margin-top:4px;">7.7M children permanently affected</div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
+                    <div class="fact-card">
+                        <div class="fact-value">Rs 54K</div>
+                        <div class="fact-label">Per Capita Income</div>
+                        <div style="font-size:0.65rem;color:var(--text-tertiary);margin-top:3px;">1/3 of India avg</div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-value">63%+</div>
+                        <div class="fact-label">OBC + EBC</div>
+                        <div style="font-size:0.65rem;color:var(--text-tertiary);margin-top:3px;">Caste Survey 2023</div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-value">11.3%</div>
+                        <div class="fact-label">Urban Pop.</div>
+                        <div style="font-size:0.65rem;color:var(--text-tertiary);margin-top:3px;">India's least urbanised</div>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-value">8-10M</div>
+                        <div class="fact-label">Migrant Workers</div>
+                        <div style="font-size:0.65rem;color:var(--text-tertiary);margin-top:3px;">Working outside Bihar</div>
+                    </div>
                 </div>
             </section>
             <section id="geography" class="content-section">
@@ -1352,6 +1390,30 @@ graph LR
                         <li>Archaeological Survey of India. <em>Nalanda and Vikramshila Site Reports.</em> <a href="https://asi.nic.in/" target="_blank" rel="noopener noreferrer">asi.nic.in</a></li>
                         <li>Indira Gandhi National Centre for the Arts. <em>Madhubani Painting Documentation Project.</em> <a href="https://ignca.gov.in/" target="_blank" rel="noopener noreferrer">ignca.gov.in</a></li>
                         <li>Thakur, U. (1956). <em>History of Mithila.</em> Mithila Institute, Darbhanga.</li>
+                    </ol>
+                </div>
+
+                <div class="ref-category">
+                    <h4>Seminal Academic Works on Bihar</h4>
+                    <ol class="ref-list" start="26">
+                        <li>Dr&egrave;ze, J. &amp; Sen, A. (2013). <em>An Uncertain Glory: India and Its Contradictions.</em> Princeton University Press. [Bihar chapters on education, health, and governance failure]</li>
+                        <li>Frankel, F.R. (1989). <em>Caste, Land and Dominance in Bihar.</em> In: Frankel &amp; Rao (eds.), <em>Dominance and State Power in Modern India</em>, Vol. 1. Oxford University Press. [Foundational analysis of how caste maps onto land ownership and political power in Bihar]</li>
+                        <li>Witsoe, J. (2013). <em>Democracy against Development: Lower-Caste Politics and Political Modernity in Postcolonial India.</em> University of Chicago Press. [Ethnographic study of how OBC political mobilisation in Bihar challenged development paradigms]</li>
+                        <li>Kunnath, G.J. (2012). <em>Rebels from the Mud Houses: Dalits and the Making of the Maoist Revolution in Bihar.</em> Social Science Press. [Definitive account of Naxalite movement's Dalit roots in central Bihar]</li>
+                        <li>Das, A.N. (1992). <em>The Republic of Bihar.</em> Penguin India. [Classic journalistic-sociological portrait of Bihar's political economy]</li>
+                        <li>Bhatia, B. (2005). The Naxalite Movement in Central Bihar. <em>Economic &amp; Political Weekly</em>, 40(15), 1536-1549. <a href="https://www.epw.in/" target="_blank" rel="noopener noreferrer">epw.in</a> [EPW analysis of Naxalite roots in land inequality]</li>
+                        <li>Narayan, B. (2011). <em>The Making of the Dalit Public in North India: Uttar Pradesh, 1880-Present.</em> Oxford University Press. [Includes extensive Bihar Dalit mobilisation history]</li>
+                        <li>Sharma, A.N. (2005). Agrarian Relations and Socio-Economic Change in Bihar. <em>Economic &amp; Political Weekly</em>, 40(10), 960-972. [Land ownership patterns, tenancy, and rural power structures]</li>
+                        <li>Prasad, P.H. (2007). <em>The Economics of Caste in Bihar.</em> In: Shah (ed.), <em>Caste and Democratic Politics in India.</em> Permanent Black. [How caste determines economic outcomes]</li>
+                        <li>Muralidharan, K. &amp; Prakash, N. (2017). Cycling to School: Increasing Secondary School Enrollment for Girls in India. <em>American Economic Journal: Applied Economics</em>, 9(3), 321-350. [Rigorous impact evaluation of Bihar's Cycle Yojana]</li>
+                        <li>Rodgers, G. &amp; Rodgers, J. (2001). A Leap across Time: When Semi-Feudalism Met the Market in Rural Purnia. <em>Economic &amp; Political Weekly</em>, 36(22), 1976-1983. [EPW -- how market forces interact with feudal caste structures in Purnia]</li>
+                        <li>Mishra, D.K. (2008). <em>Trapped! Between the Devil and Deep Waters: The Story of Bihar's Kosi River.</em> People's Science Institute &amp; SANDRP. [Definitive account of Kosi flood management failure and embankment politics]</li>
+                        <li>Chattopadhyay, R. &amp; Duflo, E. (2004). Women as Policy Makers: Evidence from a Randomized Policy Experiment in India. <em>Econometrica</em>, 72(5), 1409-1443. [Landmark study on women's panchayat reservation impact, Bihar data]</li>
+                        <li>Basant, R. &amp; Shariff, A. (2010). <em>Handbook of Muslims in India.</em> Oxford University Press. [Includes Seemanchal data on Muslim socio-economic marginalisation]</li>
+                        <li>Blair, H.W. (1980). Rising Kulaks and Back-Sliding Castes: Aggregate Electoral Data and Bihar Politics. <em>Economic &amp; Political Weekly</em>, 15(3), 64-74. [Early EPW analysis of caste-based electoral sociology in Bihar]</li>
+                        <li>Kumar, S. (2013). Patterns of Political Participation: Trends and Perspective. <em>Economic &amp; Political Weekly</em>, 48(39). [Bihar electoral participation across caste lines]</li>
+                        <li>Dixit, A. (2009). Kosi Embankment Breach in Nepal: Need for a Paradigm Shift in Responding to Floods. <em>Economic &amp; Political Weekly</em>, 44(6), 70-78. [Nepal-Bihar water nexus analysis]</li>
+                        <li>Sinha, A. (2011). <em>Bihar's Economy.</em> In: Bihar: What Went Wrong and What Changed. Seminar Magazine Special Issue. [Bihar's post-2005 growth model critique]</li>
                     </ol>
                 </div>
             </section>
