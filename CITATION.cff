@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use this project in your research, please cite it as below."
+message: "If you use this resource in your research, please cite it as below."
 type: software
-title: "BiharParichay: Demographic Classification System for Bihar"
+title: "Bihar Parichay: A Comprehensive Academic Deep Dive into Bihar"
 authors:
   - family-names: Raman
     given-names: Varna Sri
@@ -11,8 +11,12 @@ license: MIT
 keywords:
   - bihar
   - india
+  - academic-resource
   - demographics
-  - classification
-  - development-economics
+  - economy
+  - culture
+  - development
+  - data-visualization
+  - geography
 
-date-released: "2025-01-01"
+date-released: "2025-03-30"

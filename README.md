@@ -1,221 +1,99 @@
-# Parichay Project
-*Understanding Bihar's Social Landscape Through Data*
+# Bihar Parichay
+*A Comprehensive Academic Deep Dive into Bihar*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Academic Research](https://img.shields.io/badge/purpose-academic%20research-green.svg)]()
-[![AWS Compatible](https://img.shields.io/badge/AWS-Lambda%20Ready-orange.svg)]()
+[![Academic Resource](https://img.shields.io/badge/purpose-academic%20resource-green.svg)]()
+[![Static Site](https://img.shields.io/badge/deploy-Netlify-blue.svg)]()
 
 ## Overview
 
-Parichay (परिचय - "Introduction") is a cost-optimized demographic classification system designed for development economics research in Bihar, India. It combines a comprehensive local surname database with optional API integration to achieve **80-90% cost reduction** while maintaining research-grade accuracy.
+Bihar Parichay (Bihar -- "Introduction") is an academic deep-dive resource providing comprehensive, data-driven analysis of Bihar, India. The site covers geography, demographics, economy, social issues, people, food, art and culture -- all with interactive visualisations and links to authenticated open-access scholarly sources.
 
-The system addresses the critical challenge of processing large demographic datasets for academic research while respecting ethical guidelines and budget constraints.
+Built as a single-page static site, it is designed for researchers, students, policy professionals, and anyone seeking a rigorous introduction to one of India's most historically significant and complex states.
 
-## 🚀 Key Features
+## Sections
 
-- **🏛️ Comprehensive Database**: 700+ Bihar surnames with detailed SubCaste, Caste, CasteCategory, and Religion information
-- **💰 Cost-Optimized**: 97% reduction in API calls through intelligent local mapping
-- **🔒 Privacy-First**: Local processing with optional cloud scaling
-- **📊 Research-Grade**: Academic methodology with full transparency and reproducibility
-- **⚡ Multi-Platform**: Web interface, AWS Lambda, and CLI tools
-- **🔄 Continuous Learning**: Tracks unmatched surnames for database improvement
-- **📈 Real-time Analytics**: Processing statistics and cost monitoring
+| Section | Description |
+|---------|-------------|
+| **Overview** | Key facts, historical context, and state profile |
+| **Geography & Maps** | Interactive Leaflet map, rivers, administrative divisions |
+| **Demographics & Society** | Population, caste structure, religion, literacy, urbanisation |
+| **Economy & Development** | GSDP trends, sectoral composition, agriculture, migration economy |
+| **Social Issues** | Poverty (MPI), floods, health (NFHS-5), education, gender |
+| **Notable People** | Historical figures, freedom movement leaders, intellectuals |
+| **Food & Cuisine** | Regional culinary traditions, signature dishes, agricultural connections |
+| **Art, Culture & Heritage** | Madhubani painting, UNESCO sites, performing arts, languages |
+| **Data & Analysis** | Interactive Chart.js dashboards, radar charts, heritage map |
+| **References** | 25+ authenticated open-access academic sources |
 
-## 💡 Cost Optimization Impact
+## Technology
 
-| Approach | Dataset Size | Cost | Savings |
-|----------|-------------|------|---------|
-| **Traditional API-only** | 2.7M rows | $27,000 | - |
-| **Parichay System** | 2.7M rows | $200 | **99.3%** |
+- **Single-file architecture**: Everything in `index.html` (HTML + CSS + JS)
+- **Chart.js 3.9**: Interactive data visualisations (bar, line, radar, doughnut, pie)
+- **Leaflet.js 1.9**: Interactive maps with OpenStreetMap tiles
+- **Fonts**: Inter, Merriweather, Noto Serif Devanagari
+- **No build system**: Deploy directly to any static hosting service
+- **Password-protected**: Client-side SHA-256 gate for restricted access
 
-*Savings achieved through unique surname extraction + comprehensive local mapping*
+## Deployment
 
-## 🛠️ Quick Start
-
-### Option 1: Web Application (< 10MB files)
-Perfect for initial testing and small datasets.
-
-```bash
-# 1. Download the web application
-wget https://github.com/yourusername/parichay-project/raw/main/bihar_caste_classification_professional.html
-
-# 2. Open in any modern browser
-# No installation required - runs entirely client-side with optional API integration
-```
-
-**Features**: Drag & drop CSV upload, real-time cost estimation, comprehensive analytics dashboard.
-
-### Option 2: AWS Deployment (Large datasets)
-Serverless architecture for processing millions of rows.
+The site deploys as a static single HTML file on Netlify (or any static host):
 
 ```bash
-# 1. Deploy infrastructure
-aws cloudformation create-stack \
-    --stack-name parichay-system \
-    --template-body file://bihar_cloudformation_template.yaml \
-    --parameters ParameterKey=NamsorAPIKey,ParameterValue=YOUR_API_KEY \
-                 ParameterKey=S3BucketName,ParameterValue=your-research-bucket \
-    --capabilities CAPABILITY_NAMED_IAM
-
-# 2. Use CLI tool for seamless processing
-python cli.py classify your-dataset.csv --max-cost 100
-
-# 3. Monitor processing
-aws logs tail /aws/lambda/bihar-caste-classifier --follow
+# Clone and deploy
+git clone https://github.com/Varnasr/BiharParichay-Project.git
+# Upload index.html to Netlify, Vercel, GitHub Pages, or open locally
 ```
 
-### Option 3: Local Development
-```bash
-# 1. Clone repository
-git clone https://github.com/yourusername/parichay-project.git
-cd parichay-project
+## Data Sources
 
-# 2. Install dependencies
-pip install -r requirements.txt
+All data is sourced from authenticated open-access publications:
 
-# 3. Run local classification
-python cli.py classify local-data.csv --max-cost 50
-```
+- Census of India 2011
+- National Family Health Survey 5 (NFHS-5, 2019-21)
+- Bihar Economic Survey 2022-23
+- RBI Handbook of Statistics on Indian States
+- NITI Aayog Multidimensional Poverty Index
+- ASER 2022 (Annual Status of Education Report)
+- UNESCO World Heritage entries (Nalanda, Bodh Gaya)
+- World Bank Bihar Development Reports
 
-## 📊 Academic Citation
+Full bibliography with direct links is available in the References section of the site.
+
+## Academic Citation
 
 ```bibtex
-@software{parichay_project,
-  title={Parichay Project: Bihar Demographic Classification System for Development Economics Research},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/parichay-project},
-  note={Cost-optimized demographic classification with 700+ Bihar surname database}
+@misc{bihar_parichay_2025,
+  title={Bihar Parichay: A Comprehensive Academic Deep Dive into Bihar},
+  author={Raman, Varna Sri},
+  year={2025},
+  url={https://github.com/Varnasr/BiharParichay-Project},
+  note={Interactive academic resource on Bihar's geography, society, economy, and culture}
 }
 ```
 
-## 📁 Repository Structure
+## Legal & Ethical Guidelines
 
-```
-parichay-project/
-├── 📄 bihar_caste_classification_professional.html    # Web application
-├── 🐍 bihar_caste_aws_lambda.py                      # AWS Lambda function
-├── 🔧 cli.py                                         # Command-line interface
-├── ☁️ bihar_cloudformation_template.yaml              # AWS infrastructure
-├── 📋 requirements.txt                               # Python dependencies
-├── 📊 CasteMapping.csv                               # Research database
-├── 📚 docs/
-│   ├── DEPLOYMENT_GUIDE.md                          # Comprehensive deployment guide
-│   └── AWS_Configuration.md                         # API key and S3 setup
-├── 🧪 examples/
-│   └── sample_data.csv                              # Example dataset
-└── 🛡️ LICENSE                                        # MIT License
-```
+- **Academic use only**: Designed for research and educational purposes
+- **MIT License**: Open source with attribution
+- **CC BY 4.0**: Content provided under Creative Commons Attribution 4.0
+- **Data accuracy**: All efforts made to cite reliable sources; no warranties provided
+- **Non-partisan**: Content is factual and balanced
 
-## 🔬 Research Methodology
+## Contributing
 
-### 1. Surname Extraction Strategy
-- **Primary**: RNAME field prioritization for accuracy
-- **Fallback**: ENAME processing with protective surname handling
-- **Validation**: Handles common variations (devi, kumari, begum, etc.)
+Contributions welcome -- particularly:
+- Corrections to data or citations
+- Additional authenticated academic sources
+- Accessibility improvements
+- Translations (Hindi, Maithili, Bhojpuri)
 
-### 2. Classification Hierarchy
-```
-1. Local Database Lookup (700+ surnames) → 75% typical coverage
-2. Namsor API Integration (optional) → Remaining surnames
-3. Default Classification → Safety fallback
-```
+## Version History
 
-### 3. Quality Assurance
-- **Validation Mode**: Test first 1,000 rows for cost estimation
-- **Rate Limiting**: Configurable API throttling (1-10 req/sec)
-- **Error Handling**: Comprehensive retry logic and fallback mechanisms
-- **Audit Trail**: Complete processing logs for reproducibility
-
-### 4. Output Format
-Each classified record includes:
-- Original demographic data
-- **SubCaste, Caste, CasteCategory, Religion** classifications
-- **Methodological metadata** (source, confidence, processing flags)
-- **Research transparency** fields for academic validation
-
-## 🎯 Database Coverage by Category
-
-| Category | Surnames | Coverage |
-|----------|----------|----------|
-| **SC (Scheduled Castes)** | 150+ | High |
-| **ST (Scheduled Tribes)** | 50+ | Comprehensive |
-| **OBC (Other Backward Classes)** | 200+ | Extensive |
-| **EBC (Extremely Backward Classes)** | 80+ | Good |
-| **General Category** | 300+ | Comprehensive |
-| **Minority Communities** | 50+ | Good |
-
-## 🛡️ Legal & Ethical Guidelines
-
-### ✅ Permitted Uses
-- Academic development economics research
-- Demographic analysis for policy research
-- Social mobility studies
-- Educational access research
-
-### ❌ Prohibited Uses
-- Individual discrimination or exclusion
-- Commercial profiling without consent
-- Political targeting or manipulation
-- Any harmful or unethical applications
-
-### 📋 Compliance Requirements
-- **MIT License**: Open source with attribution requirement
-- **Indian IT Act 2000**: Data protection compliance responsibility
-- **Academic Ethics**: IRB approval required for personal data
-- **Research Standards**: Manual verification recommended for sensitive applications
-
-## 🤝 Contributing
-
-We welcome contributions from the academic and development community:
-
-### Research Contributions
-- **Surname Database**: Verified additions to local mapping
-- **Validation Studies**: Accuracy assessment and methodology improvements
-- **Regional Extensions**: Adaptation for other Indian states
-
-### Technical Contributions
-- **Performance Optimization**: Processing speed and cost improvements
-- **Integration Features**: APIs for common research workflows
-- **Documentation**: User guides and academic methodologies
-
-### Getting Started
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/surname-validation`)
-3. Commit changes (`git commit -am 'Add validated surnames for XYZ region'`)
-4. Push to branch (`git push origin feature/surname-validation`)
-5. Create Pull Request with detailed description
-
-## 📞 Support & Community
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/parichay-project/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/parichay-project/discussions)
-- **Academic Support**: Contact for methodology questions and research collaboration
-
-## 🔄 Version History
-
-- **v2.0**: Professional web interface + comprehensive AWS deployment
-- **v1.5**: CLI tool and batch processing capabilities
+- **v3.0** (2025): Complete redesign as academic deep-dive site with interactive maps, charts, and 10 content sections
+- **v2.0**: Web-based demographic classification tool
 - **v1.0**: Initial release with core classification functionality
 
-## 📈 Future Roadmap
-
-- **Multi-State Support**: Extension beyond Bihar to other Indian states
-- **Machine Learning Enhancement**: Automated surname pattern recognition
-- **Real-time API**: REST API for research platform integration
-- **Visualization Dashboard**: Advanced analytics for research insights
-
 ---
 
-## ⚠️ Important Notice
-
-**This tool provides algorithmic approximations for research purposes only.** 
-
-Classifications are based on surname patterns and should not be considered definitive. Manual verification and local expertise consultation are recommended for sensitive applications. The tool is designed to assist academic research while respecting ethical guidelines and individual privacy.
-
-**Academic Use Only** | **Open Source** | **Research Grade** | **Ethically Designed**
-
----
-
-*Parichay Project: Bridging traditional knowledge with modern research methodologies for better understanding of Bihar's social landscape.*
+*Bihar Parichay: An open-access academic resource for understanding Bihar's society, economy, geography, and culture.*
