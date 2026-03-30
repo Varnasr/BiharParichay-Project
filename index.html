@@ -53,6 +53,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
 
         body {
             font-family: var(--font-sans);
@@ -61,6 +62,7 @@
             line-height: 1.7;
             min-height: 100vh;
             transition: background 0.3s ease, color 0.3s ease;
+            -webkit-text-size-adjust: 100%;
         }
 
         /* ===== PASSWORD GATE ===== */
@@ -781,6 +783,8 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 8px;
+            display: block;
+            overflow-x: auto;
         }
 
         .tool-result th, .tool-result td {
@@ -1003,21 +1007,94 @@
             display: flex;
         }
 
-        /* ===== RESPONSIVE FINE-TUNING ===== */
-        @media (max-width: 480px) {
-            .site-header { padding: 36px 20px 32px; }
-            .site-header h1 { font-size: 1.6rem; }
-            .site-header .tagline { font-size: 0.88rem; }
-            .key-facts-grid { grid-template-columns: repeat(2, 1fr); }
-            .people-grid { grid-template-columns: 1fr; }
+        /* ===== RESPONSIVE: TABLET (900px and below) ===== */
+        @media (max-width: 900px) {
+            .site-header { padding: 40px 24px 36px; }
+            .site-header h1 { font-size: 1.9rem; }
+            .site-header .tagline { font-size: 0.9rem; }
+            .theme-selector { display: none; }
+            .gate-container { padding: 36px 28px; }
+            .section-prose { max-width: 100%; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .overlay-panel { width: 94vw; }
+        }
+
+        /* ===== RESPONSIVE: PHONE (600px and below) ===== */
+        @media (max-width: 600px) {
+            .site-header { padding: 32px 16px 28px; }
+            .site-header h1 { font-size: 1.5rem; }
+            .site-header .tagline { font-size: 0.82rem; line-height: 1.5; }
+            .site-header .meta-line { font-size: 0.72rem; }
+            .site-header-inner::after { font-size: 0.72rem; }
+
+            .content-section { padding: 28px 0 40px; }
             .section-title { font-size: 1.3rem; }
+            .section-subtitle { font-size: 0.82rem; margin-bottom: 20px; }
+            .section-prose { font-size: 0.88rem; line-height: 1.75; }
+            .section-prose p { text-align: left; hyphens: none; }
+
+            .key-facts-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .fact-card { padding: 12px 10px; }
+            .fact-value { font-size: 1rem; }
+            .fact-label { font-size: 0.68rem; }
+
+            .people-grid { grid-template-columns: 1fr; gap: 12px; }
+            .person-card { padding: 16px; }
+            .person-card h4 { font-size: 0.88rem; }
+            .person-card p { font-size: 0.82rem; }
+
+            .charts-row { grid-template-columns: 1fr; gap: 16px; }
+            .chart-box { padding: 14px; }
+            .chart-box h4 { font-size: 0.85rem; }
+
+            .map-container { height: 300px; }
+
+            .geo-detail-grid { grid-template-columns: 1fr; gap: 16px; }
+            .geo-detail-grid li { font-size: 0.82rem; }
+
+            .gate-container { padding: 32px 20px; max-width: 360px; }
+            .gate-title { font-size: 1.3rem; }
+            .gate-subtitle { font-size: 0.82rem; }
+
+            .hindi-sub { font-size: 0.72rem; }
+
+            .tool-card-header h4 { font-size: 0.88rem; }
+            .tool-desc { font-size: 0.78rem; }
+            .tool-input, .tool-select { font-size: 0.85rem; padding: 8px 12px; }
+            .tool-btn { font-size: 0.82rem; padding: 8px 16px; }
+            .tool-result { font-size: 0.8rem; }
+
+            .ref-list { font-size: 0.8rem; padding-left: 20px; }
+            .ref-category h4 { font-size: 0.88rem; }
+
+            .footer-inner { grid-template-columns: 1fr; gap: 20px; }
+            .footer-disclaimer, .footer-cite { font-size: 0.78rem; }
+
+            .overlay-panel { max-height: 85vh; }
+            .overlay-header { padding: 20px 20px 0; }
+            .overlay-body { padding: 0 20px 20px; font-size: 0.82rem; }
+            .overlay-nav { padding: 10px 20px 14px; }
+            .overlay-nav-item { font-size: 0.82rem; }
+
+            .madhubani-border { height: 4px; }
+        }
+
+        /* ===== RESPONSIVE: SMALL PHONE (380px and below) ===== */
+        @media (max-width: 380px) {
+            .site-header h1 { font-size: 1.3rem; }
+            .site-header .tagline { font-size: 0.76rem; }
+            .key-facts-grid { grid-template-columns: 1fr 1fr; }
+            .fact-value { font-size: 0.9rem; }
+            .section-title { font-size: 1.15rem; }
+            .container { padding: 0 12px; }
         }
 
         /* Print stylesheet */
         @media print {
-            #password-gate, .site-nav, .back-to-top, .header-theme-toggle { display: none !important; }
-            .site-header { padding: 20px; }
+            #password-gate, .site-nav, .back-to-top, .theme-selector, .nav-cmd-btn { display: none !important; }
+            .site-header { padding: 20px; background: #1a3a5c !important; }
             .map-container { display: none; }
+            .content-section { display: block !important; page-break-inside: avoid; }
             body { background: #fff; color: #000; }
         }
 
@@ -1195,6 +1272,7 @@
         <nav class="site-nav">
             <div class="nav-inner">
                 <button class="hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+                <button class="hamburger" onclick="setThemeMode(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')" aria-label="Toggle theme" style="font-size:16px;">&#9681;</button>
                 <span class="nav-brand">BP</span>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="#overview" class="active">Overview</a></li>
