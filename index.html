@@ -220,26 +220,19 @@
             font-style: italic;
         }
 
-        .header-theme-toggle {
+        .header-controls {
             position: absolute;
-            top: 20px;
-            right: 24px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-            color: #fff;
-            transition: all 0.2s;
+            top: 16px;
+            right: 20px;
         }
 
-        .header-theme-toggle:hover {
-            background: rgba(255,255,255,0.25);
+        @media (max-width: 600px) {
+            .header-controls {
+                position: static;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 8px;
+            }
         }
 
         /* ===== NAVIGATION ===== */
@@ -1012,7 +1005,7 @@
             .site-header { padding: 40px 24px 36px; }
             .site-header h1 { font-size: 1.9rem; }
             .site-header .tagline { font-size: 0.9rem; }
-            .theme-selector { display: none; }
+            .theme-selector { position: static; margin-bottom: 12px; }
             .gate-container { padding: 36px 28px; }
             .section-prose { max-width: 100%; }
             .tools-grid { grid-template-columns: 1fr; }
@@ -1254,7 +1247,7 @@
     <!-- Main Application (hidden until auth) -->
     <div id="main-app">
         <header class="site-header">
-            <div style="position:absolute;top:20px;right:24px;display:flex;gap:8px;align-items:center;">
+            <div class="header-controls">
                 <div class="theme-selector" id="theme-selector">
                     <button class="theme-opt" data-theme-mode="light" onclick="setThemeMode('light')">Light</button>
                     <button class="theme-opt" data-theme-mode="dark" onclick="setThemeMode('dark')">Dark</button>
@@ -1272,7 +1265,6 @@
         <nav class="site-nav">
             <div class="nav-inner">
                 <button class="hamburger" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
-                <button class="hamburger" onclick="setThemeMode(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')" aria-label="Toggle theme" style="font-size:16px;">&#9681;</button>
                 <span class="nav-brand">BP</span>
                 <ul class="nav-links" id="nav-links">
                     <li><a href="#overview" class="active">Overview</a></li>
