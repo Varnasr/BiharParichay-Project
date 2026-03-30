@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/sargam-icons@1.0.0/css/sargam.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <meta property="og:title" content="Bihar Parichay - An Academic Deep Dive">
@@ -413,6 +414,85 @@
             font-style: italic;
             color: var(--text-secondary);
             font-size: 0.92rem;
+        }
+
+        /* ===== DIAGRAMS ===== */
+        .diagram-container {
+            margin: 28px 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            overflow-x: auto;
+        }
+
+        .diagram-container h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .diagram-caption {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .diagram-container .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Caste pyramid (CSS-only) */
+        .caste-pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin: 20px 0;
+        }
+
+        .pyramid-level {
+            text-align: center;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 4px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .pyramid-level .pyr-detail {
+            font-weight: 400;
+            font-size: 0.7rem;
+            opacity: 0.85;
+            display: block;
+        }
+
+        .pyr-1 { width: 35%; background: #1a3a5c; }
+        .pyr-2 { width: 50%; background: #2a6496; }
+        .pyr-3 { width: 65%; background: #c0392b; }
+        .pyr-4 { width: 80%; background: #d35400; }
+        .pyr-5 { width: 95%; background: #7f8c8d; }
+
+        @media (max-width: 600px) {
+            .pyr-1 { width: 55%; } .pyr-2 { width: 65%; } .pyr-3 { width: 78%; } .pyr-4 { width: 90%; } .pyr-5 { width: 100%; }
+            .pyramid-level { font-size: 0.7rem; padding: 8px 10px; }
+        }
+
+        /* Power flow diagram rows */
+        .power-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 600px) {
+            .power-grid { grid-template-columns: 1fr; }
         }
 
         /* ===== KEY FACTS GRID ===== */
@@ -1366,6 +1446,56 @@
 
                     <p><strong>Religious demographics.</strong> Bihar is 82.7% Hindu and 16.9% Muslim (Census 2011). Muslim populations are concentrated in Kishanganj (67.8% Muslim), Katihar (44.4%), Araria (41.3%), and Purnia (38.5%) -- the Seemanchal belt -- which also registers the lowest literacy rates, highest poverty, and least infrastructure investment in the state. The intersection of religious minority status and economic marginalisation in Seemanchal is a critical research area (Basant &amp; Shariff, 2010).</p>
                 </div>
+
+                <!-- Caste Hierarchy Pyramid -->
+                <div class="diagram-container">
+                    <h4>Bihar's Social Hierarchy: Population vs Power</h4>
+                    <div class="caste-pyramid">
+                        <div class="pyramid-level pyr-1">Upper Castes ~15.5%<span class="pyr-detail">Brahmin, Bhumihar, Rajput, Kayastha -- disproportionate land, judiciary, media, bureaucracy control</span></div>
+                        <div class="pyramid-level pyr-2">OBC ~27%<span class="pyr-detail">Yadav, Kurmi, Koeri, Kushwaha -- politically dominant since Mandal, agricultural middle class</span></div>
+                        <div class="pyramid-level pyr-3">EBC ~36%<span class="pyr-detail">Nai, Mallah, Teli, Kumhar, Kevat -- numerically largest, least institutional representation</span></div>
+                        <div class="pyramid-level pyr-4">SC/ST ~21%<span class="pyr-detail">Paswan, Musahar, Chamar, Dom, Santhal -- highest landlessness, lowest literacy, most vulnerable</span></div>
+                        <div class="pyramid-level pyr-5">Muslim Minority ~17%<span class="pyr-detail">Cross-cuts caste; concentrated in Seemanchal; lowest HDI overlap with SC/EBC poverty</span></div>
+                    </div>
+                    <p class="diagram-caption">Pyramid width represents population share. Note: upper castes are smallest in number but highest in institutional power. Source: Bihar Caste Survey 2023, Census 2011.</p>
+                </div>
+
+                <!-- Electoral Coalition Diagram -->
+                <div class="diagram-container">
+                    <h4>Electoral Coalition Map: Who Votes With Whom</h4>
+                    <div class="mermaid">
+graph LR
+    subgraph RJD["RJD Coalition"]
+        Y[Yadav ~14%]
+        M[Muslim ~17%]
+    end
+    subgraph JDU["JD(U) Coalition"]
+        E[EBC ~36%]
+        MD[Mahadalit ~8%]
+        W[Women voters]
+    end
+    subgraph BJP["BJP Coalition"]
+        UC[Upper Caste ~15%]
+        NOY[Non-Yadav OBC segments]
+    end
+    subgraph LEFT["Left/CPI-ML"]
+        LL[Landless labourers]
+        DL[Dalit activists]
+    end
+    Y --- M
+    E --- MD
+    E --- W
+    UC --- NOY
+    LL --- DL
+
+    style RJD fill:#27ae60,color:#fff,stroke:#1e8449
+    style JDU fill:#4A90E2,color:#fff,stroke:#2a6496
+    style BJP fill:#e67e22,color:#fff,stroke:#d35400
+    style LEFT fill:#c0392b,color:#fff,stroke:#922b21
+                    </div>
+                    <p class="diagram-caption">Simplified coalition map. Actual alliances shift between elections. Percentages are approximate population shares. The "swing" segments (non-Yadav OBC, women, EBC sub-groups) determine electoral outcomes.</p>
+                </div>
+
                 <div class="charts-row">
                     <div class="chart-box">
                         <h4>Caste Category Distribution</h4>
@@ -1444,6 +1574,75 @@
 
                     <p><strong>Health: the numbers behind the numbers.</strong> Bihar's health indicators are not merely low -- they reveal systematic failures. IMR: 46.8/1000 (India: 35.2). Stunting: 42.9% (India: 35.5%). Anaemia in women: 63.5% (India: 57%). TFR: 3.0 (highest in India). Only 74.4% of births are institutional. Only 38.2% of women get 4+ antenatal visits. The public health system -- with Community Health Centres serving populations of 100,000+ -- is structurally incapable of delivering adequate care. The ASHA worker system (Accredited Social Health Activists) has improved last-mile outreach, but ASHAs are paid incentive-based stipends, not salaries, and their working conditions are precarious. The intersection of poverty, malnutrition, poor sanitation, and weak health infrastructure creates a cycle that is difficult to break without massive public investment (Dreze &amp; Sen, 2013).</p>
                 </div>
+
+                <!-- Cycle of Deprivation Diagram -->
+                <div class="diagram-container">
+                    <h4>Bihar's Cycle of Deprivation</h4>
+                    <div class="mermaid">
+graph TD
+    LAND["Landlessness / No Patta"]
+    CREDIT["No access to formal credit"]
+    DEBT["Informal debt at 3-10%/month"]
+    MIGRATION["Male out-migration"]
+    WOMEN["Women-headed households"]
+    CHILD["Early marriage of daughters"]
+    EDU["Low education investment"]
+    HEALTH["Malnutrition & poor health"]
+    LABOR["Low-skill, low-wage work"]
+
+    LAND --> CREDIT
+    CREDIT --> DEBT
+    DEBT --> MIGRATION
+    MIGRATION --> WOMEN
+    WOMEN --> CHILD
+    CHILD --> EDU
+    EDU --> LABOR
+    LABOR --> LAND
+    DEBT --> HEALTH
+    HEALTH --> EDU
+
+    style LAND fill:#c0392b,color:#fff,stroke:#922b21
+    style MIGRATION fill:#2a6496,color:#fff,stroke:#1a3a5c
+    style CHILD fill:#d35400,color:#fff,stroke:#a84300
+    style HEALTH fill:#8e44ad,color:#fff,stroke:#6c3483
+    style EDU fill:#e67e22,color:#fff,stroke:#d35400
+    style LABOR fill:#7f8c8d,color:#fff,stroke:#5d6d7e
+    style CREDIT fill:#2c3e50,color:#fff,stroke:#1a252f
+    style DEBT fill:#c0392b,color:#fff,stroke:#922b21
+    style WOMEN fill:#2a6496,color:#fff,stroke:#1a3a5c
+                    </div>
+                    <p class="diagram-caption">This cycle operates at household and community level. Landlessness locks families out of credit, pushing men to migrate. Women left behind face pressure to marry daughters early. Low education perpetuates low-skill labour. Health shocks (malnutrition, anaemia) compound every link in the chain. Breaking the cycle requires intervention at multiple points simultaneously.</p>
+                </div>
+
+                <!-- Migration Flow Diagram -->
+                <div class="diagram-container">
+                    <h4>Migration Flows: Where Bihar's Workers Go</h4>
+                    <div class="mermaid">
+graph LR
+    BH["BIHAR<br/>8-10M migrants"]
+
+    BH -->|Construction| DL["Delhi-NCR"]
+    BH -->|Factories| MH["Maharashtra<br/>Mumbai, Pune"]
+    BH -->|Textiles| GJ["Gujarat<br/>Surat, Ahmedabad"]
+    BH -->|Agriculture| PB["Punjab<br/>Haryana"]
+    BH -->|Services| KL["Kerala"]
+    BH -->|Gulf labour| GULF["UAE, Saudi,<br/>Qatar"]
+
+    DL -->|Remittances| BH
+    MH -->|Remittances| BH
+    GJ -->|Remittances| BH
+
+    style BH fill:#c0392b,color:#fff,stroke:#922b21
+    style DL fill:#2a6496,color:#fff,stroke:#1a3a5c
+    style MH fill:#2a6496,color:#fff,stroke:#1a3a5c
+    style GJ fill:#2a6496,color:#fff,stroke:#1a3a5c
+    style PB fill:#27ae60,color:#fff,stroke:#1e8449
+    style KL fill:#27ae60,color:#fff,stroke:#1e8449
+    style GULF fill:#e67e22,color:#fff,stroke:#d35400
+                    </div>
+                    <p class="diagram-caption">Estimated Rs 50,000-80,000 crore in annual remittances. Key source districts: Darbhanga, Madhubani, Siwan, Gopalganj, Supaul. COVID-19 reverse migration (2020) returned ~3 million workers within weeks, exposing the absence of local livelihood alternatives.</p>
+                </div>
+
                 <div class="charts-row">
                     <div class="chart-box">
                         <h4>Health Indicators: Bihar vs India (NFHS-5)</h4>
@@ -2545,6 +2744,8 @@
             if (sectionInits[id] && !initialized[id]) {
                 setTimeout(() => { sectionInits[id](); initialized[id] = true; }, 100);
             }
+            // Render mermaid diagrams in the active section
+            setTimeout(() => renderMermaidInSection(id), 150);
         };
 
         const origShowApp = showApp;
@@ -2558,6 +2759,31 @@
         };
 
         // Initialize
+        // Mermaid init
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default',
+            flowchart: { curve: 'basis', padding: 12 },
+            fontSize: 13
+        });
+
+        let mermaidRendered = {};
+        function renderMermaidInSection(sectionId) {
+            if (mermaidRendered[sectionId]) return;
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            const els = section.querySelectorAll('.mermaid:not([data-processed])');
+            if (els.length === 0) return;
+            els.forEach((el, i) => {
+                const id = 'mermaid-' + sectionId + '-' + i;
+                mermaid.render(id, el.textContent.trim()).then(({svg}) => {
+                    el.innerHTML = svg;
+                    el.setAttribute('data-processed', 'true');
+                });
+            });
+            mermaidRendered[sectionId] = true;
+        }
+
         initTheme();
         checkAuth();
     </script>
