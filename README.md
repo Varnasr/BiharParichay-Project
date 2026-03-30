@@ -1,99 +1,89 @@
 # Bihar Parichay
-*A Comprehensive Academic Deep Dive into Bihar*
+*Understanding Bihar -- Society, Economy, Geography, Culture, and the People*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Academic Resource](https://img.shields.io/badge/purpose-academic%20resource-green.svg)]()
-[![Static Site](https://img.shields.io/badge/deploy-Netlify-blue.svg)]()
 
-## Overview
+**Live**: [on-web.link/BiharParichay](https://on-web.link/BiharParichay)
 
-Bihar Parichay (Bihar -- "Introduction") is an academic deep-dive resource providing comprehensive, data-driven analysis of Bihar, India. The site covers geography, demographics, economy, social issues, people, food, art and culture -- all with interactive visualisations and links to authenticated open-access scholarly sources.
+## What is this?
 
-Built as a single-page static site, it is designed for researchers, students, policy professionals, and anyone seeking a rigorous introduction to one of India's most historically significant and complex states.
+Bihar Parichay is an interactive resource for understanding Bihar -- its people, problems, politics, and possibilities. It combines data, stories, maps, and research tools into a single site designed for anyone who needs to know what is actually happening in Bihar.
 
-## Sections
+This is not a textbook or a tourism site. It is a working resource built for people who engage with Bihar professionally -- researchers, journalists, policy workers, political organisers, and fieldworkers conducting listening circles.
 
-| Section | Description |
-|---------|-------------|
-| **Overview** | Key facts, historical context, and state profile |
-| **Geography & Maps** | Interactive Leaflet map, rivers, administrative divisions |
-| **Demographics & Society** | Population, caste structure, religion, literacy, urbanisation |
-| **Economy & Development** | GSDP trends, sectoral composition, agriculture, migration economy |
-| **Social Issues** | Poverty (MPI), floods, health (NFHS-5), education, gender |
-| **Notable People** | Historical figures, freedom movement leaders, intellectuals |
-| **Food & Cuisine** | Regional culinary traditions, signature dishes, agricultural connections |
-| **Art, Culture & Heritage** | Madhubani painting, UNESCO sites, performing arts, languages |
-| **Data & Analysis** | Interactive Chart.js dashboards, radar charts, heritage map |
-| **References** | 25+ authenticated open-access academic sources |
+## What's inside
+
+| Section | What it covers |
+|---------|---------------|
+| **Overview** | 128 million people, 51.9% poverty, the core paradox |
+| **Geography** | North-South divide, flood politics, Nepal water nexus, Diara lands |
+| **Society** | Caste structure, land ownership, electoral sociology, gender indicators |
+| **Economy** | Jobless growth, agrarian crisis, remittance dependency, 8-10M migrant workers |
+| **Issues** | Naxal history, prohibition, health/education failure, water/sanitation, climate |
+| **People** | Ashoka to Karpoori Thakur, Bhikhari Thakur to Phanishwarnath Renu |
+| **Food** | Litti chokha to makhana economics, caste on the plate |
+| **Culture** | Madhubani painting, Bidesia theatre, Chhath Puja, linguistic politics |
+| **Crafts** | 6 craft traditions with economics (maker price vs retail price) |
+| **Stories** | 45 perspective pieces -- makhana divers, child brides, ASHA workers, hooch deaths |
+| **Data** | District indicator map, 12+ charts, Bihar vs India comparisons |
+| **Tools** | 16 interactive tools (see below) |
+| **Briefing** | Select a district, see everything on one page |
+| **Compare** | Bihar vs 9 states on 9 indicators |
+
+## Tools (16)
+
+- Surname Lookup -- caste category database
+- Bihar Lexicon -- 16 searchable terms with etymology
+- District Data Explorer -- Census data for 20 districts
+- Flood Risk Checker -- risk level and river systems
+- Development Comparator -- multi-district chart generator
+- Constituency Lookup -- 15 Lok Sabha seats, 2024 results, margins, caste profiles
+- Issue Priority Ranker -- ranked local issues by district
+- Scheme Gap Finder -- MGNREGA, PM-Kisan, Ujjwala coverage vs national average
+- District Indicator Map -- color-coded Bihar map by literacy, sex ratio, urbanisation, density
+- Impact Calculator -- translates statistics into human terms
+- Bihar Timeline -- 28 events from 600 BCE to 2024
+- Voices of Bihar -- 20 published quotes, filterable by theme
+- District One-Pager -- printable summary for fieldworkers
+- Facilitator Guide -- 6 audience-specific listening circle session plans
+- WhatsApp Fact Cards -- 12 pre-formatted Hindi messages, one-tap share
+- Reading List Generator -- 24 open-access sources, 8 topic filters
+
+## Features
+
+- **Hindi toggle** -- EN/HI switch for bilingual content
+- **WhatsApp sharing** -- floating button + per-story share
+- **Search** -- site-wide search across all content
+- **Ctrl+K navigation** -- keyboard shortcut for quick section access
+- **Light/Dark/Auto theme** -- 3-mode theme selector
+- **Offline access** -- service worker caches the full site
+- **PNG download** -- download any chart with source watermark
+- **Print** -- printable district briefings and one-pagers
+- **Password protected** -- client-side access gate
 
 ## Technology
 
-- **Single-file architecture**: Everything in `index.html` (HTML + CSS + JS)
-- **Chart.js 3.9**: Interactive data visualisations (bar, line, radar, doughnut, pie)
-- **Leaflet.js 1.9**: Interactive maps with OpenStreetMap tiles
-- **Fonts**: Inter, Merriweather, Noto Serif Devanagari
-- **No build system**: Deploy directly to any static hosting service
-- **Password-protected**: Client-side SHA-256 gate for restricted access
+Single HTML file. No build system. No framework.
 
-## Deployment
-
-The site deploys as a static single HTML file on Netlify (or any static host):
-
-```bash
-# Clone and deploy
-git clone https://github.com/Varnasr/BiharParichay-Project.git
-# Upload index.html to Netlify, Vercel, GitHub Pages, or open locally
-```
+- Chart.js for data visualisation
+- Leaflet.js for interactive maps
+- CSS-only diagrams (no Mermaid dependency)
+- Noto Serif Devanagari for Hindi
+- Newsreader + DM Sans + JetBrains Mono typography
+- Service worker for offline capability
 
 ## Data Sources
 
-All data is sourced from authenticated open-access publications:
+All data is traceable to authenticated sources:
 
-- Census of India 2011
-- National Family Health Survey 5 (NFHS-5, 2019-21)
-- Bihar Economic Survey 2022-23
-- RBI Handbook of Statistics on Indian States
-- NITI Aayog Multidimensional Poverty Index
-- ASER 2022 (Annual Status of Education Report)
-- UNESCO World Heritage entries (Nalanda, Bodh Gaya)
-- World Bank Bihar Development Reports
+Census of India 2011 | NFHS-5 (2019-21) | Bihar Caste Survey 2023 | RBI Handbook of Statistics | Bihar Economic Survey | NITI Aayog MPI | ASER 2022 | ECI election data | BSDMA flood reports | CWC | NCRB | UNESCO | CPCB
 
-Full bibliography with direct links is available in the References section of the site.
+Full bibliography with 45+ sources and open-access links in the References tab.
 
-## Academic Citation
+## Licence
 
-```bibtex
-@misc{bihar_parichay_2025,
-  title={Bihar Parichay: A Comprehensive Academic Deep Dive into Bihar},
-  author={Raman, Varna Sri},
-  year={2025},
-  url={https://github.com/Varnasr/BiharParichay-Project},
-  note={Interactive academic resource on Bihar's geography, society, economy, and culture}
-}
-```
-
-## Legal & Ethical Guidelines
-
-- **Academic use only**: Designed for research and educational purposes
-- **MIT License**: Open source with attribution
-- **CC BY 4.0**: Content provided under Creative Commons Attribution 4.0
-- **Data accuracy**: All efforts made to cite reliable sources; no warranties provided
-- **Non-partisan**: Content is factual and balanced
-
-## Contributing
-
-Contributions welcome -- particularly:
-- Corrections to data or citations
-- Additional authenticated academic sources
-- Accessibility improvements
-- Translations (Hindi, Maithili, Bhojpuri)
-
-## Version History
-
-- **v3.0** (2025): Complete redesign as academic deep-dive site with interactive maps, charts, and 10 content sections
-- **v2.0**: Web-based demographic classification tool
-- **v1.0**: Initial release with core classification functionality
+MIT License. Content under CC BY 4.0.
 
 ---
 
-*Bihar Parichay: An open-access academic resource for understanding Bihar's society, economy, geography, and culture.*
+*Bihar Parichay: because understanding a place means understanding its people, their problems, and who benefits from the solutions.*

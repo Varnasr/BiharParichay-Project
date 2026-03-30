@@ -1,22 +1,23 @@
 cff-version: 1.2.0
-message: "If you use this resource in your research, please cite it as below."
+message: "If you use this resource, please cite it as below."
 type: software
-title: "Bihar Parichay: A Comprehensive Academic Deep Dive into Bihar"
+title: "Bihar Parichay: Understanding Bihar"
 authors:
   - family-names: Raman
     given-names: Varna Sri
-url: "https://github.com/Varnasr/BiharParichay-Project"
+url: "https://on-web.link/BiharParichay"
 repository-code: "https://github.com/Varnasr/BiharParichay-Project"
 license: MIT
 keywords:
   - bihar
   - india
-  - academic-resource
-  - demographics
+  - society
   - economy
-  - culture
+  - caste
   - development
   - data-visualization
   - geography
+  - culture
+  - listening-circles
 
 date-released: "2025-03-30"
