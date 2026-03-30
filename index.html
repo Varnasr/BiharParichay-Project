@@ -376,39 +376,104 @@
 
         /* === RESPONSIVE: PHONE === */
         @media (max-width: 600px) {
-            .container { padding: 0 16px; }
-            .site-header { padding: 28px 16px 24px; }
-            .site-header h1 { font-size: 1.4rem; }
-            .site-header .tagline { font-size: 0.82rem; }
-            .site-header .meta-line { font-size: 0.7rem; }
-            .site-header-inner::after { font-size: 0.68rem; }
-            .content-section { padding: 36px 0 44px; }
-            .section-title { font-size: 1.25rem; }
-            .section-subtitle { font-size: 0.8rem; margin-bottom: 24px; }
-            .section-prose { font-size: 0.86rem; line-height: 1.7; }
-            .key-facts-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-            .fact-card { padding: 12px 8px; }
-            .fact-value { font-size: 0.92rem; }
-            .people-grid { grid-template-columns: 1fr; }
-            .charts-row { grid-template-columns: 1fr; }
-            .chart-box { padding: 16px; }
-            .map-container { height: 260px; }
-            .geo-detail-grid { grid-template-columns: 1fr; }
-            .footer-inner { grid-template-columns: 1fr; }
-            .gate-container { padding: 36px 24px; max-width: 340px; }
-            .gate-title { font-size: 1.4rem; }
-            .overlay-panel { max-height: 80vh; }
-            .pyr-1 { width: 55%; } .pyr-2 { width: 65%; } .pyr-3 { width: 80%; } .pyr-4 { width: 90%; } .pyr-5 { width: 100%; }
-            .pyramid-level { font-size: 0.68rem; padding: 8px 10px; }
+            .container { padding: 0 14px; }
+            .site-header { padding: 24px 14px 20px; }
+            .site-header h1 { font-size: 1.3rem; }
+            .site-header .tagline { font-size: 0.78rem; line-height: 1.4; }
+            .site-header .meta-line { font-size: 0.68rem; }
+            .site-header-inner::after { font-size: 0.65rem; }
+            .content-section { padding: 28px 0 36px; }
+            .section-title { font-size: 1.15rem; }
+            .section-title::before { width: 18px; height: 18px; margin-right: 6px; }
+            .section-subtitle { font-size: 0.76rem; margin-bottom: 20px; }
+            .section-prose { font-size: 0.84rem; line-height: 1.7; }
+            .section-prose p { margin-bottom: 14px; }
+            .hindi-sub { font-size: 0.65rem; }
+            .key-facts-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .fact-card { padding: 10px 6px; }
+            .fact-value { font-size: 0.88rem; }
+            .fact-label { font-size: 0.6rem; }
+            .people-grid { grid-template-columns: 1fr; gap: 10px; }
+            .person-card { padding: 16px; }
+            .person-card::before { margin: -16px -16px 12px; }
+            .person-card h4 { font-size: 0.85rem; }
+            .person-card p { font-size: 0.78rem; }
+            .charts-row { grid-template-columns: 1fr; gap: 12px; }
+            .chart-box { padding: 14px; }
+            .chart-box h4 { font-size: 0.82rem; }
+            .map-container { height: 240px; }
+            .geo-detail-grid { grid-template-columns: 1fr; gap: 14px; }
+            .geo-detail-grid h4 { font-size: 0.88rem; }
+            .geo-detail-grid li { font-size: 0.78rem; padding: 4px 0; }
+            .footer-inner { grid-template-columns: 1fr; gap: 16px; }
+            .footer-disclaimer, .footer-cite { font-size: 0.72rem; }
+            .gate-container { padding: 32px 20px; max-width: 320px; }
+            .gate-title { font-size: 1.3rem; }
+            .gate-subtitle { font-size: 0.78rem; }
+            .gate-input { padding: 10px 14px; font-size: 0.88rem; }
+            .gate-btn { padding: 10px; font-size: 0.85rem; }
+            .overlay-panel { max-height: 85vh; width: 95vw; }
+            .overlay-header { padding: 16px 16px 0; }
+            .overlay-body { padding: 0 16px 16px; font-size: 0.8rem; }
+            .overlay-nav { padding: 8px 16px 12px; }
+            .overlay-nav-item { font-size: 0.78rem; padding: 6px 0; }
+            .pyr-1 { width: 60%; } .pyr-2 { width: 70%; } .pyr-3 { width: 82%; } .pyr-4 { width: 92%; } .pyr-5 { width: 100%; }
+            .pyramid-level { font-size: 0.65rem; padding: 7px 8px; }
+            .pyramid-level .pyr-detail { font-size: 0.58rem; }
+            .diagram-container { padding: 16px; margin: 20px 0; }
+            .diagram-container h4 { font-size: 0.85rem; }
+            .css-flow { gap: 6px; }
+            .flow-node { min-width: 80px; font-size: 0.68rem; padding: 7px 10px; }
+            .flow-node small { font-size: 0.58rem; }
+            .flow-arrow { font-size: 0.9rem; }
+            .flow-group { padding: 8px; }
+            .flow-group-label { font-size: 0.65rem; }
+            .flow-group-item { font-size: 0.7rem; }
+            .flow-leak { font-size: 0.65rem; padding: 6px 8px; }
+            .tool-card-header h4 { font-size: 0.85rem; }
+            .tool-desc { font-size: 0.75rem; }
+            .tool-input, .tool-select { font-size: 0.84rem; padding: 8px 12px; }
+            .tool-btn { font-size: 0.8rem; padding: 8px 14px; }
+            .tool-result { font-size: 0.78rem; padding: 12px; }
+            .tool-result th, .tool-result td { padding: 4px 6px; font-size: 0.72rem; }
+            .tool-category h3 { font-size: 0.88rem; }
+            .tool-category p { font-size: 0.7rem; }
+            .ref-list { font-size: 0.76rem; padding-left: 18px; }
+            .ref-category h4 { font-size: 0.85rem; }
+            .madhubani-panel { padding: 18px; margin: 20px 0; }
+            .mp-title { font-size: 0.9rem !important; }
+            .mp-text { font-size: 0.8rem !important; }
+            .madhubani-panel::after { width: 50px; height: 50px; }
+            .craft-card-body { padding: 16px; }
+            .craft-card-body h4 { font-size: 0.88rem; }
+            .craft-card-body p { font-size: 0.78rem; }
+            .craft-economics { font-size: 0.72rem; padding: 8px 10px; }
+            .crafts-grid { grid-template-columns: 1fr; }
+            .search-bar { padding: 6px 14px; }
+            .search-input { font-size: 0.82rem; padding: 8px 14px 8px 30px; }
+            .chip { font-size: 0.68rem; padding: 3px 8px; }
+            .lexicon-entry { padding: 6px 0; }
+            .lexicon-term { font-size: 0.85rem; }
+            .lexicon-def { font-size: 0.78rem; }
+            .reading-item a { font-size: 0.8rem; }
+            .reading-item .reading-meta { font-size: 0.68rem; }
+            .wa-share-float { width: 38px; height: 38px; bottom: 14px; left: 14px; }
+            .back-to-top { width: 34px; height: 34px; bottom: 14px; right: 14px; font-size: 14px; }
+            .deco-peacock { width: 90px; height: 90px; opacity: 0.1; }
+            .deco-flower-tl { display: none; }
             [style*="grid-template-columns: 1fr 1fr 1fr;"] { grid-template-columns: 1fr !important; }
             [style*="grid-template-columns: 1fr 1fr 1fr 1fr;"] { grid-template-columns: 1fr 1fr !important; }
+            /* Craft art panels: 1 per row on phone */
+            [style*="flex:0 0 260px"] { flex: 0 0 100% !important; }
         }
 
         @media (max-width: 380px) {
-            .site-header h1 { font-size: 1.2rem; }
-            .container { padding: 0 12px; }
-            .section-title { font-size: 1.1rem; }
+            .site-header h1 { font-size: 1.1rem; }
+            .container { padding: 0 10px; }
+            .section-title { font-size: 1rem; }
             .key-facts-grid { grid-template-columns: 1fr 1fr; }
+            .fact-value { font-size: 0.82rem; }
+            .gate-container { max-width: 290px; padding: 24px 16px; }
         }
 
         /* === PRINT === */
