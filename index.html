@@ -601,6 +601,230 @@
             text-align: center;
         }
 
+        /* ===== TOOLS SECTION ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tool-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .tool-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tool-card-header h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .tool-card-header .tool-toggle {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            transition: transform 0.2s;
+        }
+
+        .tool-card-header .tool-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .tool-card-body {
+            display: none;
+            padding: 20px;
+        }
+
+        .tool-card-body.open {
+            display: block;
+        }
+
+        .tool-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+            transition: border-color 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .tool-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .tool-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            background: var(--surface-elevated);
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .tool-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        [data-theme="dark"] .tool-btn { background: #3a6a9e; }
+        .tool-btn:hover { background: var(--primary-hover); }
+        [data-theme="dark"] .tool-btn:hover { background: #4a7ab0; }
+
+        .tool-result {
+            margin-top: 14px;
+            padding: 14px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .tool-result.visible { display: block; }
+
+        .tool-result table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .tool-result th, .tool-result td {
+            text-align: left;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.83rem;
+        }
+
+        .tool-result th {
+            color: var(--text-tertiary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+        }
+
+        .tool-desc {
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .lexicon-entry {
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+        }
+
+        .lexicon-entry:last-child { border-bottom: none; }
+
+        .lexicon-term {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .lexicon-origin {
+            font-size: 0.78rem;
+            color: var(--accent);
+            font-style: italic;
+            margin-left: 6px;
+        }
+
+        .lexicon-def {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .reading-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .reading-item:last-child { border-bottom: none; }
+
+        .reading-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .reading-item a:hover { text-decoration: underline; }
+
+        .reading-item .reading-meta {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        .comparator-charts {
+            margin-top: 16px;
+        }
+
+        .comparator-charts canvas {
+            max-height: 300px;
+        }
+
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .chip {
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            background: var(--surface);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .chip.active {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
         /* ===== CONTAINER ===== */
         .container {
             max-width: 960px;
@@ -792,6 +1016,7 @@
                     <li><a href="#food">Food</a></li>
                     <li><a href="#culture">Art &amp; Culture</a></li>
                     <li><a href="#data">Data</a></li>
+                    <li><a href="#tools">Tools</a></li>
                     <li><a href="#references">References</a></li>
                 </ul>
             </div>
@@ -1092,6 +1317,111 @@
                 <h3 style="font-family:var(--font-serif);margin:32px 0 12px;font-size:1.1rem;">Heritage &amp; Pilgrimage Sites Map</h3>
                 <div id="heritage-map" class="map-container"></div>
             </section>
+            <section id="tools" class="content-section">
+                <h2 class="section-title">Research Tools</h2>
+                <p class="section-subtitle">Interactive, data-first tools for Bihar-specific research -- all sources verifiable</p>
+
+                <div class="tools-grid">
+
+                    <!-- Tool 1: Caste/Surname Lookup -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('surname-tool')">
+                            <h4>Surname Lookup</h4>
+                            <span class="tool-toggle" id="surname-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="surname-tool">
+                            <p class="tool-desc">Look up a Bihar surname to see associated caste category, sub-caste, and religion from our verified database of 60+ entries. Based on Census categories and Bihar government classification data.</p>
+                            <input type="text" class="tool-input" id="surname-input" placeholder="Enter a surname (e.g., Yadav, Jha, Paswan)" onkeydown="if(event.key==='Enter')lookupSurname()">
+                            <button class="tool-btn" onclick="lookupSurname()">Look Up</button>
+                            <div class="tool-result" id="surname-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 2: Bihar Lexicon -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('lexicon-tool')">
+                            <h4>Bihar Lexicon</h4>
+                            <span class="tool-toggle" id="lexicon-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="lexicon-tool">
+                            <p class="tool-desc">Searchable glossary of Bihar-specific terms from Maithili, Bhojpuri, Magahi, and administrative/sociological vocabulary. Etymologies and usage context included.</p>
+                            <input type="text" class="tool-input" id="lexicon-input" placeholder="Search terms (e.g., sattu, makhana, panchayat)" onkeyup="searchLexicon()">
+                            <div class="tool-result visible" id="lexicon-result" style="max-height:320px;overflow-y:auto;display:block;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 3: District Data Explorer -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('district-tool')">
+                            <h4>District Data Explorer</h4>
+                            <span class="tool-toggle" id="district-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="district-tool">
+                            <p class="tool-desc">Select a district to view Census 2011 data: population, density, literacy, sex ratio, and urbanisation rate.</p>
+                            <select class="tool-select" id="district-select" onchange="showDistrictData()">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div class="tool-result" id="district-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 4: Flood Risk Checker -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('flood-tool')">
+                            <h4>Flood Risk Checker</h4>
+                            <span class="tool-toggle" id="flood-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="flood-tool">
+                            <p class="tool-desc">Check flood risk classification for any Bihar district. Data from Bihar State Disaster Management Authority (BSDMA) and Central Water Commission.</p>
+                            <select class="tool-select" id="flood-select" onchange="showFloodData()">
+                                <option value="">-- Select a district --</option>
+                            </select>
+                            <div class="tool-result" id="flood-result"></div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 5: Development Indicator Comparator -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('comparator-tool')">
+                            <h4>Development Comparator</h4>
+                            <span class="tool-toggle" id="comparator-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="comparator-tool">
+                            <p class="tool-desc">Compare development indicators across Bihar districts. Select 2-4 districts to generate side-by-side charts.</p>
+                            <div class="chip-group" id="comparator-chips"></div>
+                            <button class="tool-btn" onclick="runComparator()">Compare Selected</button>
+                            <div class="comparator-charts">
+                                <canvas id="comparatorChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 6: Reading List Generator -->
+                    <div class="tool-card">
+                        <div class="tool-card-header" onclick="toggleTool('reading-tool')">
+                            <h4>Reading List Generator</h4>
+                            <span class="tool-toggle" id="reading-tool-toggle">&#9660;</span>
+                        </div>
+                        <div class="tool-card-body" id="reading-tool">
+                            <p class="tool-desc">Generate a curated reading list of open-access papers and reports on Bihar. Filter by topic.</p>
+                            <div class="chip-group" id="reading-chips">
+                                <span class="chip active" onclick="toggleReadingChip(this)" data-topic="all">All Topics</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="economy">Economy</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="caste">Caste &amp; Society</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="health">Health</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="education">Education</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="flood">Floods &amp; Environment</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="culture">Culture &amp; Heritage</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="migration">Migration</span>
+                                <span class="chip" onclick="toggleReadingChip(this)" data-topic="governance">Governance</span>
+                            </div>
+                            <div class="tool-result visible" id="reading-result" style="display:block;max-height:400px;overflow-y:auto;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
             <section id="references" class="content-section">
                 <h2 class="section-title">References &amp; Sources</h2>
                 <p class="section-subtitle">Authenticated open-access sources, government publications, and peer-reviewed research</p>
