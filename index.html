@@ -327,38 +327,64 @@
             }
         }
 
-        /* ===== SECTIONS ===== */
+        /* ===== SECTIONS (TAB-BASED) ===== */
         .content-section {
-            padding: 48px 0;
-            border-bottom: 1px solid var(--border);
+            display: none;
+            padding: 40px 0 56px;
+            min-height: calc(100vh - 200px);
+            animation: fadeIn 0.25s ease;
         }
 
-        .content-section:last-child {
-            border-bottom: none;
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
             font-family: var(--font-serif);
-            font-size: 1.6rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
         .section-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-tertiary);
-            margin-bottom: 28px;
+            margin-bottom: 32px;
+            line-height: 1.5;
         }
 
         .section-prose {
             font-size: 0.95rem;
-            line-height: 1.8;
+            line-height: 1.9;
             color: var(--text-secondary);
+            max-width: 720px;
         }
 
         .section-prose p {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .section-prose strong {
+            color: var(--text-primary);
+        }
+
+        .section-prose blockquote {
+            margin: 20px 0;
+            padding: 16px 20px;
+            border-left: 3px solid var(--accent);
+            background: var(--surface);
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
         }
 
         /* ===== KEY FACTS GRID ===== */
@@ -827,9 +853,9 @@
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
 
         /* ===== MADHUBANI DECORATIVE ELEMENTS ===== */
@@ -880,17 +906,7 @@
             border-radius: 2px;
         }
 
-        /* Madhubani-style decorative divider between major sections */
-        .content-section + .content-section::before {
-            content: '\25C8  \25C7  \25C8';
-            display: block;
-            text-align: center;
-            color: var(--accent);
-            font-size: 0.75rem;
-            letter-spacing: 8px;
-            padding-bottom: 24px;
-            opacity: 0.6;
-        }
+        /* (removed inter-section divider -- not needed with tab layout) */
 
         /* Card header accent */
         .person-card::before {
@@ -968,8 +984,7 @@
             body { background: #fff; color: #000; }
         }
 
-        /* Smooth scroll */
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: auto; }
     </style>
 </head>
 <body>
@@ -1024,7 +1039,7 @@
 
         <!-- Content Container -->
         <div class="container">
-            <section id="overview" class="content-section">
+            <section id="overview" class="content-section active">
                 <h2 class="section-title">Overview</h2>
                 <p class="section-subtitle">An introduction to one of India's most historically significant and complex states</p>
                 <div class="section-prose">
@@ -1594,56 +1609,55 @@
             }
         }
 
-        // Navigation
+        // Tab-based navigation
         function toggleNav() {
             document.getElementById('nav-links').classList.toggle('open');
         }
 
-        // Close mobile nav on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('nav-links').classList.remove('open');
+        function switchTab(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            // Show target
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+            // Update nav active state
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + sectionId);
             });
-        });
-
-        // Scroll-based active nav highlighting
-        function updateActiveNav() {
-            const sections = document.querySelectorAll('.content-section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            let current = '';
-
-            sections.forEach(section => {
-                const top = section.offsetTop - 80;
-                if (window.scrollY >= top) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            // Close mobile nav
+            document.getElementById('nav-links').classList.remove('open');
+            // Invalidate any Leaflet maps in the newly visible section
+            setTimeout(() => {
+                target.querySelectorAll('.map-container').forEach(el => {
+                    if (el._leaflet_id) {
+                        Object.values(L.Map._instances || {}).forEach(m => m.invalidateSize());
+                    }
+                });
+            }, 100);
         }
 
-        window.addEventListener('scroll', function() {
-            updateActiveNav();
-            const btn = document.getElementById('backToTop');
-            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
-        });
-
-        // Smooth scroll for nav links
+        // Bind nav links
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = 60;
-                    const top = target.offsetTop - offset;
-                    window.scrollTo({ top, behavior: 'smooth' });
-                }
+                const id = this.getAttribute('href').replace('#', '');
+                switchTab(id);
+                history.replaceState(null, '', '#' + id);
             });
+        });
+
+        // Handle back/forward and direct hash links
+        window.addEventListener('hashchange', () => {
+            const id = location.hash.replace('#', '');
+            if (id) switchTab(id);
+        });
+
+        // Back-to-top
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('backToTop');
+            if (btn) btn.classList.toggle('visible', window.scrollY > 400);
         });
 
         // Demographics charts
@@ -1937,15 +1951,32 @@
         }
 
         // Init map when app is shown
+        // Lazy initialization: init charts/maps when their tab is first shown
+        const initialized = {};
+        const sectionInits = {
+            'geography': () => initMap(),
+            'demographics': () => initDemographicsCharts(),
+            'economy': () => initEconomyCharts(),
+            'social-issues': () => initSocialCharts(),
+            'data': () => { initDataCharts(); initHeritageMap(); }
+        };
+
+        const origSwitchTab = switchTab;
+        switchTab = function(id) {
+            origSwitchTab(id);
+            if (sectionInits[id] && !initialized[id]) {
+                setTimeout(() => { sectionInits[id](); initialized[id] = true; }, 100);
+            }
+        };
+
         const origShowApp = showApp;
         showApp = function() {
             origShowApp();
-            setTimeout(initMap, 100);
-            setTimeout(initDemographicsCharts, 150);
-            setTimeout(initEconomyCharts, 200);
-            setTimeout(initSocialCharts, 250);
-            setTimeout(initDataCharts, 300);
-            setTimeout(initHeritageMap, 350);
+            // Init the default active tab (overview has no charts)
+            const hash = location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                switchTab(hash);
+            }
         };
 
         // Initialize
