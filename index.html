@@ -175,12 +175,73 @@
             display: none;
         }
 
-        /* Placeholder for content sections */
-        .placeholder-msg {
+        /* ===== SITE HEADER ===== */
+        .site-header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 56px 40px 48px;
             text-align: center;
-            padding: 80px 20px;
-            color: var(--text-tertiary);
-            font-size: 1.1rem;
+            position: relative;
+        }
+
+        [data-theme="dark"] .site-header {
+            background: #1a2332;
+        }
+
+        .site-header-inner {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .site-header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .site-header .tagline {
+            font-size: 1.05rem;
+            font-weight: 300;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .site-header .meta-line {
+            font-size: 0.82rem;
+            opacity: 0.65;
+            font-style: italic;
+        }
+
+        .header-theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        .header-theme-toggle:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
     </style>
 </head>
@@ -203,9 +264,18 @@
 
     <!-- Main Application (hidden until auth) -->
     <div id="main-app">
-        <div class="placeholder-msg">
-            <p>Authenticated. Site content loading...</p>
-        </div>
+        <header class="site-header">
+            <button class="header-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <span id="app-theme-icon">&#9790;</span>
+            </button>
+            <div class="site-header-inner">
+                <h1>Bihar Parichay</h1>
+                <div class="tagline">A Comprehensive Academic Introduction to Bihar &mdash; Society, Economy, Geography, Culture, and Development</div>
+                <div class="meta-line">An open-access research resource with data-driven analysis and authenticated scholarly sources</div>
+            </div>
+        </header>
+
+        <!-- Content sections will be added here -->
     </div>
 
     <script>
@@ -229,8 +299,11 @@
 
         function updateThemeIcon() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const icon = isDark ? '&#9788;' : '&#9790;';
             const gateIcon = document.getElementById('gate-theme-icon');
-            if (gateIcon) gateIcon.innerHTML = isDark ? '&#9788;' : '&#9790;';
+            const appIcon = document.getElementById('app-theme-icon');
+            if (gateIcon) gateIcon.innerHTML = icon;
+            if (appIcon) appIcon.innerHTML = icon;
         }
 
         // Password gate
