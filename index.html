@@ -985,13 +985,146 @@
         }
 
         html { scroll-behavior: auto; }
+
+        /* ===== CTRL+K OVERLAY ===== */
+        .overlay-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 12vh;
+        }
+
+        .overlay-backdrop.visible { display: flex; }
+
+        .overlay-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            width: 560px;
+            max-width: 92vw;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: overlayIn 0.15s ease;
+        }
+
+        @keyframes overlayIn {
+            from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .overlay-header {
+            padding: 24px 28px 0;
+        }
+
+        .overlay-header h3 {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+
+        .overlay-header .overlay-hint {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+
+        .overlay-body {
+            padding: 0 28px 24px;
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .overlay-body p { margin-bottom: 12px; }
+
+        .overlay-body .kbd {
+            display: inline-block;
+            padding: 2px 7px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+        }
+
+        .overlay-nav {
+            padding: 12px 28px 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .overlay-nav-item {
+            display: block;
+            padding: 8px 0;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .overlay-nav-item:last-child { border-bottom: none; }
+        .overlay-nav-item:hover { color: var(--primary-color); }
+
+        .overlay-nav-item .nav-shortcut {
+            float: right;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ===== THEME SELECTOR ===== */
+        .theme-selector {
+            display: flex;
+            gap: 2px;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .theme-opt {
+            padding: 4px 10px;
+            font-size: 0.72rem;
+            font-family: var(--font-sans);
+            border: none;
+            background: transparent;
+            color: var(--text-tertiary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .theme-opt.active {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        [data-theme="dark"] .theme-opt.active {
+            background: #3a6a9e;
+        }
+
+        /* ===== HINDI SUBTITLE ===== */
+        .hindi-sub {
+            font-family: 'Noto Serif Devanagari', serif;
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
     <!-- Password Gate -->
     <div id="password-gate">
-        <button class="gate-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-            <span id="gate-theme-icon">&#9790;</span>
+        <button class="gate-theme-toggle" onclick="setThemeMode(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')" aria-label="Toggle theme">
+            &#9681;
         </button>
         <div class="gate-container">
             <div class="gate-title">Bihar Parichay</div>
@@ -1007,9 +1140,13 @@
     <!-- Main Application (hidden until auth) -->
     <div id="main-app">
         <header class="site-header">
-            <button class="header-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span id="app-theme-icon">&#9790;</span>
-            </button>
+            <div style="position:absolute;top:20px;right:24px;display:flex;gap:8px;align-items:center;">
+                <div class="theme-selector" id="theme-selector">
+                    <button class="theme-opt" data-theme-mode="light" onclick="setThemeMode('light')">Light</button>
+                    <button class="theme-opt" data-theme-mode="dark" onclick="setThemeMode('dark')">Dark</button>
+                    <button class="theme-opt" data-theme-mode="system" onclick="setThemeMode('system')">Auto</button>
+                </div>
+            </div>
             <div class="site-header-inner">
                 <h1>Bihar Parichay</h1>
                 <div class="tagline">A Comprehensive Academic Introduction to Bihar &mdash; Society, Economy, Geography, Culture, and Development</div>
@@ -1041,6 +1178,7 @@
         <div class="container">
             <section id="overview" class="content-section active">
                 <h2 class="section-title">Overview</h2>
+                <div class="hindi-sub">&#x0905;&#x0935;&#x0932;&#x094B;&#x0915;&#x0928;</div>
                 <p class="section-subtitle">Why Bihar matters -- and why it is misunderstood</p>
                 <div class="section-prose">
                     <p>Bihar is not a state that can be understood through summary statistics alone. It is a place where the world's first republic (the Licchavi clan of Vaishali, c. 6th century BCE) and the world's first university (Nalanda, 5th century CE) coexisted with structures of caste hierarchy so deeply embedded that they continue to shape electoral outcomes, land ownership, and access to education in 2025. To study Bihar is to confront the central paradox of Indian development: how a civilisation that produced Ashoka, Aryabhata, and the concept of zero can simultaneously produce some of the worst human development outcomes in the modern world.</p>
@@ -1066,6 +1204,7 @@
             </section>
             <section id="geography" class="content-section">
                 <h2 class="section-title">Geography &amp; Maps</h2>
+                <div class="hindi-sub">&#x092D;&#x0942;&#x0917;&#x094B;&#x0932; &#x0914;&#x0930; &#x0928;&#x0915;&#x094D;&#x0936;&#x0947;</div>
                 <p class="section-subtitle">How rivers, terrain, and the Nepal border shape Bihar's political economy and vulnerability</p>
                 <div class="section-prose">
                     <p><strong>The North-South divide.</strong> The Ganga bisects Bihar roughly east-west, creating two distinct regions with profoundly different socioeconomic realities. North Bihar (Mithila, Tirhut, Kosi, and Purnia divisions) is a low-lying, flood-prone alluvial plain where 73% of the land area faces annual flood risk (BSDMA). The region is characterised by higher poverty rates, greater out-migration, and fragmented landholding patterns. South Bihar (Magadh, Patna, Munger, Bhagalpur divisions) sits on slightly elevated terrain with better drainage, greater urbanisation around Patna, and historically more consolidated land ownership by upper-caste landlords. This geographic divide maps onto distinct caste geographies: Mithila is associated with Brahmin and Kayastha cultural dominance alongside large Dalit and EBC populations; the Bhojpur region in the west has historically been the site of the most intense caste conflicts and Naxalite activity; the Kosi-Seemanchal belt in the northeast has significant Muslim populations and some of the worst development indicators in all of India.</p>
@@ -1105,6 +1244,7 @@
             </section>
             <section id="demographics" class="content-section">
                 <h2 class="section-title">Demographics &amp; Society</h2>
+                <div class="hindi-sub">&#x091C;&#x0928;&#x0938;&#x0902;&#x0916;&#x094D;&#x092F;&#x093E; &#x0914;&#x0930; &#x0938;&#x092E;&#x093E;&#x091C;</div>
                 <p class="section-subtitle">Caste as the organising principle -- who owns what, who gets what, and who decides</p>
                 <div class="section-prose">
                     <p><strong>Caste is not identity politics in Bihar -- it is material reality.</strong> The 2023 Bihar Caste Survey, the first comprehensive caste enumeration since the colonial era, revealed a social structure where over 63% of the population belongs to OBC and EBC categories, 19.7% to Scheduled Castes, and approximately 15.5% to "upper castes" (Brahmin, Bhumihar, Rajput, Kayastha). Yet land ownership, access to English-medium education, representation in the judiciary and senior bureaucracy, and control of media remain disproportionately concentrated in the upper-caste minority. This structural gap between demographic weight and material power is the central tension of Bihar's social life.</p>
@@ -1144,6 +1284,7 @@
             </section>
             <section id="economy" class="content-section">
                 <h2 class="section-title">Economy &amp; Development</h2>
+                <div class="hindi-sub">&#x0905;&#x0930;&#x094D;&#x0925;&#x0935;&#x094D;&#x092F;&#x0935;&#x0938;&#x094D;&#x0925;&#x093E; &#x0914;&#x0930; &#x0935;&#x093F;&#x0915;&#x093E;&#x0938;</div>
                 <p class="section-subtitle">Growth without jobs, agriculture without land reform, and an economy held together by remittances</p>
                 <div class="section-prose">
                     <p><strong>The growth mirage.</strong> Bihar's headline GSDP growth of 10.5% annually (2005-2015) was real, but it obscures critical structural weaknesses. The growth was driven primarily by public expenditure (road construction, school buildings, government salaries) and a services sector boom centred on Patna. It did not produce a corresponding expansion in industrial employment or private-sector job creation. Bihar has virtually no manufacturing base: the state contributes less than 1% of India's industrial output. The few large employers -- railways, government, education -- are concentrated in Patna. Per capita income remains Rs 54,383, roughly one-third of the national average and one-tenth of Goa or Haryana (RBI, 2023). For the majority of Bihar's working population, "growth" has meant higher food prices and rising aspirations without local employment opportunities to match.</p>
@@ -1181,6 +1322,7 @@
             </section>
             <section id="social-issues" class="content-section">
                 <h2 class="section-title">Social Issues &amp; Challenges</h2>
+                <div class="hindi-sub">&#x0938;&#x093E;&#x092E;&#x093E;&#x091C;&#x093F;&#x0915; &#x0938;&#x092E;&#x0938;&#x094D;&#x092F;&#x093E;&#x090F;&#x0901; &#x0914;&#x0930; &#x091A;&#x0941;&#x0928;&#x094C;&#x0924;&#x093F;&#x092F;&#x093E;&#x0901;</div>
                 <p class="section-subtitle">The fault lines -- caste violence, Naxalism, prohibition, governance failure, and what people actually live with</p>
                 <div class="section-prose">
                     <p><strong>Caste violence and the Naxalite legacy.</strong> Bihar's central and southern districts experienced some of the most intense caste-based violence in post-independence India. Between the 1970s and early 2000s, private caste militias -- the Ranvir Sena (Bhumihar), Sunlight Sena (Kurmi), Lorik Sena (Yadav), and others -- fought Naxalite/Maoist groups and targeted Dalit communities demanding land rights. The Bathani Tola massacre (1996, 21 Dalit deaths), Laxmanpur Bathe massacre (1997, 58 Dalits killed by Ranvir Sena), and Senari massacre (1999) are among the most documented incidents. While large-scale militia violence has reduced since the mid-2000s due to improved policing and the declining organisational capacity of armed groups, the underlying structural conditions -- landlessness, caste humiliation, denial of dignity -- persist. The Naxalite movement itself, whatever its methods, arose from a real demand: land redistribution and an end to bonded labour. That demand remains unmet in many areas of Magadh and Bhojpur (Kunnath, 2012; Bhatia, 2005).</p>
@@ -1208,6 +1350,7 @@
             </section>
             <section id="people" class="content-section">
                 <h2 class="section-title">Notable People &amp; Leadership</h2>
+                <div class="hindi-sub">&#x092A;&#x094D;&#x0930;&#x092E;&#x0941;&#x0916; &#x0935;&#x094D;&#x092F;&#x0915;&#x094D;&#x0924;&#x093F; &#x0914;&#x0930; &#x0928;&#x0947;&#x0924;&#x0943;&#x0924;&#x094D;&#x0935;</div>
                 <p class="section-subtitle">From Mauryan emperors to Mandal politics -- Bihar's disproportionate impact on Indian history</p>
                 <div class="section-prose">
                     <p>Bihar's contribution to Indian civilisation is extraordinary. The region produced the world's first major empire (Maurya), its oldest university (Nalanda), foundational figures in mathematics (Aryabhata), two world religions' key events (Buddha's enlightenment, Mahavira's birth), India's first President, and the movement that ended the Emergency. In modern politics, Bihar has been the laboratory for India's most significant experiments in social justice -- the Mandal Commission's recommendations were rooted in Bihar's caste realities, and every major OBC/Dalit political mobilisation in India traces intellectual lineage to Bihar's movements. The figures below span this range.</p>
@@ -1261,6 +1404,7 @@
             </section>
             <section id="food" class="content-section">
                 <h2 class="section-title">Food &amp; Cuisine</h2>
+                <div class="hindi-sub">&#x0916;&#x093E;&#x0928;-&#x092A;&#x093E;&#x0928; &#x0914;&#x0930; &#x092A;&#x093E;&#x0915;&#x0936;&#x093E;&#x0938;&#x094D;&#x0924;&#x094D;&#x0930;</div>
                 <p class="section-subtitle">Class and caste on the plate -- what Bihar eats, who produces it, and what it reveals about society</p>
                 <div class="section-prose">
                     <p>Bihar's food system is inseparable from its agrarian political economy and caste structure. The cuisine relies on sattu (roasted gram flour), rice, wheat, dal, and seasonal vegetables -- but what people eat, how much, and with what nutrition varies drastically by class. Chronic undernutrition (42.9% stunting in under-5 children, NFHS-5) coexists with Bihar being one of India's most fertile agricultural regions. This paradox -- abundant production, widespread hunger -- is a function of landlessness, market access failures, and the caste-based division of food labour (who grows, who cooks, who eats first). Mithila, Magadh, and Bhojpur each have distinct culinary identities shaped by local crops, water availability, and cultural practice.</p>
@@ -1294,6 +1438,7 @@
             </section>
             <section id="culture" class="content-section">
                 <h2 class="section-title">Art, Culture &amp; Heritage</h2>
+                <div class="hindi-sub">&#x0915;&#x0932;&#x093E;, &#x0938;&#x0902;&#x0938;&#x094D;&#x0915;&#x0943;&#x0924;&#x093F; &#x0914;&#x0930; &#x0935;&#x093F;&#x0930;&#x093E;&#x0938;&#x0924;</div>
                 <p class="section-subtitle">Four languages, two UNESCO sites, and cultural production that is both ancient and alive</p>
                 <div class="section-prose">
                     <p>Bihar's cultural landscape is shaped by four distinct linguistic communities -- Maithili (Eighth Schedule recognition, 2003), Bhojpuri (the largest non-scheduled language in India by speakers, seeking recognition), Magahi, and Angika -- each with its own literary canon, music, and ritual practice. This linguistic diversity is political: Maithili's constitutional recognition was a decades-long movement; Bhojpuri's exclusion remains a grievance. Culture in Bihar is not decorative -- it encodes caste identity (who performs, who patronises), migration experience (Bidesia theatre), religious syncretism (Chhath Puja's pre-Vedic solar worship), and resistance (Dalit literary movements). Two UNESCO World Heritage Sites (Nalanda, Bodh Gaya) anchor Bihar's global cultural significance.</p>
@@ -1335,6 +1480,7 @@
             </section>
             <section id="data" class="content-section">
                 <h2 class="section-title">Data &amp; Analysis</h2>
+                <div class="hindi-sub">&#x0906;&#x0901;&#x0915;&#x0921;&#x093C;&#x0947; &#x0914;&#x0930; &#x0935;&#x093F;&#x0936;&#x094D;&#x0932;&#x0947;&#x0937;&#x0923;</div>
                 <p class="section-subtitle">Numbers that tell the story -- where Bihar stands, and how it got here</p>
                 <div class="section-prose">
                     <p>This section consolidates key data into comparative visualisations. All figures are sourced from government publications and peer-reviewed research. The gap between Bihar and national averages on nearly every indicator is not accidental -- it is the cumulative result of colonial extraction, zamindari landholding, post-independence policy neglect (Bihar received less per-capita central investment than most states for decades), and internal structural inequality. The data should be read with that context.</p>
@@ -1368,6 +1514,7 @@
             </section>
             <section id="tools" class="content-section">
                 <h2 class="section-title">Research Tools</h2>
+                <div class="hindi-sub">&#x0936;&#x094B;&#x0927; &#x0909;&#x092A;&#x0915;&#x0930;&#x0923;</div>
                 <p class="section-subtitle">Interactive, data-first tools for Bihar-specific research -- all sources verifiable</p>
 
                 <div class="tools-grid">
@@ -1473,6 +1620,7 @@
 
             <section id="references" class="content-section">
                 <h2 class="section-title">References &amp; Sources</h2>
+                <div class="hindi-sub">&#x0938;&#x0902;&#x0926;&#x0930;&#x094D;&#x092D; &#x0914;&#x0930; &#x0938;&#x094D;&#x0930;&#x094B;&#x0924;</div>
                 <p class="section-subtitle">Authenticated open-access sources, government publications, and peer-reviewed research</p>
                 <div class="section-prose">
                     <p>All data and claims in this resource are traceable to the sources listed below. Priority has been given to open-access publications that readers can verify independently. Government of India publications are available through their respective portals under open data mandates.</p>
@@ -1568,6 +1716,30 @@
         </footer>
     </div>
 
+    <!-- Ctrl+K Overlay -->
+    <div class="overlay-backdrop" id="cmdOverlay" onclick="if(event.target===this)closeCmdOverlay()">
+        <div class="overlay-panel">
+            <div class="overlay-header">
+                <h3>Bihar Parichay</h3>
+                <div class="overlay-hint">Press <span class="kbd">Esc</span> to close &middot; <span class="kbd">Ctrl+K</span> to toggle</div>
+            </div>
+            <div class="overlay-body">
+                <p><strong>About this project.</strong> Bihar Parichay is an open-access academic resource providing data-driven, source-verified analysis of Bihar's society, economy, geography, and culture. It is designed for researchers, students, policy professionals, and anyone who needs to understand Bihar beyond surface-level summaries.</p>
+                <p>Every data point links to an authenticated open-access source. The site covers caste structure, land ownership, electoral sociology, flood vulnerability, migration economics, health and education systems, cultural heritage, and more. Interactive research tools allow exploration of district-level data, surname demographics, flood risk, and curated academic reading lists.</p>
+                <p><strong>Data sources include:</strong> Census of India 2011, NFHS-5 (2019-21), Bihar Caste Survey 2023, RBI Handbook of Statistics, NITI Aayog MPI, Bihar Economic Survey, ASER, UNESCO, CWC, and BSDMA publications.</p>
+            </div>
+            <div class="overlay-nav">
+                <a class="overlay-nav-item" onclick="goToSection('overview')">Overview <span class="nav-shortcut">1</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('geography')">Geography &amp; Maps <span class="nav-shortcut">2</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('demographics')">Demographics &amp; Society <span class="nav-shortcut">3</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('economy')">Economy &amp; Development <span class="nav-shortcut">4</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('social-issues')">Social Issues <span class="nav-shortcut">5</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('tools')">Research Tools <span class="nav-shortcut">T</span></a>
+                <a class="overlay-nav-item" onclick="goToSection('references')">References <span class="nav-shortcut">R</span></a>
+            </div>
+        </div>
+    </div>
+
     <!-- Back to top button -->
     <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8593;</button>
 
@@ -1575,28 +1747,10 @@
         // SHA-256 hash of the password "bihar2026parichay"
         const EXPECTED_HASH = ''; // Will be computed on first load
 
-        // Theme management
+        // Theme management (3-mode: light/dark/system)
         function initTheme() {
-            const saved = localStorage.getItem('bp-theme') || 'light';
-            document.documentElement.setAttribute('data-theme', saved);
-            updateThemeIcon();
-        }
-
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('bp-theme', next);
-            updateThemeIcon();
-        }
-
-        function updateThemeIcon() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            const icon = isDark ? '&#9788;' : '&#9790;';
-            const gateIcon = document.getElementById('gate-theme-icon');
-            const appIcon = document.getElementById('app-theme-icon');
-            if (gateIcon) gateIcon.innerHTML = icon;
-            if (appIcon) appIcon.innerHTML = icon;
+            const mode = localStorage.getItem('bp-theme-mode') || 'system';
+            applyThemeMode(mode);
         }
 
         // Password gate
@@ -1642,6 +1796,67 @@
                 showApp();
             }
         }
+
+        // 3-mode theme (light / dark / system)
+        function setThemeMode(mode) {
+            localStorage.setItem('bp-theme-mode', mode);
+            applyThemeMode(mode);
+        }
+
+        function applyThemeMode(mode) {
+            let resolved = mode;
+            if (mode === 'system') {
+                resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', resolved);
+            // Update selector buttons
+            document.querySelectorAll('.theme-opt').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.themeMode === mode);
+            });
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const mode = localStorage.getItem('bp-theme-mode') || 'system';
+            if (mode === 'system') applyThemeMode('system');
+        });
+
+        // Ctrl+K overlay
+        function openCmdOverlay() {
+            document.getElementById('cmdOverlay').classList.add('visible');
+        }
+
+        function closeCmdOverlay() {
+            document.getElementById('cmdOverlay').classList.remove('visible');
+        }
+
+        function goToSection(id) {
+            closeCmdOverlay();
+            switchTab(id);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+K or Cmd+K
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const overlay = document.getElementById('cmdOverlay');
+                overlay.classList.toggle('visible');
+            }
+            // Escape closes overlay
+            if (e.key === 'Escape') {
+                closeCmdOverlay();
+            }
+            // Number keys for quick section nav (only when overlay is open)
+            const overlay = document.getElementById('cmdOverlay');
+            if (overlay && overlay.classList.contains('visible')) {
+                const sectionMap = {'1':'overview','2':'geography','3':'demographics','4':'economy','5':'social-issues','6':'people','7':'food','8':'culture','9':'data','t':'tools','r':'references'};
+                if (sectionMap[e.key]) {
+                    e.preventDefault();
+                    goToSection(sectionMap[e.key]);
+                }
+            }
+        });
 
         // Tab-based navigation
         function toggleNav() {
