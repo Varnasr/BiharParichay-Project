@@ -3945,7 +3945,7 @@
             // Number keys for quick section nav (only when overlay is open)
             const overlay = document.getElementById('cmdOverlay');
             if (overlay && overlay.classList.contains('visible')) {
-                const sectionMap = {'1':'overview','2':'geography','3':'demographics','4':'economy','5':'social-issues','6':'people','7':'food','8':'culture','9':'data','t':'tools','r':'references'};
+                const sectionMap = {'1':'overview','2':'geography','3':'demographics','4':'economy','5':'social-issues','6':'people','7':'food','8':'culture','9':'performing','s':'perspectives','d':'data','t':'tools','r':'references'};
                 if (sectionMap[e.key]) {
                     e.preventDefault();
                     goToSection(sectionMap[e.key]);
