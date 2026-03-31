@@ -2803,21 +2803,24 @@
             <section id="tools" class="content-section">
                 <h2 class="section-title">Research Tools</h2>
                 <div class="hindi-sub">&#x0936;&#x094B;&#x0927; &#x0909;&#x092A;&#x0915;&#x0930;&#x0923;</div>
-                <p class="section-subtitle">Interactive, data-first tools for Bihar-specific research -- all sources verifiable</p>
+                <p class="section-subtitle lang-en">Interactive, data-first tools for Bihar-specific research -- all sources verifiable</p>
+                <p class="section-subtitle lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार-विशिष्ट अनुसंधान के लिए इंटरैक्टिव, डेटा-प्रथम उपकरण -- सभी स्रोत सत्यापनीय</p>
 
-                <div class="tool-category"><h3>Lookup &amp; Explore</h3><p>Search Bihar's demographic, electoral, and geographic data</p></div>
+                <div class="tool-category"><h3 class="lang-en">Lookup &amp; Explore</h3><h3 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">खोजें और जानें</h3><p class="lang-en">Search Bihar's demographic, electoral, and geographic data</p><p class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार के जनसांख्यिकीय, चुनावी और भौगोलिक डेटा खोजें</p></div>
                 <div class="tools-grid">
 
                     <!-- Tool 1: Caste/Surname Lookup -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('surname-tool')">
-                            <h4>Surname Lookup</h4>
+                            <h4 class="lang-en">Surname Lookup</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">उपनाम खोज</h4>
                             <span class="tool-toggle" id="surname-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="surname-tool">
-                            <p class="tool-desc">Look up a Bihar surname to see associated caste category, sub-caste, and religion from our verified database of 60+ entries. Based on Census categories and Bihar government classification data.</p>
+                            <p class="tool-desc lang-en">Look up a Bihar surname to see associated caste category, sub-caste, and religion from our verified database of 60+ entries. Based on Census categories and Bihar government classification data.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार का कोई उपनाम खोजें और उससे जुड़ी जाति श्रेणी, उपजाति और धर्म देखें। 60+ प्रविष्टियों के सत्यापित डेटाबेस पर आधारित। जनगणना श्रेणियों और बिहार सरकार वर्गीकरण डेटा से।</p>
                             <input type="text" class="tool-input" id="surname-input" placeholder="Enter a surname (e.g., Yadav, Jha, Paswan)" onkeydown="if(event.key==='Enter')lookupSurname()">
-                            <button class="tool-btn" onclick="lookupSurname()">Look Up</button>
+                            <button class="tool-btn" onclick="lookupSurname()"><span class="lang-en">Look Up</span><span class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">खोजें</span></button>
                             <div class="tool-result" id="surname-result"></div>
                         </div>
                     </div>
@@ -2825,11 +2828,13 @@
                     <!-- Tool 2: Bihar Lexicon -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('lexicon-tool')">
-                            <h4>Bihar Lexicon</h4>
+                            <h4 class="lang-en">Bihar Lexicon</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार शब्दकोश</h4>
                             <span class="tool-toggle" id="lexicon-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="lexicon-tool">
-                            <p class="tool-desc">Searchable glossary of Bihar-specific terms from Maithili, Bhojpuri, Magahi, and administrative/sociological vocabulary. Etymologies and usage context included.</p>
+                            <p class="tool-desc lang-en">Searchable glossary of Bihar-specific terms from Maithili, Bhojpuri, Magahi, and administrative/sociological vocabulary. Etymologies and usage context included.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">मैथिली, भोजपुरी, मगही और प्रशासनिक/समाजशास्त्रीय शब्दावली से बिहार-विशिष्ट शब्दों की खोज योग्य शब्दावली। व्युत्पत्ति और प्रयोग संदर्भ सहित।</p>
                             <input type="text" class="tool-input" id="lexicon-input" placeholder="Search terms (e.g., sattu, makhana, panchayat)" onkeyup="searchLexicon()">
                             <div class="tool-result visible" id="lexicon-result" style="max-height:320px;overflow-y:auto;display:block;"></div>
                         </div>
@@ -2838,11 +2843,13 @@
                     <!-- Tool 3: District Data Explorer -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('district-tool')">
-                            <h4>District Data Explorer</h4>
+                            <h4 class="lang-en">District Data Explorer</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">जिला डेटा एक्सप्लोरर</h4>
                             <span class="tool-toggle" id="district-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="district-tool">
-                            <p class="tool-desc">Select a district to view Census 2011 data: population, density, literacy, sex ratio, and urbanisation rate.</p>
+                            <p class="tool-desc lang-en">Select a district to view Census 2011 data: population, density, literacy, sex ratio, and urbanisation rate.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">जनगणना 2011 का डेटा देखने के लिए जिला चुनें: जनसंख्या, घनत्व, साक्षरता, लिंगानुपात और शहरीकरण दर।</p>
                             <select class="tool-select" id="district-select" onchange="showDistrictData()">
                                 <option value="">-- Select a district --</option>
                             </select>
@@ -2853,11 +2860,13 @@
                     <!-- Tool 4: Flood Risk Checker -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('flood-tool')">
-                            <h4>Flood Risk Checker</h4>
+                            <h4 class="lang-en">Flood Risk Checker</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बाढ़ जोखिम जाँच</h4>
                             <span class="tool-toggle" id="flood-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="flood-tool">
-                            <p class="tool-desc">Check flood risk classification for any Bihar district. Data from Bihar State Disaster Management Authority (BSDMA) and Central Water Commission.</p>
+                            <p class="tool-desc lang-en">Check flood risk classification for any Bihar district. Data from Bihar State Disaster Management Authority (BSDMA) and Central Water Commission.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">किसी भी बिहार जिले का बाढ़ जोखिम वर्गीकरण देखें। बिहार राज्य आपदा प्रबंधन प्राधिकरण (BSDMA) और केंद्रीय जल आयोग के डेटा पर आधारित।</p>
                             <select class="tool-select" id="flood-select" onchange="showFloodData()">
                                 <option value="">-- Select a district --</option>
                             </select>
@@ -2868,13 +2877,15 @@
                     <!-- Tool 5: Development Indicator Comparator -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('comparator-tool')">
-                            <h4>Development Comparator</h4>
+                            <h4 class="lang-en">Development Comparator</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">विकास तुलनाकर्ता</h4>
                             <span class="tool-toggle" id="comparator-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="comparator-tool">
-                            <p class="tool-desc">Compare development indicators across Bihar districts. Select 2-4 districts to generate side-by-side charts.</p>
+                            <p class="tool-desc lang-en">Compare development indicators across Bihar districts. Select 2-4 districts to generate side-by-side charts.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार के जिलों में विकास संकेतकों की तुलना करें। 2-4 जिले चुनकर साथ-साथ चार्ट बनाएँ।</p>
                             <div class="chip-group" id="comparator-chips"></div>
-                            <button class="tool-btn" onclick="runComparator()">Compare Selected</button>
+                            <button class="tool-btn" onclick="runComparator()"><span class="lang-en">Compare Selected</span><span class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">चयनित की तुलना करें</span></button>
                             <div class="comparator-charts">
                                 <canvas id="comparatorChart"></canvas>
                             </div>
@@ -2886,11 +2897,13 @@
                     <!-- Tool 7: Constituency Lookup -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('constituency-tool')">
-                            <h4>Constituency Lookup</h4>
+                            <h4 class="lang-en">Constituency Lookup</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">निर्वाचन क्षेत्र खोज</h4>
                             <span class="tool-toggle" id="constituency-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="constituency-tool">
-                            <p class="tool-desc">Look up a Lok Sabha constituency to see 2024 election results, winning margin, dominant caste groups, and key local issues. Useful for understanding electoral dynamics.</p>
+                            <p class="tool-desc lang-en">Look up a Lok Sabha constituency to see 2024 election results, winning margin, dominant caste groups, and key local issues. Useful for understanding electoral dynamics.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">लोकसभा निर्वाचन क्षेत्र खोजें -- 2024 चुनाव परिणाम, जीत का अंतर, प्रमुख जाति समूह और स्थानीय मुद्दे देखें। चुनावी गतिशीलता समझने में सहायक।</p>
                             <select class="tool-select" id="constituency-select" onchange="showConstituencyData()">
                                 <option value="">-- Select a constituency --</option>
                             </select>
@@ -2899,17 +2912,19 @@
                     </div>
 
                 </div>
-                <div class="tool-category"><h3>Analysis &amp; Planning</h3><p>Issue mapping, scheme gaps, and election data for fieldwork preparation</p></div>
+                <div class="tool-category"><h3 class="lang-en">Analysis &amp; Planning</h3><h3 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">विश्लेषण और योजना</h3><p class="lang-en">Issue mapping, scheme gaps, and election data for fieldwork preparation</p><p class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">क्षेत्रकार्य की तैयारी के लिए मुद्दा मानचित्रण, योजना अंतराल और चुनाव डेटा</p></div>
                 <div class="tools-grid">
 
                     <!-- Tool 8: Issue Priority Ranker -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('issue-tool')">
-                            <h4>Issue Priority Ranker</h4>
+                            <h4 class="lang-en">Issue Priority Ranker</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">मुद्दा प्राथमिकता रैंकर</h4>
                             <span class="tool-toggle" id="issue-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="issue-tool">
-                            <p class="tool-desc">Select a district to see ranked local issues based on data indicators. Helps identify what people actually face -- not what headlines say.</p>
+                            <p class="tool-desc lang-en">Select a district to see ranked local issues based on data indicators. Helps identify what people actually face -- not what headlines say.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">डेटा संकेतकों के आधार पर स्थानीय मुद्दों की रैंकिंग देखने के लिए जिला चुनें। लोग वास्तव में क्या झेलते हैं -- सुर्खियाँ क्या कहती हैं नहीं।</p>
                             <select class="tool-select" id="issue-select" onchange="showIssuePriorities()">
                                 <option value="">-- Select a district --</option>
                             </select>
@@ -2920,11 +2935,13 @@
                     <!-- Tool 9: Scheme Gap Finder -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('scheme-tool')">
-                            <h4>Scheme Gap Finder</h4>
+                            <h4 class="lang-en">Scheme Gap Finder</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">योजना अंतराल खोजक</h4>
                             <span class="tool-toggle" id="scheme-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="scheme-tool">
-                            <p class="tool-desc">Check how well key central and state government schemes are reaching people in each district. Data from MGNREGA, PM-Kisan, Ujjwala, and state welfare programmes.</p>
+                            <p class="tool-desc lang-en">Check how well key central and state government schemes are reaching people in each district. Data from MGNREGA, PM-Kisan, Ujjwala, and state welfare programmes.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">प्रत्येक जिले में प्रमुख केंद्र और राज्य सरकारी योजनाएँ लोगों तक कितनी पहुँच रही हैं, देखें। मनरेगा, पीएम-किसान, उज्ज्वला और राज्य कल्याण कार्यक्रमों का डेटा।</p>
                             <select class="tool-select" id="scheme-select" onchange="showSchemeGaps()">
                                 <option value="">-- Select a district --</option>
                             </select>
@@ -2933,11 +2950,13 @@
                     </div>
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('reading-tool')">
-                            <h4>Reading List Generator</h4>
+                            <h4 class="lang-en">Reading List Generator</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">पठन सूची जनरेटर</h4>
                             <span class="tool-toggle" id="reading-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="reading-tool">
-                            <p class="tool-desc">Generate a curated reading list of open-access papers and reports on Bihar. Filter by topic.</p>
+                            <p class="tool-desc lang-en">Generate a curated reading list of open-access papers and reports on Bihar. Filter by topic.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार पर ओपन-एक्सेस शोधपत्रों और रिपोर्टों की क्यूरेटेड पठन सूची बनाएँ। विषय के अनुसार फ़िल्टर करें।</p>
                             <div class="chip-group" id="reading-chips">
                                 <span class="chip active" onclick="toggleReadingChip(this)" data-topic="all">All Topics</span>
                                 <span class="chip" onclick="toggleReadingChip(this)" data-topic="economy">Economy</span>
@@ -2954,17 +2973,19 @@
                     </div>
 
                 </div>
-                <div class="tool-category"><h3>Maps, Data &amp; History</h3><p>Visual exploration of Bihar's districts and timeline</p></div>
+                <div class="tool-category"><h3 class="lang-en">Maps, Data &amp; History</h3><h3 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">मानचित्र, डेटा और इतिहास</h3><p class="lang-en">Visual exploration of Bihar's districts and timeline</p><p class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार के जिलों और समयरेखा का दृश्य अन्वेषण</p></div>
                 <div class="tools-grid">
 
                     <!-- Tool 11: Impact Calculator -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('calc-tool')">
-                            <h4>Impact Calculator</h4>
+                            <h4 class="lang-en">Impact Calculator</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">प्रभाव कैलकुलेटर</h4>
                             <span class="tool-toggle" id="calc-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="calc-tool">
-                            <p class="tool-desc">What do Bihar's statistics mean for real families?</p>
+                            <p class="tool-desc lang-en">What do Bihar's statistics mean for real families?</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार के आँकड़ों का वास्तविक परिवारों के लिए क्या मतलब है?</p>
                             <select class="tool-select" id="calc-indicator" onchange="calculateImpact()">
                                 <option value="">-- Select --</option>
                                 <option value="poverty">Multidimensional Poverty (51.9%)</option>
@@ -2981,27 +3002,31 @@
                     <!-- Tool 12: Timeline -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('timeline-tool')">
-                            <h4>Bihar Timeline</h4>
+                            <h4 class="lang-en">Bihar Timeline</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार समयरेखा</h4>
                             <span class="tool-toggle" id="timeline-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="timeline-tool">
-                            <p class="tool-desc">Key moments from Maurya Empire to 2024 elections.</p>
+                            <p class="tool-desc lang-en">Key moments from Maurya Empire to 2024 elections.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">मौर्य साम्राज्य से 2024 चुनावों तक के प्रमुख क्षण।</p>
                             <div id="timeline-container" style="max-height:500px;overflow-y:auto;"></div>
                         </div>
                     </div>
 
                 </div>
-                <div class="tool-category"><h3>Voices &amp; Resources</h3><p>Published quotes, reading lists, and printable materials for fieldworkers</p></div>
+                <div class="tool-category"><h3 class="lang-en">Voices &amp; Resources</h3><h3 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">आवाज़ें और संसाधन</h3><p class="lang-en">Published quotes, reading lists, and printable materials for fieldworkers</p><p class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">प्रकाशित उद्धरण, पठन सूचियाँ और क्षेत्रकर्मियों के लिए मुद्रण योग्य सामग्री</p></div>
                 <div class="tools-grid">
 
                     <!-- Tool 13: Quote Wall -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('quote-tool')">
-                            <h4>Voices of Bihar</h4>
+                            <h4 class="lang-en">Voices of Bihar</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार की आवाज़ें</h4>
                             <span class="tool-toggle" id="quote-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="quote-tool">
-                            <p class="tool-desc">Published quotes and documented voices from Bihar -- researchers, writers, workers, activists. Filter by theme.</p>
+                            <p class="tool-desc lang-en">Published quotes and documented voices from Bihar -- researchers, writers, workers, activists. Filter by theme.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार से प्रकाशित उद्धरण और दर्ज़ आवाज़ें -- शोधकर्ता, लेखक, कामगार, कार्यकर्ता। विषय के अनुसार फ़िल्टर करें।</p>
                             <div class="chip-group" id="quote-chips">
                                 <span class="chip active" onclick="filterQuotes(this)" data-topic="all">All</span>
                                 <span class="chip" onclick="filterQuotes(this)" data-topic="migration">Migration</span>
@@ -3018,27 +3043,31 @@
                     <!-- Tool 14: Printable District Summary -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('print-tool')">
-                            <h4>District One-Pager</h4>
+                            <h4 class="lang-en">District One-Pager</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">जिला एक-पृष्ठ सारांश</h4>
                             <span class="tool-toggle" id="print-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="print-tool">
-                            <p class="tool-desc">Generate a printable summary for any district -- key data, top issues, scheme gaps. For fieldworkers and listening circle facilitators.</p>
+                            <p class="tool-desc lang-en">Generate a printable summary for any district -- key data, top issues, scheme gaps. For fieldworkers and listening circle facilitators.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">किसी भी जिले का मुद्रण योग्य सारांश बनाएँ -- प्रमुख डेटा, शीर्ष मुद्दे, योजना अंतराल। क्षेत्रकर्मियों और श्रवण चक्र संचालकों के लिए।</p>
                             <select class="tool-select" id="print-district" onchange="generateOnePager()">
                                 <option value="">-- Select a district --</option>
                             </select>
                             <div class="tool-result" id="print-result"></div>
-                            <button class="tool-btn" id="print-btn" style="display:none;margin-top:10px;" onclick="printOnePager()">Print / Save as PDF</button>
+                            <button class="tool-btn" id="print-btn" style="display:none;margin-top:10px;" onclick="printOnePager()"><span class="lang-en">Print / Save as PDF</span><span class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">प्रिंट / PDF सहेजें</span></button>
                         </div>
                     </div>
 
                     <!-- Tool 15: Facilitator Guide -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('guide-tool')">
-                            <h4>Listening Circle Facilitator Guide</h4>
+                            <h4 class="lang-en">Listening Circle Facilitator Guide</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">श्रवण चक्र संचालक गाइड</h4>
                             <span class="tool-toggle" id="guide-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="guide-tool">
-                            <p class="tool-desc">Ready-made session plans for different audience groups. Each suggests which stories, data, and tools to use.</p>
+                            <p class="tool-desc lang-en">Ready-made session plans for different audience groups. Each suggests which stories, data, and tools to use.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">विभिन्न श्रोता समूहों के लिए तैयार सत्र योजनाएँ। प्रत्येक में सुझाव कि कौन सी कहानियाँ, डेटा और उपकरण उपयोग करें।</p>
                             <div id="guide-content" style="font-size:0.84rem;line-height:1.7;color:var(--text-secondary);"></div>
                         </div>
                     </div>
@@ -3046,11 +3075,13 @@
                     <!-- Tool 16: SMS Fact Cards -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('sms-tool')">
-                            <h4>WhatsApp-Ready Fact Cards</h4>
+                            <h4 class="lang-en">WhatsApp-Ready Fact Cards</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">WhatsApp-तैयार तथ्य कार्ड</h4>
                             <span class="tool-toggle" id="sms-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="sms-tool">
-                            <p class="tool-desc">Pre-formatted messages under 160 characters. One-tap copy or share on WhatsApp.</p>
+                            <p class="tool-desc lang-en">Pre-formatted messages under 160 characters. One-tap copy or share on WhatsApp.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">160 अक्षरों से कम के पूर्व-स्वरूपित संदेश। एक टैप में कॉपी या WhatsApp पर शेयर करें।</p>
                             <div id="sms-cards"></div>
                         </div>
                     </div>
@@ -3058,11 +3089,13 @@
                     <!-- Tool 17: District Briefing -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('briefing-tool')">
-                            <h4>District Briefing</h4>
+                            <h4 class="lang-en">District Briefing</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">जिला ब्रीफिंग</h4>
                             <span class="tool-toggle" id="briefing-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="briefing-tool">
-                            <p class="tool-desc">Everything about one district on one page -- data, issues, schemes, flood risk, constituency. Printable.</p>
+                            <p class="tool-desc lang-en">Everything about one district on one page -- data, issues, schemes, flood risk, constituency. Printable.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">एक जिले की सारी जानकारी एक पृष्ठ पर -- डेटा, मुद्दे, योजनाएँ, बाढ़ जोखिम, निर्वाचन क्षेत्र। मुद्रण योग्य।</p>
                             <select class="tool-select" id="briefing-district" onchange="generateBriefing()" style="max-width:320px;">
                                 <option value="">-- Select a district --</option>
                             </select>
@@ -3073,11 +3106,13 @@
                     <!-- Tool 18: Bihar vs States -->
                     <div class="tool-card">
                         <div class="tool-card-header" onclick="toggleTool('compare-tool')">
-                            <h4>Bihar vs States</h4>
+                            <h4 class="lang-en">Bihar vs States</h4>
+                            <h4 class="lang-hi" style="font-family:'Noto Serif Devanagari',serif;">बिहार बनाम अन्य राज्य</h4>
                             <span class="tool-toggle" id="compare-tool-toggle">&#9660;</span>
                         </div>
                         <div class="tool-card-body" id="compare-tool">
-                            <p class="tool-desc">Compare Bihar against 9 states on 9 indicators. Interactive chart + full data table.</p>
+                            <p class="tool-desc lang-en">Compare Bihar against 9 states on 9 indicators. Interactive chart + full data table.</p>
+                            <p class="tool-desc lang-hi" style="font-family:'Noto Serif Devanagari',serif;">9 संकेतकों पर बिहार की 9 राज्यों से तुलना करें। इंटरैक्टिव चार्ट + पूर्ण डेटा तालिका।</p>
                             <div id="compare-content"></div>
                         </div>
                     </div>
