@@ -18,6 +18,8 @@
     <!-- mermaid removed, using CSS diagrams instead -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
     <meta property="og:title" content="Bihar Parichay - Understanding Bihar">
     <meta property="og:description" content="Comprehensive academic resource on Bihar: geography, society, economy, culture, and development.">
     <meta property="og:type" content="website">
@@ -309,6 +311,23 @@
         @media (max-width: 600px) { .deco-peacock { width: 120px; height: 120px; } .deco-flower-tl { width: 100px; height: 100px; } }
 
         /* === ARTWORK (CSS-only art panels) === */
+
+        /* === D3 SANKEY & CHORD DIAGRAMS === */
+        .d3-diagram-wrap { position: relative; }
+        .d3-diagram-wrap svg { width: 100%; height: auto; display: block; }
+        .sankey-node rect { cursor: default; }
+        .sankey-node text { font-family: var(--font-sans); font-size: 11px; fill: var(--text-primary); pointer-events: none; }
+        .sankey-link { fill: none; stroke-opacity: 0.35; transition: stroke-opacity 0.2s; }
+        .sankey-link:hover { stroke-opacity: 0.6; }
+        .chord-group text { font-family: var(--font-sans); font-size: 10.5px; fill: var(--text-primary); }
+        .chord-ribbon { fill-opacity: 0.62; stroke: none; transition: fill-opacity 0.2s; }
+        .chord-ribbon:hover { fill-opacity: 0.85; }
+        .chord-arc { stroke: var(--surface); stroke-width: 1px; }
+        .d3-tooltip { position: absolute; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 12px; font-size: 0.78rem; color: var(--text-primary); pointer-events: none; box-shadow: var(--shadow-lg); z-index: 10; white-space: nowrap; opacity: 0; transition: opacity 0.15s; }
+        @media (max-width: 600px) {
+            .sankey-node text { font-size: 9px; }
+            .chord-group text { font-size: 8.5px; }
+        }
 
         /* === CSS FLOWCHARTS === */
         .css-flow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; padding: 16px 0; }
@@ -2756,6 +2775,28 @@
                         <p class="chart-source">Source: ECI 2024 results (margins in thousands)</p>
                     </div>
                 </div>
+                <!-- Sankey & Chord Diagrams -->
+                <h3 style="font-family:var(--font-serif);margin:32px 0 8px;font-size:1.1rem;">Flow &amp; Relationship Diagrams</h3>
+                <p style="font-size:0.82rem;color:var(--text-tertiary);margin-bottom:20px;">Interactive Sankey and chord diagrams revealing how money, people, and power flow through Bihar. Hover for details.</p>
+
+                <div class="diagram-container">
+                    <h4>Migration Flows: Source Districts to Destinations</h4>
+                    <div class="d3-diagram-wrap" id="sankey-migration"></div>
+                    <p class="diagram-caption">Estimated 8-10 million Bihari workers migrate annually. Width of flows proportional to estimated worker volume. Remittances (Rs 50,000-80,000 Cr/year) flow back along these same routes. Source: Keshri &amp; Bhagat (2012); PLFS 2021-22; various state estimates.</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Government Scheme Delivery Pipeline: Where Benefits Leak</h4>
+                    <div class="d3-diagram-wrap" id="sankey-budget"></div>
+                    <p class="diagram-caption">For every Rs 100 allocated centrally, estimated Rs 30-40 reaches the intended beneficiary in Bihar. Leakage occurs at every stage of the delivery chain. Source: CAG audit reports; Bihar Economic Survey 2022-23; Dreze &amp; Khera studies on PDS.</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Caste Groups &amp; Political Alliances: Bihar's Electoral Matrix</h4>
+                    <div class="d3-diagram-wrap" id="chord-caste-politics"></div>
+                    <p class="diagram-caption">Chord thickness indicates the strength of voting alignment between caste groups and political alliances across Bihar's 40 Lok Sabha seats. Bihar's elections are fundamentally caste-coalition arithmetic. Source: Bihar Caste Survey 2023; ECI 2024; CSDS post-poll surveys.</p>
+                </div>
+
                 <h3 style="font-family:var(--font-serif);margin:32px 0 12px;font-size:1.1rem;">Heritage &amp; Pilgrimage Sites Map</h3>
                 <div id="heritage-map" class="map-container"></div>
             </section>
@@ -3531,11 +3572,17 @@
                 btn.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V3h3v5H12L8 12zm-5 2h10v1H3v-1z"/></svg> PNG';
                 btn.onclick = () => {
                     const mermaidDiv = container.querySelector('.mermaid');
+                    const d3Wrap = container.querySelector('.d3-diagram-wrap');
                     if (mermaidDiv) {
-                        // Create temp container with ID for the function
                         const tempId = 'dl-' + Date.now();
                         mermaidDiv.id = tempId;
                         downloadDiagramAsPNG(tempId, title ? title.textContent : 'diagram', caption ? caption.textContent.substring(0, 100) : 'Bihar Parichay');
+                    } else if (d3Wrap) {
+                        const tempId = 'dl-' + Date.now();
+                        d3Wrap.id = d3Wrap.id || tempId;
+                        downloadDiagramAsPNG(d3Wrap.id, title ? title.textContent : 'diagram', caption ? caption.textContent.substring(0, 100) : 'Bihar Parichay');
+                    } else {
+                        downloadElementAsPNG(container, title ? title.textContent : 'diagram', caption ? caption.textContent.substring(0, 100) : 'Bihar Parichay');
                     }
                 };
                 container.appendChild(btn);
@@ -4088,6 +4135,421 @@
                 },
                 options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { callback: v => v + 'K' } } } }
             });
+        }
+
+        // === D3 SANKEY & CHORD DIAGRAMS ===
+
+        function initSankeyAndChord() {
+            if (typeof d3 === 'undefined' || typeof d3.sankey === 'undefined') return;
+
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const textColor = isDark ? '#e8e4de' : '#1a1a18';
+
+            // --- SANKEY 1: Migration Flows ---
+            (function() {
+                const container = document.getElementById('sankey-migration');
+                if (!container || container.querySelector('svg')) return;
+
+                const width = Math.min(container.clientWidth || 780, 900);
+                const height = 480;
+                const margin = { top: 16, right: 160, bottom: 10, left: 10 };
+
+                const svg = d3.select(container).append('svg')
+                    .attr('viewBox', `0 0 ${width} ${height}`)
+                    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+                const tooltip = d3.select(container).append('div').attr('class', 'd3-tooltip');
+
+                // Nodes: source districts → intermediate (Bihar aggregate) → destination states
+                const nodes = [
+                    { name: 'Darbhanga' },        // 0
+                    { name: 'Madhubani' },         // 1
+                    { name: 'Siwan' },             // 2
+                    { name: 'Gopalganj' },         // 3
+                    { name: 'Supaul' },            // 4
+                    { name: 'East Champaran' },    // 5
+                    { name: 'Muzaffarpur' },       // 6
+                    { name: 'Patna' },             // 7
+                    { name: 'Purnia' },            // 8
+                    { name: 'Other Districts' },   // 9
+                    { name: 'Delhi-NCR' },         // 10
+                    { name: 'Maharashtra' },       // 11
+                    { name: 'Gujarat' },           // 12
+                    { name: 'Punjab / Haryana' },  // 13
+                    { name: 'Kerala' },            // 14
+                    { name: 'Gulf States' },       // 15
+                    { name: 'Other States' },      // 16
+                    // Sector nodes (level 3)
+                    { name: 'Construction' },      // 17
+                    { name: 'Factories' },         // 18
+                    { name: 'Textiles' },          // 19
+                    { name: 'Agriculture' },       // 20
+                    { name: 'Services' },          // 21
+                    { name: 'Gulf Labour' },       // 22
+                ];
+
+                // Links: district → destination (est. thousands of workers)
+                const links = [
+                    // Darbhanga
+                    { source: 0, target: 10, value: 320 },
+                    { source: 0, target: 11, value: 220 },
+                    { source: 0, target: 15, value: 80 },
+                    // Madhubani
+                    { source: 1, target: 10, value: 280 },
+                    { source: 1, target: 12, value: 180 },
+                    { source: 1, target: 15, value: 60 },
+                    // Siwan
+                    { source: 2, target: 10, value: 200 },
+                    { source: 2, target: 11, value: 250 },
+                    { source: 2, target: 13, value: 120 },
+                    // Gopalganj
+                    { source: 3, target: 10, value: 180 },
+                    { source: 3, target: 12, value: 160 },
+                    { source: 3, target: 13, value: 90 },
+                    // Supaul
+                    { source: 4, target: 10, value: 150 },
+                    { source: 4, target: 11, value: 100 },
+                    { source: 4, target: 15, value: 70 },
+                    // East Champaran
+                    { source: 5, target: 10, value: 350 },
+                    { source: 5, target: 13, value: 200 },
+                    { source: 5, target: 16, value: 100 },
+                    // Muzaffarpur
+                    { source: 6, target: 10, value: 200 },
+                    { source: 6, target: 11, value: 180 },
+                    { source: 6, target: 14, value: 60 },
+                    // Patna
+                    { source: 7, target: 10, value: 150 },
+                    { source: 7, target: 11, value: 80 },
+                    { source: 7, target: 16, value: 50 },
+                    // Purnia
+                    { source: 8, target: 10, value: 120 },
+                    { source: 8, target: 12, value: 100 },
+                    { source: 8, target: 15, value: 50 },
+                    // Other Districts
+                    { source: 9, target: 10, value: 550 },
+                    { source: 9, target: 11, value: 370 },
+                    { source: 9, target: 12, value: 260 },
+                    { source: 9, target: 13, value: 190 },
+                    { source: 9, target: 14, value: 140 },
+                    { source: 9, target: 15, value: 140 },
+                    { source: 9, target: 16, value: 200 },
+                    // Destination → sector
+                    { source: 10, target: 17, value: 1800 },  // Delhi → Construction
+                    { source: 10, target: 21, value: 700 },   // Delhi → Services
+                    { source: 11, target: 18, value: 900 },   // Maharashtra → Factories
+                    { source: 11, target: 17, value: 300 },   // Maharashtra → Construction
+                    { source: 12, target: 19, value: 500 },   // Gujarat → Textiles
+                    { source: 12, target: 18, value: 200 },   // Gujarat → Factories
+                    { source: 13, target: 20, value: 450 },   // Punjab → Agriculture
+                    { source: 13, target: 17, value: 150 },   // Punjab → Construction
+                    { source: 14, target: 21, value: 200 },   // Kerala → Services
+                    { source: 15, target: 22, value: 400 },   // Gulf → Gulf Labour
+                    { source: 16, target: 17, value: 200 },   // Other → Construction
+                    { source: 16, target: 21, value: 150 },   // Other → Services
+                ];
+
+                const colorScale = d3.scaleOrdinal()
+                    .domain(nodes.map((_, i) => i))
+                    .range(['#c0392b','#d35400','#e67e22','#f39c12','#27ae60','#2980b9','#8e44ad','#2c3e50','#16a085','#95a5a6',
+                            '#4A90E2','#3498db','#1abc9c','#27ae60','#e74c3c','#f0a04b','#7f8c8d',
+                            '#c0392b','#2c3e50','#1abc9c','#27ae60','#3498db','#f0a04b']);
+
+                const sankey = d3.sankey()
+                    .nodeId(d => d.index)
+                    .nodeWidth(18)
+                    .nodePadding(14)
+                    .nodeAlign(d3.sankeyLeft)
+                    .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]]);
+
+                const graph = sankey({
+                    nodes: nodes.map((d, i) => Object.assign({}, d, { index: i })),
+                    links: links.map(d => Object.assign({}, d))
+                });
+
+                // Links
+                svg.append('g').selectAll('path')
+                    .data(graph.links)
+                    .join('path')
+                    .attr('class', 'sankey-link')
+                    .attr('d', d3.sankeyLinkHorizontal())
+                    .attr('stroke', d => colorScale(d.source.index))
+                    .attr('stroke-width', d => Math.max(1, d.width))
+                    .on('mouseover', function(event, d) {
+                        tooltip.style('opacity', 1).html(
+                            `<strong>${d.source.name}</strong> → <strong>${d.target.name}</strong><br>${d.value.toLocaleString()}K workers`
+                        );
+                    })
+                    .on('mousemove', function(event) {
+                        tooltip.style('left', (event.offsetX + 12) + 'px').style('top', (event.offsetY - 28) + 'px');
+                    })
+                    .on('mouseout', function() { tooltip.style('opacity', 0); });
+
+                // Nodes
+                const node = svg.append('g').selectAll('g')
+                    .data(graph.nodes)
+                    .join('g')
+                    .attr('class', 'sankey-node');
+
+                node.append('rect')
+                    .attr('x', d => d.x0)
+                    .attr('y', d => d.y0)
+                    .attr('height', d => Math.max(1, d.y1 - d.y0))
+                    .attr('width', d => d.x1 - d.x0)
+                    .attr('fill', d => colorScale(d.index))
+                    .attr('rx', 2);
+
+                node.append('text')
+                    .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                    .attr('y', d => (d.y0 + d.y1) / 2)
+                    .attr('dy', '0.35em')
+                    .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                    .attr('fill', textColor)
+                    .text(d => d.name);
+            })();
+
+            // --- SANKEY 2: Budget/Scheme Delivery Pipeline ---
+            (function() {
+                const container = document.getElementById('sankey-budget');
+                if (!container || container.querySelector('svg')) return;
+
+                const width = Math.min(container.clientWidth || 780, 900);
+                const height = 420;
+                const margin = { top: 16, right: 150, bottom: 10, left: 10 };
+
+                const svg = d3.select(container).append('svg')
+                    .attr('viewBox', `0 0 ${width} ${height}`)
+                    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+                const tooltip = d3.select(container).append('div').attr('class', 'd3-tooltip');
+
+                const nodes = [
+                    { name: 'Central Budget (Rs 100)' },    // 0
+                    { name: 'MGNREGA' },                      // 1
+                    { name: 'PM-Kisan' },                     // 2
+                    { name: 'Mid-Day Meal' },                 // 3
+                    { name: 'PDS / Food' },                   // 4
+                    { name: 'Ujjwala LPG' },                  // 5
+                    { name: 'Health (NHM)' },                 // 6
+                    { name: 'State Govt' },                   // 7
+                    { name: 'District Admin' },               // 8
+                    { name: 'Block/Panchayat' },              // 9
+                    { name: 'Beneficiary' },                  // 10
+                    { name: 'Bureaucratic Delays' },          // 11
+                    { name: 'Aadhaar / ID Barriers' },        // 12
+                    { name: 'Elite Capture' },                // 13
+                    { name: 'Corruption / Ghost Entries' },   // 14
+                ];
+
+                const links = [
+                    // Central → schemes
+                    { source: 0, target: 1, value: 22 },
+                    { source: 0, target: 2, value: 18 },
+                    { source: 0, target: 3, value: 12 },
+                    { source: 0, target: 4, value: 25 },
+                    { source: 0, target: 5, value: 10 },
+                    { source: 0, target: 6, value: 13 },
+                    // Schemes → State
+                    { source: 1, target: 7, value: 18 },
+                    { source: 2, target: 7, value: 15 },
+                    { source: 3, target: 7, value: 10 },
+                    { source: 4, target: 7, value: 21 },
+                    { source: 5, target: 7, value: 8 },
+                    { source: 6, target: 7, value: 10 },
+                    // Leakage from schemes
+                    { source: 1, target: 11, value: 4 },
+                    { source: 2, target: 12, value: 3 },
+                    { source: 3, target: 14, value: 2 },
+                    { source: 4, target: 14, value: 4 },
+                    { source: 5, target: 12, value: 2 },
+                    { source: 6, target: 11, value: 3 },
+                    // State → District
+                    { source: 7, target: 8, value: 65 },
+                    { source: 7, target: 11, value: 10 },
+                    { source: 7, target: 13, value: 7 },
+                    // District → Block
+                    { source: 8, target: 9, value: 50 },
+                    { source: 8, target: 11, value: 8 },
+                    { source: 8, target: 14, value: 7 },
+                    // Block → Beneficiary
+                    { source: 9, target: 10, value: 35 },
+                    { source: 9, target: 13, value: 8 },
+                    { source: 9, target: 12, value: 7 },
+                ];
+
+                const colors = {
+                    0: '#2c3e50', 1: '#27ae60', 2: '#27ae60', 3: '#27ae60', 4: '#27ae60', 5: '#27ae60', 6: '#27ae60',
+                    7: '#2980b9', 8: '#3498db', 9: '#4A90E2',
+                    10: '#27ae60',
+                    11: '#c0392b', 12: '#d35400', 13: '#e67e22', 14: '#c0392b'
+                };
+
+                const sankey = d3.sankey()
+                    .nodeId(d => d.index)
+                    .nodeWidth(18)
+                    .nodePadding(14)
+                    .nodeAlign(d3.sankeyLeft)
+                    .extent([[margin.left, margin.top], [width - margin.right, height - margin.bottom]]);
+
+                const graph = sankey({
+                    nodes: nodes.map((d, i) => Object.assign({}, d, { index: i })),
+                    links: links.map(d => Object.assign({}, d))
+                });
+
+                svg.append('g').selectAll('path')
+                    .data(graph.links)
+                    .join('path')
+                    .attr('class', 'sankey-link')
+                    .attr('d', d3.sankeyLinkHorizontal())
+                    .attr('stroke', d => {
+                        const t = d.target.index;
+                        return (t >= 11) ? '#c0392b' : colors[d.source.index] || '#2980b9';
+                    })
+                    .attr('stroke-width', d => Math.max(1, d.width))
+                    .on('mouseover', function(event, d) {
+                        tooltip.style('opacity', 1).html(
+                            `<strong>${d.source.name}</strong> → <strong>${d.target.name}</strong><br>Rs ${d.value} of every 100`
+                        );
+                    })
+                    .on('mousemove', function(event) {
+                        tooltip.style('left', (event.offsetX + 12) + 'px').style('top', (event.offsetY - 28) + 'px');
+                    })
+                    .on('mouseout', function() { tooltip.style('opacity', 0); });
+
+                const node = svg.append('g').selectAll('g')
+                    .data(graph.nodes)
+                    .join('g')
+                    .attr('class', 'sankey-node');
+
+                node.append('rect')
+                    .attr('x', d => d.x0)
+                    .attr('y', d => d.y0)
+                    .attr('height', d => Math.max(1, d.y1 - d.y0))
+                    .attr('width', d => d.x1 - d.x0)
+                    .attr('fill', d => colors[d.index] || '#95a5a6')
+                    .attr('rx', 2);
+
+                node.append('text')
+                    .attr('x', d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+                    .attr('y', d => (d.y0 + d.y1) / 2)
+                    .attr('dy', '0.35em')
+                    .attr('text-anchor', d => d.x0 < width / 2 ? 'start' : 'end')
+                    .attr('fill', d => (d.index >= 11) ? '#c0392b' : textColor)
+                    .style('font-weight', d => (d.index >= 11) ? '600' : '400')
+                    .text(d => d.name);
+            })();
+
+            // --- CHORD DIAGRAM: Caste Groups ↔ Political Alliances ---
+            (function() {
+                const container = document.getElementById('chord-caste-politics');
+                if (!container || container.querySelector('svg')) return;
+
+                const size = Math.min(container.clientWidth || 600, 640);
+                const outerRadius = size / 2 - 80;
+                const innerRadius = outerRadius - 22;
+
+                const svg = d3.select(container).append('svg')
+                    .attr('viewBox', `0 0 ${size} ${size}`)
+                    .attr('preserveAspectRatio', 'xMidYMid meet')
+                    .append('g')
+                    .attr('transform', `translate(${size/2},${size/2})`);
+
+                const tooltip = d3.select(container).append('div').attr('class', 'd3-tooltip');
+
+                // Groups: Caste categories (0-6) and Political alliances (7-11)
+                const groups = [
+                    'Yadav (OBC)',          // 0  ~14%
+                    'Kurmi/Koeri (OBC)',    // 1  ~8%
+                    'EBC Groups',           // 2  ~18%
+                    'Dalit (SC)',           // 3  ~20%
+                    'Muslim',              // 4  ~17%
+                    'Rajput (UC)',          // 5  ~4%
+                    'Brahmin/Bhumihar (UC)',// 6  ~6%
+                    'RJD',                 // 7
+                    'JD(U)',               // 8
+                    'BJP',                 // 9
+                    'Congress + Left',     // 10
+                    'LJP/RLSP/Others'      // 11
+                ];
+
+                // Matrix: rows = from, cols = to. Value = relative voting strength alignment
+                // Higher value = stronger caste-party voting alignment
+                const matrix = [
+                    //Yad  Kur  EBC  Dal  Mus  Raj  Bra  RJD  JDU  BJP  Con  LJP
+                    [  0,   0,   0,   0,   0,   0,   0,  70,  10,   5,   8,   7], // Yadav → mostly RJD
+                    [  0,   0,   0,   0,   0,   0,   0,  10,  50,  25,   5,  10], // Kurmi/Koeri → JDU + BJP
+                    [  0,   0,   0,   0,   0,   0,   0,  15,  30,  25,   8,  22], // EBC → split JDU/BJP/LJP
+                    [  0,   0,   0,   0,   0,   0,   0,  25,  15,  10,  20,  30], // Dalit → split RJD/Cong/LJP
+                    [  0,   0,   0,   0,   0,   0,   0,  40,  15,   3,  35,   7], // Muslim → RJD + Cong
+                    [  0,   0,   0,   0,   0,   0,   0,   5,  20,  60,   5,  10], // Rajput → mostly BJP
+                    [  0,   0,   0,   0,   0,   0,   0,   5,  15,  65,   8,   7], // Brahmin/Bhumihar → mostly BJP
+                    [ 70,  10,  15,  25,  40,   5,   5,   0,   0,   0,   0,   0], // RJD ← caste bases
+                    [ 10,  50,  30,  15,  15,  20,  15,   0,   0,   0,   0,   0], // JDU
+                    [  5,  25,  25,  10,   3,  60,  65,   0,   0,   0,   0,   0], // BJP
+                    [  8,   5,   8,  20,  35,   5,   8,   0,   0,   0,   0,   0], // Cong+Left
+                    [  7,  10,  22,  30,   7,  10,   7,   0,   0,   0,   0,   0], // LJP/Others
+                ];
+
+                const groupColors = [
+                    '#27ae60', '#2ecc71', '#1abc9c', '#3498db', '#9b59b6', '#e67e22', '#f39c12',
+                    '#c0392b', '#2980b9', '#e67e22', '#2c3e50', '#95a5a6'
+                ];
+
+                const chord = d3.chord()
+                    .padAngle(0.04)
+                    .sortSubgroups(d3.descending);
+
+                const chords = chord(matrix);
+
+                const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
+                const ribbon = d3.ribbon().radius(innerRadius);
+
+                // Arcs
+                svg.append('g').selectAll('path')
+                    .data(chords.groups)
+                    .join('path')
+                    .attr('class', 'chord-arc')
+                    .attr('d', arc)
+                    .attr('fill', d => groupColors[d.index])
+                    .on('mouseover', function(event, d) {
+                        tooltip.style('opacity', 1).html(`<strong>${groups[d.index]}</strong><br>Total alignment score: ${d.value}`);
+                    })
+                    .on('mousemove', function(event) {
+                        const rect = container.getBoundingClientRect();
+                        tooltip.style('left', (event.clientX - rect.left + 12) + 'px').style('top', (event.clientY - rect.top - 28) + 'px');
+                    })
+                    .on('mouseout', function() { tooltip.style('opacity', 0); });
+
+                // Labels
+                svg.append('g').selectAll('text')
+                    .data(chords.groups)
+                    .join('text')
+                    .attr('class', 'chord-group')
+                    .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                    .attr('dy', '0.35em')
+                    .attr('transform', d => `rotate(${(d.angle * 180 / Math.PI - 90)}) translate(${outerRadius + 8}) ${d.angle > Math.PI ? 'rotate(180)' : ''}`)
+                    .attr('text-anchor', d => d.angle > Math.PI ? 'end' : 'start')
+                    .attr('fill', textColor)
+                    .text(d => groups[d.index]);
+
+                // Ribbons
+                svg.append('g').selectAll('path')
+                    .data(chords)
+                    .join('path')
+                    .attr('class', 'chord-ribbon')
+                    .attr('d', ribbon)
+                    .attr('fill', d => groupColors[d.source.index])
+                    .on('mouseover', function(event, d) {
+                        tooltip.style('opacity', 1).html(
+                            `<strong>${groups[d.source.index]}</strong> ↔ <strong>${groups[d.target.index]}</strong><br>Alignment: ${d.source.value}`
+                        );
+                    })
+                    .on('mousemove', function(event) {
+                        const rect = container.getBoundingClientRect();
+                        tooltip.style('left', (event.clientX - rect.left + 12) + 'px').style('top', (event.clientY - rect.top - 28) + 'px');
+                    })
+                    .on('mouseout', function() { tooltip.style('opacity', 0); });
+            })();
         }
 
         function initHeritageMap() {
@@ -4869,7 +5331,7 @@
             'demographics': () => initDemographicsCharts(),
             'economy': () => initEconomyCharts(),
             'social-issues': () => initSocialCharts(),
-            'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); setTimeout(updateDistrictMap, 200); },
+            'data': () => { initDataCharts(); initGenderAndElectionCharts(); initHeritageMap(); setTimeout(updateDistrictMap, 200); setTimeout(initSankeyAndChord, 300); },
             'tools': () => { initTools(); initBriefingDropdown(); initCompare(); },
             'briefing': () => { initBriefingDropdown(); }, /* kept for direct hash access */
             'compare': () => { initCompare(); } /* kept for direct hash access */
