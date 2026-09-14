@@ -627,7 +627,7 @@
     <!-- Main Application (hidden until auth) -->
     <div id="main-app">
         <header class="site-header">
-            <div class="header-controls" style="display:flex;gap:6px;align-items:center;">
+            <div class="header-controls" data-dyslexia-slot style="display:flex;gap:6px;align-items:center;">
                 <div class="lang-toggle" id="lang-toggle">
                     <button class="lang-opt active" data-lang-mode="en" onclick="setLang('en')">EN</button>
                     <button class="lang-opt" data-lang-mode="hi" onclick="setLang('hi')">HI</button>
@@ -5410,5 +5410,6 @@
             navigator.serviceWorker.register('/sw.js').catch(() => {});
         }
     </script>
+<script src="js/dyslexia-font.js" defer></script>
 </body>
 </html>
