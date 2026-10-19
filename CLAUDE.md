@@ -3,7 +3,7 @@
 Shared engineering standard: @.claude/engineering-standards.md. It applies to all work in this repository. This file adds what is specific to the project, and wins where the two disagree.
 
 Bihar Parichay, a static resource on Bihar's society, economy, geography and
-culture, live at on-web.link/BiharParichay. No build step. `netlify.toml`
+culture, live at bihar-parichayproject.netlify.app. No build step. `netlify.toml`
 publishes the repository root, and `.github/workflows/static.yml` also
 publishes it to GitHub Pages. `README.md` describes the sections.
 
