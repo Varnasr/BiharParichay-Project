@@ -3,7 +3,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Live**: [on-web.link/BiharParichay](https://on-web.link/BiharParichay)
+**Live**: [bihar-parichayproject.netlify.app](https://bihar-parichayproject.netlify.app)
 
 ## What is this?
 
